@@ -33,9 +33,9 @@ export class World {
 
     render(GL: WebGLRenderingContext, time: number) {
         this.cameras[this.activeCamera].setPosition(new Float32Array([
-            Math.sin(time * 0.001),
-            0.2,
-            Math.cos(time * 0.001)
+            Math.sin(time * 0.001) * 3,
+            0.0,
+            Math.cos(time * 0.001) * 3
         ]));
         const viewMatrix = this.cameras[this.activeCamera].getViewMatrix();
         this.renderWorldObjects(GL, time, viewMatrix);

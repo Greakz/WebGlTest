@@ -11,7 +11,7 @@ export function initCubeVisionWorld() {
             new Camera(
                 new Float32Array([0, 0, -2]),
                 new Float32Array([0, 0, 0]),
-                1.1
+                1.0
             )
         ]
     )

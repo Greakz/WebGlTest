@@ -18,7 +18,6 @@ export class Scene {
     }
 
     renderScene(GL: WebGLRenderingContext, time: number) {
-        console.log('render');
         GL.enable(GL.DEPTH_TEST);
         GL.depthFunc(GL.ALWAYS);
         GL.clearColor(0.7, 0.68, 0.73, 1.0);

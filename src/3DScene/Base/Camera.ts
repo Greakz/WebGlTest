@@ -1,4 +1,5 @@
 import { lookAt } from '../../missUtil';
+import MDN from '../../MDN';
 
 const mat4 = require('gl-mat4');
 
@@ -20,15 +21,13 @@ export class Camera {
         const lookAtMatrix: Float32Array = new Float32Array(16);
         lookAt(lookAtMatrix, this.position, this.target, [0, 1, 0]);
         mat4.multiply(lookAtMatrix, this.getPerspectiveMatrix(), lookAtMatrix);
-        console.log(lookAtMatrix)
         return lookAtMatrix;
     }
 
     getPerspectiveMatrix(): Float32Array {
-        const perspectiveMatrix: Float32Array = mat4.create();
         var zNear = 0.1;
         var zFar = 100;
-        mat4.perspective(perspectiveMatrix, this.fov, this.aspect, zNear, zFar);
+        const perspectiveMatrix: Float32Array = new Float32Array(MDN.perspectiveMatrix(MDN.radians(45.0), 4.0 / 3.0, 0.1, 100.0));
         return perspectiveMatrix
     }
 
