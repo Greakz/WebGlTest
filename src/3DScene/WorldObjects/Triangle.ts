@@ -35,8 +35,6 @@ export class Triangle implements WorldObject {
     }
 
     render(GL: WebGLRenderingContext, time: number, viewMatrix: Float32Array) {
-        console.log(this.shader.getProgram());
-
         GL.bindBuffer(GL.ARRAY_BUFFER, this.vertexBuffer);
         GL.vertexAttribPointer(this.shader.attr_position, 3, GL.FLOAT, false, 0, 0);
         GL.enableVertexAttribArray(this.shader.attr_position);

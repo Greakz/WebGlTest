@@ -1,5 +1,7 @@
 import { lookAt } from '../../missUtil';
 import MDN from '../../MDN';
+import {Mouse}  from './Mouse';
+import { mouseInstance } from '../../index';
 
 const mat4 = require('gl-mat4');
 
@@ -10,11 +12,15 @@ export class Camera {
     protected fov: number;
     protected aspect: number;
 
+    protected mouse: Mouse;
+
     constructor(position: Float32Array,target: Float32Array, aspect: number) {
         this.position = position;
         this.target = target;
         this.fov = 72;
         this.aspect = aspect;
+        console.log(mouseInstance)
+        this.mouse = mouseInstance;
     }
 
     getViewMatrix(): Float32Array {
@@ -27,7 +33,7 @@ export class Camera {
     getPerspectiveMatrix(): Float32Array {
         var zNear = 0.1;
         var zFar = 100;
-        const perspectiveMatrix: Float32Array = new Float32Array(MDN.perspectiveMatrix(MDN.radians(45.0), 4.0 / 3.0, 0.1, 100.0));
+        const perspectiveMatrix: Float32Array = new Float32Array(MDN.perspectiveMatrix(MDN.radians(this.fov), 4.0 / 3.0, 0.1, 100.0));
         return perspectiveMatrix
     }
 
@@ -43,4 +49,13 @@ export class Camera {
         this.target = target;
     }
 
+    update() {
+        const mouseX = (this.mouse.x / 1000) * Math.PI * 2;
+
+        this.position = new Float32Array([
+            Math.sin(mouseX) * 5,
+            0,
+            Math.cos(mouseX) * 5
+        ]);
+    }
 }

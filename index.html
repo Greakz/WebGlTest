@@ -17,7 +17,7 @@
       height: 100%;
       width: 100%;
     }
-    #container {
+    #container, #overlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -25,12 +25,13 @@
       bottom: 0;
     }
   </style>
+  <script src="app.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="container">
   <canvas id="canvas" />
 </div>
+<div id="overlay"></div>
 <div id="shader-space" />
-<script src="app.js" type="text/javascript"></script>
 </body>
 </html>
