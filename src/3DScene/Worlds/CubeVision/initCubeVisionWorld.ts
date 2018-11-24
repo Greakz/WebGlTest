@@ -14,9 +14,9 @@ export function initCubeVisionWorld() {
         ],
         [
             new Camera(
-                new Float32Array([0, 5, 0]),
-                new Float32Array([0, 1, 0]),
-                 window.innerWidth / window.innerHeight
+                {x:5, y: 3, z: 1},
+                {x: 0, y: 1, z: 0},
+                window.innerWidth / window.innerHeight
             )
         ]
     )

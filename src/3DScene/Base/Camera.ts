@@ -1,16 +1,20 @@
-import { lookAt } from '../../missUtil';
-import MDN from '../../MDN';
-import {Mouse}  from './Mouse';
+import { Mouse } from './Mouse';
 import { mouseInstance } from '../../index';
-
-const mat4 = require('gl-mat4');
+import { Vec3 } from './MathTypes/Types/vectors';
+import { Mat4 } from './MathTypes/Types/matrix';
+import {
+    getPerspectiveMatrix, lookAtMatrix, mat4ToFloat32Array, multiplyMatrices,
+    radians
+} from './MathTypes/matrix.util';
 
 export class Camera {
-    protected position: Float32Array;
-    protected target: Float32Array;
+    protected position: Vec3;
+    protected target: Vec3;
 
     protected fov: number;
     protected aspect: number;
+    protected zNear = 0.001;
+    protected zFar = 100;
 
     protected mouse: Mouse;
     private mouseXLastFrame: number;
@@ -18,36 +22,41 @@ export class Camera {
     protected statePosition: number;
     protected heightPosition: number;
 
-    constructor(position: Float32Array,target: Float32Array, aspect: number) {
+    constructor(position: Vec3, target: Vec3, aspect: number) {
         this.position = position;
         this.target = target;
         this.fov = 60;
         this.aspect = aspect;
         this.mouse = mouseInstance;
         this.statePosition = 0;
-        this.heightPosition= 0;
+        this.heightPosition = 0;
     }
 
-    getViewMatrix(): Float32Array {
-        const lookAtMatrix: Float32Array = new Float32Array(16);
-        lookAt(lookAtMatrix, this.position, this.target, [0, 1, 0]);
-        mat4.multiply(lookAtMatrix, this.getPerspectiveMatrix(), lookAtMatrix);
-        return lookAtMatrix;
+    getViewMatrix(): Mat4 {
+        return multiplyMatrices(
+            this.getPerspectiveMatrix(),
+            this.getLookAtMatrix()
+        );
     }
 
-    getPerspectiveMatrix(): Float32Array {
-        var zNear = 0.1;
-        var zFar = 100;
-        return new Float32Array(
-            MDN.perspectiveMatrix(
-                MDN.radians(this.fov),
+    getLookAtMatrix() {
+        return lookAtMatrix(
+            this.position,
+            this.target,
+            {x: 0, y: 1, z: 0}
+            )
+    }
+
+    getPerspectiveMatrix(): Mat4 {
+        return getPerspectiveMatrix(
+                radians(this.fov),
                 this.aspect,
-                zNear,
-                zFar
-            ));
+                this.zNear,
+                this.zFar
+            );
     }
 
-    setPosition(position: Float32Array): void {
+    setPosition(position: Vec3): void {
         this.position = position;
     }
 
@@ -55,23 +64,23 @@ export class Camera {
         this.fov = fov;
     }
 
-    setTarget(target: Float32Array): void {
+    setTarget(target: Vec3): void {
         this.target = target;
     }
 
     update() {
-        if(this.mouse.leftClicked) {
+        if (this.mouse.leftClicked) {
             const distance = 10;
             const distanceX = this.mouse.x - this.mouseXLastFrame;
             this.statePosition += (-1 * (distanceX / 1000) * Math.PI * 2) % (2 * Math.PI);
             const distanceY = this.mouse.y - this.mouseYLastFrame;
             this.heightPosition += (-1 * (distanceY / 1000) * Math.PI * 2) % (Math.PI);
 
-            this.position = new Float32Array([
-                Math.sin(this.statePosition) * (1 - Math.pow(Math.sin(this.heightPosition), 2)) * distance,
-                Math.sin(this.heightPosition) * distance,
-                Math.cos(this.statePosition) * (1 - Math.pow(Math.sin(this.heightPosition), 2)) * distance
-            ]);
+            this.position = {
+                x: Math.sin(this.statePosition) * (1 - Math.pow(Math.sin(this.heightPosition), 2)) * distance,
+                y: Math.sin(this.heightPosition) * distance,
+                z: Math.cos(this.statePosition) * (1 - Math.pow(Math.sin(this.heightPosition), 2)) * distance
+            };
         }
         this.mouseXLastFrame = this.mouse.x;
         this.mouseYLastFrame = this.mouse.y;

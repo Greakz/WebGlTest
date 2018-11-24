@@ -1,37 +1,56 @@
 import { Shader } from './Shader';
 import MDN from '../../MDN';
+import { Mat4 } from './MathTypes/Types/matrix';
+import { Vec3 } from './MathTypes/Types/vectors';
+import {
+    getRotationXMatrix, getRotationYMatrix, getRotationZMatrix, getScalingMatrix, getTranslationMatrix,
+    mat4ToFloat32Array,
+    multiplyArrayOfMatrices,
+    radians
+} from './MathTypes/matrix.util';
 
 export abstract class WorldObject {
     transformation: Transformation;
     shader: Shader | Shader[];
-    init(GL: WebGLRenderingContext) {}
-    render(GL: WebGLRenderingContext, time: number, viewMatrix: Float32Array) {}
+
+    init(GL: WebGLRenderingContext) {
+    }
+
+    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4) {
+    }
+
     setTranslation(translation: Transformation) {
         this.transformation = translation;
     }
-    getModelMatrix() {
-        if(!this.transformation) {
+
+    getModelMatrixF32(): Float32Array {
+        return mat4ToFloat32Array(this.getModelMatrix());
+    }
+
+    getModelMatrix(): Mat4 {
+        if (!this.transformation) {
             this.transformation = getNoTransform();
         }
-        return MDN.multiplyArrayOfMatrices([
-            MDN.scaleMatrix(this.transformation.scaling[0], this.transformation.scaling[1], this.transformation.scaling[2]),
-            MDN.rotateYMatrix(MDN.radians(this.transformation.rotation[1])),
-            MDN.rotateXMatrix(MDN.radians(this.transformation.rotation[0])),
-            MDN.rotateZMatrix(MDN.radians(this.transformation.rotation[2])),
-            MDN.translateMatrix(this.transformation.translation[0], this.transformation.translation[1], this.transformation.translation[2]),
+        return multiplyArrayOfMatrices([
+            getScalingMatrix(this.transformation.scaling.x, this.transformation.scaling.y, this.transformation.scaling.z),
+            getRotationYMatrix(radians(this.transformation.rotation.y)),
+            getRotationXMatrix(radians(this.transformation.rotation.x)),
+            getRotationZMatrix(radians(this.transformation.rotation.z)),
+            getTranslationMatrix(this.transformation.translation.x, this.transformation.translation.y, this.transformation.translation.z),
         ])
     }
 }
 
-export function getNoTransform():Transformation {
+export function getNoTransform(): Transformation {
     return {
-        rotation: new Float32Array([0, 0, 0]),
-        translation: new Float32Array([0, 0, 0]),
-        scaling: new Float32Array([1, 1, 1]),
+        rotation: {x: 0, y: 0, z: 0},
+        translation: {x: 0, y: 0, z: 0},
+        scaling: {x: 1, y: 1, z: 1},
     }
 }
+
 export interface Transformation {
-    rotation: Float32Array;
-    translation: Float32Array;
-    scaling: Float32Array;
+    rotation: Vec3;
+    translation: Vec3;
+    scaling: Vec3;
 }

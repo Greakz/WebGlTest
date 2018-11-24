@@ -1,5 +1,7 @@
 import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
 import { SimpleShader } from '../Shaders/SimpleShader';
+import { mat4ToFloat32Array } from '../Base/MathTypes/matrix.util';
+import { Mat4 } from '../Base/MathTypes/Types/matrix';
 
 const yGrid = -0.0001;
 const r = 52 / 255;
@@ -74,7 +76,7 @@ export class Grid extends WorldObject {
         this.shader.attachAndLink(GL);
     }
 
-    render(GL: WebGLRenderingContext, time: number, viewMatrix: Float32Array) {
+    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4) {
         GL.bindBuffer(GL.ARRAY_BUFFER, this.vertexBuffer);
         GL.vertexAttribPointer(this.shader.attr_position, 3, GL.FLOAT, false, 0, 0);
         GL.enableVertexAttribArray(this.shader.attr_position);
@@ -88,12 +90,12 @@ export class Grid extends WorldObject {
         GL.uniformMatrix4fv(
             this.shader.uf_view_matrix,
             false,
-            viewMatrix);
+            mat4ToFloat32Array(viewMatrix));
 
         GL.uniformMatrix4fv(
             this.shader.uf_model_matrix,
             false,
-            this.getModelMatrix());
+            this.getModelMatrixF32());
 
         GL.drawArrays(GL.LINES, 0, this.size * 8 + 2);
     }

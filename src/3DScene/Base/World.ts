@@ -1,5 +1,7 @@
 import { WorldObject } from './WorldObject';
 import { Camera } from './Camera';
+import { mat4ToFloat32Array } from './MathTypes/matrix.util';
+import { Mat4 } from './MathTypes/Types/matrix';
 
 export class World {
     cameras: Camera[];
@@ -37,7 +39,7 @@ export class World {
         this.renderWorldObjects(GL, time, viewMatrix);
     }
 
-    renderWorldObjects(GL: WebGLRenderingContext, time: number, viewMatrix: Float32Array): void {
+    renderWorldObjects(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4): void {
         this.worldObjects.forEach(
             (worldObject: WorldObject) => {
                 worldObject.render(GL, time, viewMatrix);

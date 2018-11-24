@@ -1,5 +1,7 @@
 import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
 import { SimpleShader } from '../Shaders/SimpleShader';
+import { Mat4 } from '../Base/MathTypes/Types/matrix';
+import { mat4ToFloat32Array } from '../Base/MathTypes/matrix.util';
 
 export class Cube extends WorldObject {
 
@@ -88,7 +90,7 @@ export class Cube extends WorldObject {
         this.shader.attachAndLink(GL);
     }
 
-    render(GL: WebGLRenderingContext, time: number, viewMatrix: Float32Array) {
+    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4) {
         GL.bindBuffer(GL.ARRAY_BUFFER, this.vertexBuffer);
         GL.vertexAttribPointer(this.shader.attr_position, 3, GL.FLOAT, false, 0, 0);
         GL.enableVertexAttribArray(this.shader.attr_position);
@@ -104,12 +106,12 @@ export class Cube extends WorldObject {
         GL.uniformMatrix4fv(
             this.shader.uf_view_matrix,
             false,
-            viewMatrix);
+            mat4ToFloat32Array(viewMatrix));
 
         GL.uniformMatrix4fv(
             this.shader.uf_model_matrix,
             false,
-            this.getModelMatrix());
+            this.getModelMatrixF32());
         
         GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT,0);
     }
