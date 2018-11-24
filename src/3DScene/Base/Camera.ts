@@ -2,18 +2,25 @@ import { Mouse } from './Mouse';
 import { mouseInstance } from '../../index';
 import { Vec3 } from './MathTypes/Types/vectors';
 import { Mat4 } from './MathTypes/Types/matrix';
+import { getPerspectiveMatrix, lookAtMatrix, multiplyMatrices, radians } from './MathTypes/matrix.util';
 import {
-    getPerspectiveMatrix, lookAtMatrix, mat4ToFloat32Array, multiplyMatrices,
-    radians
-} from './MathTypes/matrix.util';
+    addVec3s, crossProductVec3, normalizeVec3, scaleVec3, subtractVec3s,
+} from './MathTypes/vector.util';
+import { Ray } from './Ray';
 
 export class Camera {
     protected position: Vec3;
     protected target: Vec3;
 
-    protected fov: number;
+    protected screenHeight: number;
+    protected screenWidth: number;
+
+    protected perspective_matrix: Mat4;
+    protected look_at_matrix: Mat4;
+
+    protected fovY: number;
     protected aspect: number;
-    protected zNear = 0.001;
+    protected zNear = 0.1;
     protected zFar = 100;
 
     protected mouse: Mouse;
@@ -22,46 +29,97 @@ export class Camera {
     protected statePosition: number;
     protected heightPosition: number;
 
-    constructor(position: Vec3, target: Vec3, aspect: number) {
+    constructor(position: Vec3, target: Vec3) {
         this.position = position;
         this.target = target;
-        this.fov = 60;
-        this.aspect = aspect;
+        this.fovY = 60;
         this.mouse = mouseInstance;
         this.statePosition = 0;
         this.heightPosition = 0;
+        window.addEventListener('resize', (e) => this.calculateWindowSize());
+        this.calculateWindowSize();
+        this.updateLookAtMatrix();
+        this.updatePerspectiveMatrix();
+    }
+
+    calculateWindowSize() {
+        this.screenHeight = window.innerHeight;
+        this.screenWidth = window.innerWidth;
+        this.aspect = this.screenWidth / this.screenHeight
     }
 
     getViewMatrix(): Mat4 {
         return multiplyMatrices(
-            this.getPerspectiveMatrix(),
-            this.getLookAtMatrix()
+            this.perspective_matrix,
+            this.look_at_matrix
         );
     }
 
-    getLookAtMatrix() {
-        return lookAtMatrix(
+    updateLookAtMatrix() {
+        this.look_at_matrix = lookAtMatrix(
             this.position,
             this.target,
             {x: 0, y: 1, z: 0}
-            )
+        )
     }
 
-    getPerspectiveMatrix(): Mat4 {
-        return getPerspectiveMatrix(
-                radians(this.fov),
-                this.aspect,
-                this.zNear,
-                this.zFar
-            );
+    updatePerspectiveMatrix(): void {
+        this.perspective_matrix = getPerspectiveMatrix(
+            radians(this.fovY),
+            this.aspect,
+            this.zNear,
+            this.zFar
+        );
     }
+
+
+    getRay(screenX: number, screenY: number): Ray {
+        let view: Vec3 = subtractVec3s(this.target, this.position);
+        view = normalizeVec3(view);
+
+        let h: Vec3 = crossProductVec3(view, {x: 0, y: 1, z: 0});
+        h = normalizeVec3(h);
+
+        let v: Vec3 = crossProductVec3(h, view);
+        v = normalizeVec3(v);
+
+        let rad = this.fovY * Math.PI / 180;
+        let vLength = Math.tan(rad / 2) * this.zNear;
+        let hLength = vLength * this.aspect;
+
+        v = scaleVec3(v, vLength);
+        h = scaleVec3(h, hLength);
+
+        let mouse_x: number = this.screenWidth - screenX - (this.screenWidth / 2);
+        let mouse_y: number = screenY - (this.screenHeight / 2);
+        mouse_y /= (this.screenHeight / 2);
+        mouse_x /= (this.screenWidth / 2);
+
+        let pos: Vec3 = addVec3s(
+            addVec3s(
+                addVec3s(
+                    this.position,
+                    scaleVec3(view, this.zNear)
+                ),
+                scaleVec3(h, mouse_x)
+            ),
+            scaleVec3(v, mouse_y)
+        );
+        let direction: Vec3 = subtractVec3s(pos, this.position);
+
+        return {
+            pos: pos,
+            dir: direction
+        }
+    }
+
 
     setPosition(position: Vec3): void {
         this.position = position;
     }
 
     setFOV(fov: number): void {
-        this.fov = fov;
+        this.fovY = fov;
     }
 
     setTarget(target: Vec3): void {
@@ -85,5 +143,7 @@ export class Camera {
         this.mouseXLastFrame = this.mouse.x;
         this.mouseYLastFrame = this.mouse.y;
 
+        this.updateLookAtMatrix();
+        this.updatePerspectiveMatrix();
     }
 }

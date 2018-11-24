@@ -2,6 +2,8 @@ import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject
 import { SimpleShader } from '../Shaders/SimpleShader';
 import { Mat4 } from '../Base/MathTypes/Types/matrix';
 import { mat4ToFloat32Array } from '../Base/MathTypes/matrix.util';
+import { Vec3 } from '../Base/MathTypes/Types/vectors';
+import { Ray } from '../Base/Ray';
 
 export class Plane extends WorldObject {
 
@@ -49,7 +51,7 @@ export class Plane extends WorldObject {
         this.shader.attachAndLink(GL);
     }
 
-    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4) {
+    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray) {
         GL.bindBuffer(GL.ARRAY_BUFFER, this.vertexBuffer);
         GL.vertexAttribPointer(this.shader.attr_position, 3, GL.FLOAT, false, 0, 0);
         GL.enableVertexAttribArray(this.shader.attr_position);

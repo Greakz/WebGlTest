@@ -3,7 +3,8 @@ export class ShaderLoader {
 
     static shaderList: string[] = [
         'cube',
-        'simple'
+        'simple',
+        'monocolor'
     ];
 
     static combinedShaderList: string = '';

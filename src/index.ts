@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const GL: WebGLRenderingContext | null = canvas.getContext('webgl');
             if (GL !== null) {
                 const scene: Scene = new Scene(initWorlds());
-                const canvas: Canvas = new Canvas(scene, 60);
+                const canvas: Canvas = new Canvas(scene, 40);
                 scene.activateWorld(GL, 0);
                 canvas.runLoop();
             }

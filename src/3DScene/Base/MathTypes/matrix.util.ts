@@ -1,5 +1,6 @@
 import { Mat4 } from './Types/matrix';
-import { Vec3 } from './Types/vectors';
+import { Vec3, Vec4 } from './Types/vectors';
+
 export const EPSILON = 0.000001;
 
 const c = Math.cos;
@@ -109,7 +110,6 @@ export function getOrthographicMatrix(left: number, right: number, bottom: numbe
         [row4col1, row4col2, row4col3, 1]
     ];
 }
-
 export function multiplyMatrices(aAsMat4: Mat4, bAsMat4: Mat4): Mat4 {
 
     let a = mat4ToFlat(aAsMat4);

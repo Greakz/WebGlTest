@@ -2,6 +2,9 @@ import { WorldObject } from './WorldObject';
 import { Camera } from './Camera';
 import { mat4ToFloat32Array } from './MathTypes/matrix.util';
 import { Mat4 } from './MathTypes/Types/matrix';
+import { Vec3 } from './MathTypes/Types/vectors';
+import { mouseInstance } from '../../index';
+import { Ray } from './Ray';
 
 export class World {
     cameras: Camera[];
@@ -36,13 +39,14 @@ export class World {
     render(GL: WebGLRenderingContext, time: number) {
         this.cameras[this.activeCamera].update();
         const viewMatrix = this.cameras[this.activeCamera].getViewMatrix();
-        this.renderWorldObjects(GL, time, viewMatrix);
+        const mouseRay = this.cameras[this.activeCamera].getRay(mouseInstance.x, mouseInstance.y);
+        this.renderWorldObjects(GL, time, viewMatrix, mouseRay);
     }
 
-    renderWorldObjects(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4): void {
+    renderWorldObjects(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray): void {
         this.worldObjects.forEach(
             (worldObject: WorldObject) => {
-                worldObject.render(GL, time, viewMatrix);
+                worldObject.render(GL, time, viewMatrix, mouseRay);
             }
         )
     }

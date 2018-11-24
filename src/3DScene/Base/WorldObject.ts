@@ -1,5 +1,4 @@
 import { Shader } from './Shader';
-import MDN from '../../MDN';
 import { Mat4 } from './MathTypes/Types/matrix';
 import { Vec3 } from './MathTypes/Types/vectors';
 import {
@@ -8,15 +7,20 @@ import {
     multiplyArrayOfMatrices,
     radians
 } from './MathTypes/matrix.util';
+import { Hitbox } from './WorldObject/Hitbox';
+import { cubePolygonsForHitbox } from './Util/cubePolygonsForHitbox';
+import { Ray } from './Ray';
 
 export abstract class WorldObject {
+    hitBox: Hitbox = new Hitbox(cubePolygonsForHitbox());
     transformation: Transformation;
     shader: Shader | Shader[];
+    hovered: boolean = false;
 
     init(GL: WebGLRenderingContext) {
     }
 
-    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4) {
+    render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray) {
     }
 
     setTranslation(translation: Transformation) {
@@ -38,6 +42,10 @@ export abstract class WorldObject {
             getRotationZMatrix(radians(this.transformation.rotation.z)),
             getTranslationMatrix(this.transformation.translation.x, this.transformation.translation.y, this.transformation.translation.z),
         ])
+    }
+
+    checkHit(ray: Ray, viewMatrix: Mat4) {
+        this.hovered = (this.hitBox.testRay(ray, viewMatrix, this.getModelMatrix()));
     }
 }
 
