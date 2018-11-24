@@ -10,10 +10,11 @@
     attribute vec4 color;
     varying vec4 vColor;
 
+    uniform mat4 modelMatrix;
     uniform mat4 viewMatrix;
 
     void main(void) {
-        gl_Position = viewMatrix * vec4(vertexPosition, 1.0);
+        gl_Position = viewMatrix * modelMatrix *  vec4(vertexPosition, 1.0);
         vColor = color;
     }
 

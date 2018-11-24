@@ -38,14 +38,13 @@ export class Camera {
     getPerspectiveMatrix(): Float32Array {
         var zNear = 0.1;
         var zFar = 100;
-        const perspectiveMatrix: Float32Array = new Float32Array(
+        return new Float32Array(
             MDN.perspectiveMatrix(
                 MDN.radians(this.fov),
                 this.aspect,
                 zNear,
                 zFar
             ));
-        return perspectiveMatrix
     }
 
     setPosition(position: Float32Array): void {
@@ -62,7 +61,7 @@ export class Camera {
 
     update() {
         if(this.mouse.leftClicked) {
-            const distance = 10
+            const distance = 10;
             const distanceX = this.mouse.x - this.mouseXLastFrame;
             this.statePosition += (-1 * (distanceX / 1000) * Math.PI * 2) % (2 * Math.PI);
             const distanceY = this.mouse.y - this.mouseYLastFrame;

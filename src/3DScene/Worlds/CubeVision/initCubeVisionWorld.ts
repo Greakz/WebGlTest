@@ -2,14 +2,15 @@ import { World } from '../../Base/World';
 import { Camera } from '../../Base/Camera';
 import { Plane } from '../../WorldObjects/Plane';
 import { Grid } from '../../WorldObjects/Grid';
-import { Cube } from '../../WorldObjects/Cube';
+import { Triangle } from '../../WorldObjects/Triangle';
 
 export function initCubeVisionWorld() {
     return new World(
         [
-            new Grid(25),
-            new Cube((211 / 255), (84 / 255), 0),
-            new Plane()
+            new Grid(5),
+            //new Cube((211 / 255), (84 / 255), 0),
+            new Plane(),
+            new Triangle()
         ],
         [
             new Camera(

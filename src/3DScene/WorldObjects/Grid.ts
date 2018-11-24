@@ -1,4 +1,4 @@
-import { getNoTranslation, Translation, WorldObject } from '../Base/WorldObject';
+import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
 import { TriangleShader } from '../Shaders/TriangleShader';
 
 const yGrid = -0.0001;
@@ -6,9 +6,8 @@ const r = 52 / 255;
 const g = 152 / 255;
 const b = 219 / 255;
 
-export class Grid implements WorldObject {
+export class Grid extends WorldObject {
 
-    translation: Translation = getNoTranslation();
     shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
 
     protected vertexBuffer: WebGLBuffer;
@@ -19,6 +18,7 @@ export class Grid implements WorldObject {
 
     protected size: number;
     constructor(size: number) {
+        super();
         this.size = size;
         for(let i = -1 * size; i <= size; i++) {
             this.pushVertex(i)
@@ -89,6 +89,11 @@ export class Grid implements WorldObject {
             this.shader.uf_view_matrix,
             false,
             viewMatrix);
+
+        GL.uniformMatrix4fv(
+            this.shader.uf_model_matrix,
+            false,
+            this.getModelMatrix());
 
         GL.drawArrays(GL.LINES, 0, this.size * 8 + 2);
     }

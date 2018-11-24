@@ -1,9 +1,8 @@
-import { getNoTranslation, Translation, WorldObject } from '../Base/WorldObject';
+import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
 import { TriangleShader } from '../Shaders/TriangleShader';
 
-export class Plane implements WorldObject {
+export class Plane extends WorldObject {
 
-    translation: Translation = getNoTranslation();
     shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
 
     protected indicesBuffer: WebGLBuffer;
@@ -25,6 +24,7 @@ export class Plane implements WorldObject {
     ];
 
     constructor() {
+        super();
     }
 
     init(GL: WebGLRenderingContext) {
@@ -64,6 +64,11 @@ export class Plane implements WorldObject {
             this.shader.uf_view_matrix,
             false,
             viewMatrix);
+
+        GL.uniformMatrix4fv(
+            this.shader.uf_model_matrix,
+            false,
+            this.getModelMatrix());
 
         GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT, 0);
     }

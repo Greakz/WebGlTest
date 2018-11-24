@@ -1,9 +1,8 @@
-import { getNoTranslation, Translation, WorldObject } from '../Base/WorldObject';
+import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
 import { TriangleShader } from '../Shaders/TriangleShader';
 
-export class Cube implements WorldObject {
+export class Cube extends WorldObject {
 
-    translation: Translation = getNoTranslation();
     shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
 
     protected indicesBuffer: WebGLBuffer;
@@ -58,6 +57,9 @@ export class Cube implements WorldObject {
     protected colors = [];
 
     constructor(r: number, g: number, b: number) {
+        super();
+        this.transformation = getNoTransform();
+        this.transformation.translation[1] = 2;
         for(let i = 0; i < this.indices.length; i++) {
             this.colors.push(r);
             this.colors.push(g);
@@ -103,6 +105,11 @@ export class Cube implements WorldObject {
             this.shader.uf_view_matrix,
             false,
             viewMatrix);
+
+        GL.uniformMatrix4fv(
+            this.shader.uf_model_matrix,
+            false,
+            this.getModelMatrix());
         
         GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT,0);
     }
