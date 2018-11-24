@@ -1,7 +1,7 @@
 import { getNoTranslation, Translation, WorldObject } from '../Base/WorldObject';
 import { TriangleShader } from '../Shaders/TriangleShader';
 
-export class Triangle implements WorldObject {
+export class Plane implements WorldObject {
 
     translation: Translation = getNoTranslation();
     shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
@@ -11,18 +11,21 @@ export class Triangle implements WorldObject {
     protected colorBuffer: WebGLBuffer;
 
     protected vertices = [
-        0.0,3,0.0,
-        -3,0,0.0,
-        3,0,0.0,
+        -3, 0, -3,
+        -3, 0, 3,
+        3, 0, -3,
+        3, 0, 3,
     ];
-    protected indices = [0,1,2];
+    protected indices = [0, 1, 2, 1, 2, 3];
     protected colors = [
-        1.0, 1.0, 1.0, 1.0,
-        1.0, 1.0, 1.0, 1.0,
-        1.0, 1.0, 1.0, 1.0,
+        0.4, 0.4, 0.4, 1.0,
+        0.4, 0.4, 0.4, 1.0,
+        0.4, 0.4, 0.4, 1.0,
+        0.4, 0.4, 0.4, 1.0,
     ];
 
-    constructor() {}
+    constructor() {
+    }
 
     init(GL: WebGLRenderingContext) {
 
@@ -61,8 +64,8 @@ export class Triangle implements WorldObject {
             this.shader.uf_view_matrix,
             false,
             viewMatrix);
-        
-        GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT,0);
+
+        GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT, 0);
     }
 
 }

@@ -1,28 +1,63 @@
 import { getNoTranslation, Translation, WorldObject } from '../Base/WorldObject';
 import { TriangleShader } from '../Shaders/TriangleShader';
 
-export class Triangle implements WorldObject {
+const yGrid = -0.0001;
+const r = 52 / 255;
+const g = 152 / 255;
+const b = 219 / 255;
+
+export class Grid implements WorldObject {
 
     translation: Translation = getNoTranslation();
     shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
 
-    protected indicesBuffer: WebGLBuffer;
     protected vertexBuffer: WebGLBuffer;
     protected colorBuffer: WebGLBuffer;
 
-    protected vertices = [
-        0.0,3,0.0,
-        -3,0,0.0,
-        3,0,0.0,
-    ];
-    protected indices = [0,1,2];
-    protected colors = [
-        1.0, 1.0, 1.0, 1.0,
-        1.0, 1.0, 1.0, 1.0,
-        1.0, 1.0, 1.0, 1.0,
-    ];
+    protected vertices = [];
+    protected colors = [];
 
-    constructor() {}
+    protected size: number;
+    constructor(size: number) {
+        this.size = size;
+        for(let i = -1 * size; i <= size; i++) {
+            this.pushVertex(i)
+        }
+    }
+
+    private pushVertex(i: number) {
+        this.vertices.push(i);
+        this.vertices.push(yGrid);
+        this.vertices.push(-1 * this.size);
+        this.colors.push(r);
+        this.colors.push(g);
+        this.colors.push(b);
+        this.colors.push(1.0);
+
+        this.vertices.push(i);
+        this.vertices.push(yGrid);
+        this.vertices.push(this.size);
+        this.colors.push(r);
+        this.colors.push(g);
+        this.colors.push(b);
+        this.colors.push(1.0);
+
+        this.vertices.push(-1 * this.size);
+        this.vertices.push(yGrid);
+        this.vertices.push(i);
+        this.colors.push(r);
+        this.colors.push(g);
+        this.colors.push(b);
+        this.colors.push(1.0);
+
+        this.vertices.push(this.size);
+        this.vertices.push(yGrid);
+        this.vertices.push(i);
+        this.colors.push(r);
+        this.colors.push(g);
+        this.colors.push(b);
+        this.colors.push(1.0);
+    }
 
     init(GL: WebGLRenderingContext) {
 
@@ -36,11 +71,6 @@ export class Triangle implements WorldObject {
         GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(this.colors), GL.STATIC_DRAW);
         GL.bindBuffer(GL.ARRAY_BUFFER, null);
 
-        this.indicesBuffer = GL.createBuffer();
-        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
-        GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), GL.STATIC_DRAW);
-        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, null);
-
         this.shader.attachAndLink(GL);
     }
 
@@ -53,16 +83,14 @@ export class Triangle implements WorldObject {
         GL.vertexAttribPointer(this.shader.attr_color, 4, GL.FLOAT, false, 0, 0);
         GL.enableVertexAttribArray(this.shader.attr_color);
 
-        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
-
         GL.useProgram(this.shader.getProgram());
 
         GL.uniformMatrix4fv(
             this.shader.uf_view_matrix,
             false,
             viewMatrix);
-        
-        GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT,0);
+
+        GL.drawArrays(GL.LINES, 0, this.size * 8 + 2);
     }
 
 }

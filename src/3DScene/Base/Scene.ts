@@ -19,7 +19,7 @@ export class Scene {
 
     renderScene(GL: WebGLRenderingContext, time: number) {
         GL.enable(GL.DEPTH_TEST);
-        GL.depthFunc(GL.ALWAYS);
+        GL.depthFunc(GL.LEQUAL);
         GL.clearColor(0.7, 0.68, 0.73, 1.0);
         GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 
