@@ -3,7 +3,7 @@ export class ShaderLoader {
 
     static shaderList: string[] = [
         'cube',
-        'triangle'
+        'simple'
     ];
 
     static combinedShaderList: string = '';

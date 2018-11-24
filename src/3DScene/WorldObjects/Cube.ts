@@ -1,9 +1,9 @@
 import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
-import { TriangleShader } from '../Shaders/TriangleShader';
+import { SimpleShader } from '../Shaders/SimpleShader';
 
 export class Cube extends WorldObject {
 
-    shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
+    shader: SimpleShader = new SimpleShader('simple-shader-vs', 'simple-shader-fs');
 
     protected indicesBuffer: WebGLBuffer;
     protected vertexBuffer: WebGLBuffer;

@@ -1,5 +1,5 @@
 import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
-import { TriangleShader } from '../Shaders/TriangleShader';
+import { SimpleShader } from '../Shaders/SimpleShader';
 
 const yGrid = -0.0001;
 const r = 52 / 255;
@@ -8,7 +8,7 @@ const b = 219 / 255;
 
 export class Grid extends WorldObject {
 
-    shader: TriangleShader = new TriangleShader('triangle-shader-vs', 'triangle-shader-fs');
+    shader: SimpleShader = new SimpleShader('simple-shader-vs', 'simple-shader-fs');
 
     protected vertexBuffer: WebGLBuffer;
     protected colorBuffer: WebGLBuffer;

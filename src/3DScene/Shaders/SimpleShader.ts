@@ -1,9 +1,10 @@
 import { Shader } from '../Base/Shader';
 
-export class TriangleShader extends Shader {
+export class SimpleShader extends Shader {
 
     attr_position: number;
     attr_color: number;
+
     uf_view_matrix: WebGLUniformLocation;
     uf_model_matrix: WebGLUniformLocation;
 

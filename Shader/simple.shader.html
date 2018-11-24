@@ -1,11 +1,11 @@
-<script id="triangle-shader-fs" type="x-shader/x-fragment">
+<script id="simple-shader-fs" type="x-shader/x-fragment">
       precision mediump float;
       varying vec4 vColor;
       void main(void) {
         gl_FragColor = vColor;
       }
 </script>
-<script id="triangle-shader-vs" type="x-shader/x-vertex">
+<script id="simple-shader-vs" type="x-shader/x-vertex">
     attribute vec3 vertexPosition;
     attribute vec4 color;
     varying vec4 vColor;
