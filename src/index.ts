@@ -34,6 +34,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 mouseInstance.leftClicked = true;
             }
         });
+        overlay.addEventListener('mouseleave', (e) => {
+            if(e.clientX !== 0 || e.clientY !== 0) {
+                mouseInstance.leftClicked = false;
+            }
+        });
         overlay.addEventListener('mouseup', (e) => {
             if(e.clientX !== 0 || e.clientY !== 0) {
                 mouseInstance.leftClicked = false;
