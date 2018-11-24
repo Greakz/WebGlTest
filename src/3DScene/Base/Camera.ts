@@ -13,6 +13,9 @@ export class Camera {
     protected aspect: number;
 
     protected mouse: Mouse;
+    private mouseXLastFrame: number;
+    private mouseYLastFrame: number;
+    protected statePosition: number;
 
     constructor(position: Float32Array,target: Float32Array, aspect: number) {
         this.position = position;
@@ -20,6 +23,7 @@ export class Camera {
         this.fov = 60;
         this.aspect = aspect;
         this.mouse = mouseInstance;
+        this.statePosition = 0;
     }
 
     getViewMatrix(): Float32Array {
@@ -55,12 +59,17 @@ export class Camera {
     }
 
     update() {
-        const mouseX = -1 * (this.mouse.x / 1000) * Math.PI * 2;
+        if(this.mouse.leftClicked) {
+            const distance = this.mouse.x - this.mouseXLastFrame;
+            this.statePosition += (-1 * (distance / 1000) * Math.PI * 2);
+            this.position = new Float32Array([
+                Math.sin(this.statePosition) * 5,
+                this.position[1],
+                Math.cos(this.statePosition) * 5
+            ]);
+        }
+        this.mouseXLastFrame = this.mouse.x;
+        this.mouseYLastFrame = this.mouse.y;
 
-        this.position = new Float32Array([
-             Math.sin(mouseX) * 5,
-            this.position[1],
-            Math.cos(mouseX) * 5
-        ]);
     }
 }
