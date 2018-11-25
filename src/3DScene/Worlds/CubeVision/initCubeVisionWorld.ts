@@ -11,19 +11,21 @@ export function initCubeVisionWorld() {
 
     for (let i = -5; i < 5; i++) {
         for (let j = -5; j < 5; j++) {
-            worldObjects.push(new Cube((211 / 255), (84 / 255), 0, {x: i, y: 0, z: j}));
+            worldObjects.push(new Cube({x:(52 / 255), y:(152 / 255), z:(219 / 255), w: 0.2}, {x: i*2, y: 0, z: j*2}));
         }
     }
     return new World(
         //worldObjects,
         [
+            // ...worldObjects,
+            new Cube({x:(52 / 255), y:(152 / 255), z:(219 / 255), w: 0.2}, {x: 1, y: 2, z: 1}),
             new Grid(5),
             new Plane(),
-            new Triangle()
+            new Triangle(),
         ],
         [
             new Camera(
-                {x: 2, y: 1, z: 2},
+                {x: 0, y: 2, z: 8},
                 {x: 0, y: 1, z: 0},
             )
         ]

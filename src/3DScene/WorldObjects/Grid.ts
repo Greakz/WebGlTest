@@ -99,7 +99,7 @@ export class Grid extends WorldObject {
             false,
             this.getModelMatrixF32());
 
-        GL.drawArrays(GL.LINES, 0, this.size * 8 + 2);
+        GL.drawArrays(GL.LINES, 0, (this.size * 4 + 2) * 2);
     }
 
 }

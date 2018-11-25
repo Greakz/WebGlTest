@@ -3,7 +3,7 @@ import { SimpleShader } from '../Shaders/SimpleShader';
 import { Mat4 } from '../Base/MathTypes/Types/matrix';
 import { mat4ToFloat32Array } from '../Base/MathTypes/matrix.util';
 import { mouseInstance } from '../../index';
-import { Vec3 } from '../Base/MathTypes/Types/vectors';
+import { Vec3, Vec4 } from '../Base/MathTypes/Types/vectors';
 import { Ray } from '../Base/Ray';
 import { MonoColorShader } from '../Shaders/MonoColorShader';
 
@@ -61,16 +61,18 @@ export class Cube extends WorldObject {
         20, 21, 22, 20, 22, 23    // links
     ];
     protected colors = [];
+    protected color: Vec4;
 
-    constructor(r: number, g: number, b: number, pos: Vec3) {
+    constructor(color:Vec4, pos: Vec3) {
         super();
         this.transformation = getNoTransform();
         this.transformation.translation = pos;
+        this.color = color;
         for (let i = 0; i < this.indices.length; i++) {
-            this.colors.push(r);
-            this.colors.push(g);
-            this.colors.push(b);
-            this.colors.push(0.1);
+            this.colors.push(color.x);
+            this.colors.push(color.y);
+            this.colors.push(color.z);
+            this.colors.push(color.w);
         }
     }
 
@@ -119,18 +121,17 @@ export class Cube extends WorldObject {
             this.getModelMatrixF32());
         this.checkHit(mouseRay, viewMatrix);
 
-        let color = [0.5, 0.5, 0.2, 0.8];
+        let color = this.color;
         if (this.hovered) {
-            color = [1.0, 0.0, 0.0, 1.0];
+            color = {x:1.0, y:0.0, z:0.0, w:1.0};
         }
-
 
         GL.uniform4f(
             this.shader.uf_color,
-            color[0],
-            color[1],
-            color[2],
-            color[3]);
+            color.x,
+            color.y,
+            color.z,
+            color.w);
 
         GL.drawElements(GL.TRIANGLES, this.indices.length, GL.UNSIGNED_SHORT, 0);
     }

@@ -2,7 +2,10 @@ import { Mouse } from './Mouse';
 import { mouseInstance } from '../../index';
 import { Vec3 } from './MathTypes/Types/vectors';
 import { Mat4 } from './MathTypes/Types/matrix';
-import { getPerspectiveMatrix, lookAtMatrix, multiplyMatrices, radians } from './MathTypes/matrix.util';
+import {
+    getOrthographicMatrix, getPerspectiveMatrix, lookAtMatrix, multiplyMatrices,
+    radians
+} from './MathTypes/matrix.util';
 import {
     addVec3s, crossProductVec3, normalizeVec3, scaleVec3, subtractVec3s,
 } from './MathTypes/vector.util';
@@ -89,6 +92,14 @@ export class Camera {
 
 
     getRay(screenX: number, screenY: number): Ray {
+        screenY = (this.screenHeight - screenY);
+
+        let mouse_x: number = screenX - (this.screenWidth / 2);
+        let mouse_y: number = screenY - (this.screenHeight / 2);
+        mouse_y /= (this.screenHeight / 2);
+        mouse_x /= (this.screenWidth / 2);
+
+        // vectors
         let view: Vec3 = subtractVec3s(this.target, this.position);
         view = normalizeVec3(view);
 
@@ -105,21 +116,16 @@ export class Camera {
         vert = scaleVec3(vert, vLength);
         horiz = scaleVec3(horiz, hLength);
 
-        let mouse_x: number = screenX - (this.screenWidth / 2);
-        let mouse_y: number = screenY - (this.screenHeight / 2);
-        mouse_y /= (this.screenHeight / 2);
-        mouse_x /= (this.screenWidth / 2);
+        let positionToNearPlaneCenter: Vec3 = scaleVec3(view, (this.zNear * 1.1));
 
-        let pos: Vec3 = addVec3s(
-            addVec3s(
-                addVec3s(
-                    this.position,
-                    scaleVec3(view, this.zNear)
-                ),
-                scaleVec3(horiz, mouse_x)
-            ),
-            scaleVec3(vert, mouse_y)
+        // mouse and vectors
+        let yPosOnNearPlane: Vec3 = scaleVec3(vert, mouse_y);
+        let xPosOnNearPlane: Vec3 = scaleVec3(horiz, mouse_x);
+        let nearPlaneCenter: Vec3 =  addVec3s(
+            this.position,
+            positionToNearPlaneCenter
         );
+        let pos: Vec3 = addVec3s(addVec3s(nearPlaneCenter, xPosOnNearPlane), yPosOnNearPlane);
         let direction: Vec3 = subtractVec3s(pos, this.position);
 
         return {
@@ -143,7 +149,7 @@ export class Camera {
 
     update() {
         if (this.mouse.leftClicked) {
-            const distance = 10;
+            const distance = 20;
             const distanceX = this.mouse.x - this.mouseXLastFrame;
             this.statePosition += (-1 * (distanceX / 1000) * Math.PI * 2) % (2 * Math.PI);
             const distanceY = this.mouse.y - this.mouseYLastFrame;

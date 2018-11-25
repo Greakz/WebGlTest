@@ -19,6 +19,10 @@ export class Scene {
 
     renderScene(GL: WebGLRenderingContext, time: number) {
         GL.enable(GL.DEPTH_TEST);
+        GL.enable(GL.BLEND);
+        GL.enable(GL.CULL_FACE);
+        GL.cullFace(GL.BACK);
+        GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA)
         GL.depthFunc(GL.LEQUAL);
         GL.clearColor(0.7, 0.68, 0.73, 1.0);
         GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
