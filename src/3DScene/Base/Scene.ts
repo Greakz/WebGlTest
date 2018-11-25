@@ -17,6 +17,18 @@ export class Scene {
         this.isInitialising = false;
     }
 
+    updateScene(time: number) {
+        if (!this.isInitialising) {
+            if (this.activeWorld !== undefined) {
+                this.worlds[this.activeWorld].update(time);
+            } else {
+                console.log('[SceneError]: The Scene has no World!');
+            }
+        } else {
+            console.log('[SceneError]: The Scene is not Initialised!')
+        }
+    }
+
     renderScene(GL: WebGLRenderingContext, time: number) {
         GL.enable(GL.DEPTH_TEST);
         GL.enable(GL.BLEND);
@@ -32,11 +44,7 @@ export class Scene {
                     this.worlds[this.activeWorld].render(GL, time);
                 } else if (this.worlds.length > 0) {
                     this.activateWorld(GL, 0);
-                } else {
-                    console.log('[SceneError]: The Scene has no World!');
                 }
-            } else {
-                console.log('not init')
             }
     }
 }

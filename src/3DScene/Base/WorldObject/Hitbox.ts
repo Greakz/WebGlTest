@@ -1,6 +1,6 @@
 import { Vec3 } from '../MathTypes/Types/vectors';
 import { Mat4 } from '../MathTypes/Types/matrix';
-import { multiplyMat4WithVec3 } from '../MathTypes/vector.util';
+import { compareVec3AGreaterB, multiplyMat4WithVec3, subtractVec3s } from '../MathTypes/vector.util';
 import { Ray } from '../Ray';
 import { multiplyMatrices } from '../MathTypes/matrix.util';
 var intersect = require('ray-triangle-intersection')
@@ -13,21 +13,24 @@ export class Hitbox {
         this.polygons = polygons;
     }
 
-    testRay(ray: Ray, viewMatrix: Mat4, modelMatrix: Mat4) {
-        let hit = false;
-        this.polygons.forEach(
-            (polygon: HitBoxPolygon) => {
-                const inViewSpace: HitBoxPolygon = transformToViewSpace(polygon, viewMatrix, modelMatrix);
+    testRay(ray: Ray, modelMatrix: Mat4, camPos: Vec3): Vec3 | null {
+        return this.polygons.reduce(
+            (acc: Vec3 | null, polygon: HitBoxPolygon) => {
+                const inViewSpace: HitBoxPolygon = transformToViewSpace(polygon, modelMatrix);
                 const tri: number[][] = hitBoxPolygonToLibForm(inViewSpace);
                 const pt: number[] = [ray.pos.x, ray.pos.y, ray.pos.z];
                 const dir = [ray.dir.x, ray.dir.y, ray.dir.z];
                 const result = intersect([], pt, dir, tri);
                 if(result !== null) {
-                    hit = true;
+                    let res: Vec3 = {x: result[0], y: result[1], z: result[2]};
+                    if(acc === null || compareVec3AGreaterB(subtractVec3s(acc, camPos), subtractVec3s(res, camPos))) {
+                        return res
+                    }
                 }
-            }
+                return acc;
+            },
+            null
         );
-        return hit;
     }
 
 }
@@ -38,8 +41,7 @@ export interface HitBoxPolygon {
     third: Vec3;
 }
 
-function transformToViewSpace(hitBoxPolygon: HitBoxPolygon, viewMatrix: Mat4, modelMatrix: Mat4) {
-    const scale = multiplyMatrices(viewMatrix, modelMatrix);
+function transformToViewSpace(hitBoxPolygon: HitBoxPolygon, modelMatrix: Mat4) {
     return {
         first: multiplyMat4WithVec3(modelMatrix, hitBoxPolygon.first),
         second: multiplyMat4WithVec3(modelMatrix, hitBoxPolygon.second),

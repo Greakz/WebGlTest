@@ -2,16 +2,18 @@ import { WorldObject } from './WorldObject';
 import { Camera } from './Camera';
 import { mat4ToFloat32Array } from './MathTypes/matrix.util';
 import { Mat4 } from './MathTypes/Types/matrix';
-import { Vec3 } from './MathTypes/Types/vectors';
+import { Vec3, Vec4 } from './MathTypes/Types/vectors';
 import { mouseInstance } from '../../index';
 import { Ray } from './Ray';
-import { addVec3s, normalizeVec3, scaleVec3, subtractVec3s } from './MathTypes/vector.util';
+import { addVec3s, compareVec3AGreaterB, normalizeVec3, scaleVec3, subtractVec3s } from './MathTypes/vector.util';
 import { Line } from '../WorldObjects/Line';
 
 export class World {
     cameras: Camera[];
     activeCamera: number;
     worldObjects: WorldObject[];
+    hoveredObjectIndex: number = -1;
+    vecToHoveredObject: Vec3 | null;
 
     constructor(worldObjects: WorldObject[], cameras: Camera[]) {
         this.worldObjects = worldObjects;
@@ -38,24 +40,43 @@ export class World {
         )
     }
 
-    update(time: number) {}
+    update(time: number) {
+        this.cameras[this.activeCamera].update();
+        const mouseRay = this.cameras[this.activeCamera].getRay(mouseInstance.x, mouseInstance.y);
+        this.worldObjects.forEach(
+            (worldObject: WorldObject) => {
+                worldObject.update(time);
+            }
+        );
+        if(this.hoveredObjectIndex !== -1) {
+            this.worldObjects[this.hoveredObjectIndex].setHover(false);
+        }
+        const camPos: Vec3 = this.cameras[this.activeCamera].getPosition();
+        this.vecToHoveredObject = this.worldObjects.reduce(
+            (acc: Vec3 | null, worldObject: WorldObject, index: number) => {
+                let hit: Vec3 | null = worldObject.checkHit(mouseRay, camPos);
+                if(hit !== null) {
+                    if(acc === null || compareVec3AGreaterB(subtractVec3s(acc, camPos), subtractVec3s(hit, camPos))) {
+                        this.hoveredObjectIndex = index;
+                        return hit
+                    }
+                }
+                return acc;
+            },
+            null
+        );
+        if(this.vecToHoveredObject !==  null) {
+            this.worldObjects[this.hoveredObjectIndex].setHover(true);
+        }else{
+            this.hoveredObjectIndex = -1;
+        }
+    }
 
     render(GL: WebGLRenderingContext, time: number) {
-
-
         this.cameras[this.activeCamera].update();
         const viewMatrix = this.cameras[this.activeCamera].getViewMatrix();
         const mouseRay = this.cameras[this.activeCamera].getRay(mouseInstance.x, mouseInstance.y);
-        /*
-        let direction: Vec3 = normalizeVec3(mouseRay.dir);
-        direction = scaleVec3(direction, 50);
-        let to = addVec3s(mouseRay.pos, direction);
-        const newline = new Line(mouseRay.pos, to, {x: 0.4, y: 0.05, z: 0, w: 0.9});
-        newline.init(GL);
-        if (this.linesForTest.length > 40) {
-            this.linesForTest = this.linesForTest.filter((a, i) => i > 0)
-        }
-        */
+
         this.renderWorldObjects(GL, time, viewMatrix, mouseRay);
     }
 

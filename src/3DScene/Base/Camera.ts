@@ -116,7 +116,7 @@ export class Camera {
         vert = scaleVec3(vert, vLength);
         horiz = scaleVec3(horiz, hLength);
 
-        let positionToNearPlaneCenter: Vec3 = scaleVec3(view, (this.zNear * 1.1));
+        let positionToNearPlaneCenter: Vec3 = scaleVec3(view, this.zNear);
 
         // mouse and vectors
         let yPosOnNearPlane: Vec3 = scaleVec3(vert, mouse_y);
@@ -143,7 +143,18 @@ export class Camera {
         this.fovY = fov;
     }
 
-    setTarget(target: Vec3): void {
+    setTarget(): Vec3 {
+        return this.target;
+    }
+    getPosition(): Vec3 {
+        return this.position;
+    }
+
+    getFOV(fov: number): number {
+        return this.fovY;
+    }
+
+    getTarget(target: Vec3): void {
         this.target = target;
     }
 

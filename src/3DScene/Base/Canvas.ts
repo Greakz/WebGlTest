@@ -39,6 +39,7 @@ export class Canvas {
             const startTime = Date.now();
 
             // let the engine roll...!
+            this.update(startTime);
             this.render(startTime);
 
             // calculate how much time to wait for next draw call
@@ -55,6 +56,10 @@ export class Canvas {
                 setTimeout(() => this.runLoop(), 1);
             }
         }
+    }
+
+    update(time: number ){
+        this.scene.updateScene(time);
     }
 
     render(time: number) {

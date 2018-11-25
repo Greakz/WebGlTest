@@ -19,6 +19,9 @@ export abstract class WorldObject {
 
     init(GL: WebGLRenderingContext) {
     }
+    update(time: number) {
+
+    }
 
     render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray) {
     }
@@ -44,8 +47,11 @@ export abstract class WorldObject {
         ])
     }
 
-    checkHit(ray: Ray, viewMatrix: Mat4) {
-        this.hovered = (this.hitBox.testRay(ray, viewMatrix, this.getModelMatrix()));
+    checkHit(ray: Ray, camPos: Vec3): Vec3 | null {
+        return this.hitBox.testRay(ray, this.getModelMatrix(), camPos);
+    }
+    setHover(bool: boolean) {
+        this.hovered = bool;
     }
 }
 

@@ -96,6 +96,10 @@ export class Cube extends WorldObject {
         this.shader.attachAndLink(GL);
     }
 
+    update(time) {
+
+    }
+
     render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray) {
 
         GL.bindBuffer(GL.ARRAY_BUFFER, this.vertexBuffer);
@@ -119,7 +123,6 @@ export class Cube extends WorldObject {
             this.shader.uf_model_matrix,
             false,
             this.getModelMatrixF32());
-        this.checkHit(mouseRay, viewMatrix);
 
         let color = this.color;
         if (this.hovered) {

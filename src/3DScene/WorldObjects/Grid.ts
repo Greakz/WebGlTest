@@ -78,6 +78,10 @@ export class Grid extends WorldObject {
         this.shader.attachAndLink(GL);
     }
 
+    update(time) {
+
+    }
+
     render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray) {
         GL.bindBuffer(GL.ARRAY_BUFFER, this.vertexBuffer);
         GL.vertexAttribPointer(this.shader.attr_position, 3, GL.FLOAT, false, 0, 0);

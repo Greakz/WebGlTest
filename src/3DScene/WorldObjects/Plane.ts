@@ -19,7 +19,7 @@ export class Plane extends WorldObject {
         3, 0, -3,
         3, 0, 3,
     ];
-    protected indices = [0, 1, 2, 1, 2, 3];
+    protected indices = [0, 1, 2, 2, 1, 3];
     protected colors = [
         0.4, 0.4, 0.4, 1.0,
         0.4, 0.4, 0.4, 1.0,
@@ -49,6 +49,10 @@ export class Plane extends WorldObject {
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, null);
 
         this.shader.attachAndLink(GL);
+    }
+
+    update(time) {
+
     }
 
     render(GL: WebGLRenderingContext, time: number, viewMatrix: Mat4, mouseRay: Ray) {
