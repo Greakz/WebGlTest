@@ -11,6 +11,7 @@ import { Ray } from './Ray';
 export class Camera {
     protected position: Vec3;
     protected target: Vec3;
+    protected up: Vec3 = {x: 0, y: 1, z: 0};
 
     protected screenHeight: number;
     protected screenWidth: number;
@@ -55,11 +56,25 @@ export class Camera {
         );
     }
 
+    updateUpVector() {
+        const lookVec = subtractVec3s(this.position, this.target);
+
+        const horiz = crossProductVec3(
+            lookVec,
+            {x: 0, y: 1, z: 0}
+        );
+        this.up = crossProductVec3(
+            horiz,
+            lookVec
+        );
+    }
+
     updateLookAtMatrix() {
+        // this.updateUpVector();
         this.look_at_matrix = lookAtMatrix(
             this.position,
             this.target,
-            {x: 0, y: 1, z: 0}
+            this.up
         )
     }
 
@@ -77,20 +92,20 @@ export class Camera {
         let view: Vec3 = subtractVec3s(this.target, this.position);
         view = normalizeVec3(view);
 
-        let h: Vec3 = crossProductVec3(view, {x: 0, y: 1, z: 0});
-        h = normalizeVec3(h);
+        let horiz: Vec3 = crossProductVec3(view, this.up);
+        horiz = normalizeVec3(horiz);
 
-        let v: Vec3 = crossProductVec3(h, view);
-        v = normalizeVec3(v);
+        let vert: Vec3 = crossProductVec3(horiz, view);
+        vert = normalizeVec3(vert);
 
         let rad = this.fovY * Math.PI / 180;
         let vLength = Math.tan(rad / 2) * this.zNear;
         let hLength = vLength * this.aspect;
 
-        v = scaleVec3(v, vLength);
-        h = scaleVec3(h, hLength);
+        vert = scaleVec3(vert, vLength);
+        horiz = scaleVec3(horiz, hLength);
 
-        let mouse_x: number = this.screenWidth - screenX - (this.screenWidth / 2);
+        let mouse_x: number = screenX - (this.screenWidth / 2);
         let mouse_y: number = screenY - (this.screenHeight / 2);
         mouse_y /= (this.screenHeight / 2);
         mouse_x /= (this.screenWidth / 2);
@@ -101,9 +116,9 @@ export class Camera {
                     this.position,
                     scaleVec3(view, this.zNear)
                 ),
-                scaleVec3(h, mouse_x)
+                scaleVec3(horiz, mouse_x)
             ),
-            scaleVec3(v, mouse_y)
+            scaleVec3(vert, mouse_y)
         );
         let direction: Vec3 = subtractVec3s(pos, this.position);
 

@@ -8,6 +8,15 @@ const c = Math.cos;
 const s = Math.sin;
 const t = Math.tan;
 
+export function vec4toF32(vec: Vec4): Float32Array{
+    return new Float32Array([
+        vec.x,
+        vec.y,
+        vec.z,
+        vec.w
+    ])
+}
+
 export function multiplyMat4WithVec3(matrixIn: Mat4, pointIn: Vec3) {
     return multiplyMat4WithVec4(matrixIn, {...pointIn, w: 1});
 }
@@ -15,9 +24,8 @@ export function multiplyMat4WithVec3(matrixIn: Mat4, pointIn: Vec3) {
 export function multiplyMat4WithVec4(matrixIn: Mat4, pointIn: Vec4): Vec4 {
 
     let matrix = mat4ToFlat(matrixIn);
-    let point = [pointIn.x, pointIn.y, pointIn.z, pointIn.w];
 
-    let x = point[0], y = point[1], z = point[2], w = point[3];
+    let x = pointIn.x, y = pointIn.y, z = pointIn.z, w = pointIn.w;
     let c1r1 = matrix[0], c2r1 = matrix[1], c3r1 = matrix[2], c4r1 = matrix[3],
         c1r2 = matrix[4], c2r2 = matrix[5], c3r2 = matrix[6], c4r2 = matrix[7],
         c1r3 = matrix[8], c2r3 = matrix[9], c3r3 = matrix[10], c4r3 = matrix[11],
@@ -39,30 +47,30 @@ export function crossProductVec3(vector_one: Vec3, vector_two: Vec3): Vec3 {
 }
 
 export function normalizeVec3(vec: Vec3): Vec3 {
-    const scale = 1 / Math.sqrt(
-        Math.pow(vec.x * 2, 2)
-        + Math.pow(vec.y * 2, 2)
-        + Math.pow(vec.z * 2, 2)
+    const length = Math.sqrt(
+        Math.pow(vec.x, 2)
+        + Math.pow(vec.y, 2)
+        + Math.pow(vec.z, 2)
     );
     return {
-        x: vec.x * scale,
-        y: vec.y * scale,
-        z: vec.z * scale
+        x: vec.x / length,
+        y: vec.y / length,
+        z: vec.z / length
     }
 }
 
 export function normalizeVec4(vec: Vec4): Vec4 {
-    const scale = 1 / Math.sqrt(
-        Math.pow(vec.x * 2, 2)
-        + Math.pow(vec.y * 2, 2)
-        + Math.pow(vec.z * 2, 2)
-        + Math.pow(vec.w * 2, 2)
+    const length = Math.sqrt(
+        Math.pow(vec.x, 2)
+        + Math.pow(vec.y, 2)
+        + Math.pow(vec.z, 2)
+        + Math.pow(vec.w, 2)
     );
     return {
-        x: vec.x * scale,
-        y: vec.y * scale,
-        z: vec.z * scale,
-        w: vec.w * scale
+        x: vec.x / length,
+        y: vec.y / length,
+        z: vec.z / length,
+        w: vec.w / length
     }
 }
 
