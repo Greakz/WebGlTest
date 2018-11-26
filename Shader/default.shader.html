@@ -1,0 +1,16 @@
+<script id="default-fs" type="x-shader/x-fragment">
+      precision mediump float;
+      void main(void) {
+        gl_FragColor = vec4(0.8, 0.2, 0.2, 1.0);
+      }
+</script>
+<script id="default-vs" type="x-shader/x-vertex">
+    attribute vec3 vertexPosition;
+
+    uniform mat4 modelMatrix;
+
+    void main(void) {
+        gl_Position = modelMatrix * vec4(vertexPosition, 1.0);
+    }
+
+</script>

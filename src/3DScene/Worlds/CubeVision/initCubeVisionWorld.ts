@@ -18,7 +18,7 @@ export function initCubeVisionWorld() {
         //worldObjects,
         [
             ...worldObjects,
-            new Cube({x:(52 / 255), y:(152 / 255), z:(219 / 255), w: 0.2}, {x: 1, y: 2, z: 1}),
+            // new Cube({x:(52 / 255), y:(152 / 255), z:(219 / 255), w: 0.2}, {x: 1, y: 2, z: 1}),
             new Grid(5),
             new Plane(),
             new Triangle(),

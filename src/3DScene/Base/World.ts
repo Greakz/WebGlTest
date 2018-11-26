@@ -13,7 +13,7 @@ export class World {
     activeCamera: number;
     worldObjects: WorldObject[];
     hoveredObjectIndex: number = -1;
-    vecToHoveredObject: Vec3 | null;
+    hoveredHitPoint: Vec3 | null;
 
     constructor(worldObjects: WorldObject[], cameras: Camera[]) {
         this.worldObjects = worldObjects;
@@ -52,7 +52,7 @@ export class World {
             this.worldObjects[this.hoveredObjectIndex].setHover(false);
         }
         const camPos: Vec3 = this.cameras[this.activeCamera].getPosition();
-        this.vecToHoveredObject = this.worldObjects.reduce(
+        this.hoveredHitPoint = this.worldObjects.reduce(
             (acc: Vec3 | null, worldObject: WorldObject, index: number) => {
                 let hit: Vec3 | null = worldObject.checkHit(mouseRay, camPos);
                 if(hit !== null) {
@@ -65,7 +65,7 @@ export class World {
             },
             null
         );
-        if(this.vecToHoveredObject !==  null) {
+        if(this.hoveredHitPoint !==  null) {
             this.worldObjects[this.hoveredObjectIndex].setHover(true);
         }else{
             this.hoveredObjectIndex = -1;
