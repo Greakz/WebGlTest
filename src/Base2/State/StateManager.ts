@@ -10,7 +10,6 @@ abstract class StateManagerCore extends HasSingletons {
     protected states: State[];
     protected activeState: State;
 
-
     constructor(states: State[], activeScene?: number) {
         super();
         if (states.length === 0) {
@@ -56,11 +55,11 @@ abstract class StateManagerCore extends HasSingletons {
     }
     update(time: number): void {}
 
-    renderSelfAndChildren(GL: WebGLRenderingContext): void {
+    renderSelfAndChildren(GL: WebGL2RenderingContext): void {
         this.activeState.scene.renderSelfAndChildren(GL);
         this.render(GL);
     }
-    render(GL: WebGLRenderingContext) {}
+    render(GL: WebGL2RenderingContext) {}
 }
 
 export abstract class StateManager extends StateManagerCore {
@@ -72,9 +71,9 @@ export abstract class StateManager extends StateManagerCore {
         super(states);
     }
 
-    init(GL: WebGLRenderingContext): void {}
+    init(GL: WebGL2RenderingContext): void {}
 
     update(time: number): void  {}
 
-    render(GL: WebGLRenderingContext): void  {}
+    render(GL: WebGL2RenderingContext): void  {}
 }

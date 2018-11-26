@@ -1,5 +1,7 @@
 import { Canvas } from './Base2/Singleton/Canvas'
+import { Log } from './Base2/Singleton/Log'
 import CanvasSingleton from './Base2/Singleton/CanvasSingleton'
+import LogSingleton from './Base2/Singleton/LogSingleton'
 import { State } from './Base2/State/StateManager';
 import { ExampleStateManager } from './Base2Example/ExampleStateManager';
 import { ExampleScene } from './Base2Example/Scenes/ExampleScene';
@@ -14,6 +16,8 @@ import { ExampleScene } from './Base2Example/Scenes/ExampleScene';
 document.addEventListener('DOMContentLoaded', () => {
 
     const Canvas: Canvas = CanvasSingleton.getInstance();
+    const log: Log = LogSingleton.getInstance();
+    log.show_logs();
     // First create some States between the State Manager can switch!
     const states: State[] = [
         {
@@ -27,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Canvas.init();
     Canvas.startApplication(
         (time: number) => stateManager.updateSelfAndChildren(time),
-        (GL: WebGLRenderingContext) => stateManager.renderSelfAndChildren(GL)
+        (GL: WebGL2RenderingContext) => stateManager.renderSelfAndChildren(GL)
     );
     stateManager.initActiveState();
 });

@@ -15,7 +15,7 @@ var Canvas = (function () {
             // canvas Base Storage
         var Log = LogSingleton.getInstance();
         var canvas: HTMLCanvasElement;
-        var gl: WebGLRenderingContext;
+        var gl: WebGL2RenderingContext;
 
         //renderLoopThings
         var fps: number;
@@ -25,7 +25,7 @@ var Canvas = (function () {
         var currentlyInLoop: boolean = false;
 
         var updateFunc: (time: number) => void;
-        var renderFunc: (GL: WebGLRenderingContext) => void;
+        var renderFunc: (GL: WebGL2RenderingContext) => void;
 
 
         /**
@@ -59,7 +59,7 @@ var Canvas = (function () {
             setNewFps(40);
             lastUpdateTime = Date.now();
             canvas = document.querySelector('#canvas');
-            gl = canvas.getContext('webgl');
+            gl = canvas.getContext('webgl2');
             window.addEventListener('resize', () => adjustSize());
             adjustSize();
             Log.info('Canvas', 'Initialised Successfully...')
@@ -97,7 +97,6 @@ var Canvas = (function () {
         return {
 
             init() {
-                Log.show_logs();
                 Log.info('Canvas', 'Initialise Application...');
                 initC();
             },
@@ -106,14 +105,14 @@ var Canvas = (function () {
                 setNewFps(fps);
             },
 
-            startApplication(updateFunction: (time: number) => void, renderFunction: (GL: WebGLRenderingContext) => void) {
+            startApplication(updateFunction: (time: number) => void, renderFunction: (GL: WebGL2RenderingContext) => void) {
                 Log.info('Canvas', 'Starting Application...');
                 renderFunc = renderFunction;
                 updateFunc = updateFunction;
                 runLoop();
             },
 
-            getGl(): WebGLRenderingContext {
+            getGl(): WebGL2RenderingContext {
                 return gl;
             }
         };

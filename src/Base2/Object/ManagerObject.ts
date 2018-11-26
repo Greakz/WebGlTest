@@ -1,4 +1,7 @@
-export class ManagerObject {
+import { Mat4 } from '../Math/Matrix/mat';
+import { SceneObject } from '../Scene/SceneObject';
+
+export class ManagerObject extends SceneObject{
     initSelfAndChildren() {
 
         this.init()
@@ -7,11 +10,11 @@ export class ManagerObject {
 
         this.update(time)
     }
-    renderSelfAndChildren(GL: WebGLRenderingContext) {
+    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
 
-        this.render(GL)
+        this.render(GL, projMat)
     }
     init() {}
     update(time: number) {}
-    render(GL: WebGLRenderingContext) {}
+    render(GL: WebGL2RenderingContext, projMat: Mat4) {}
 }

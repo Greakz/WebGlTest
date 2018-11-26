@@ -2,7 +2,7 @@ abstract class ShaderCore {
     protected vertexShader: WebGLShader;
     protected fragmentShader: WebGLShader;
     protected compiledProgram: WebGLProgram;
-    setProgram(vs: WebGLShader, fs: WebGLShader, cp: WebGLProgram, GL: WebGLRenderingContext) {
+    setProgram(vs: WebGLShader, fs: WebGLShader, cp: WebGLProgram, GL: WebGL2RenderingContext) {
         this.vertexShader = vs;
         this.fragmentShader = fs;
         this.compiledProgram = cp;
@@ -12,8 +12,8 @@ abstract class ShaderCore {
     getProgram(): WebGLProgram {
         return this.compiledProgram;
     }
-    bindUniformLocations(GL: WebGLRenderingContext) {}
-    bindAttributeLocations(GL: WebGLRenderingContext) {}
+    bindUniformLocations(GL: WebGL2RenderingContext) {}
+    bindAttributeLocations(GL: WebGL2RenderingContext) {}
 }
 
 
@@ -25,11 +25,13 @@ export class Shader extends ShaderCore {
     }
 
     uf_modelMatrix: WebGLUniformLocation;
-    bindUniformLocations(GL: WebGLRenderingContext) {
+    uf_projectionMatrix: WebGLUniformLocation;
+    bindUniformLocations(GL: WebGL2RenderingContext) {
         this.uf_modelMatrix = GL.getUniformLocation(this.compiledProgram, "modelMatrix");
+        this.uf_projectionMatrix = GL.getUniformLocation(this.compiledProgram, "projectionMatrix");
     }
     attr_position: number;
-    bindAttributeLocations(GL: WebGLRenderingContext) {
+    bindAttributeLocations(GL: WebGL2RenderingContext) {
         this.attr_position = GL.getAttribLocation(this.compiledProgram, "vertexPosition");
     }
 }

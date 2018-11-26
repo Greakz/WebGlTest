@@ -8,9 +8,9 @@
   ],
   "private": true,
   "dependencies": {
-    "ray-triangle-intersection": "^1.0.3",
     "gl-mat4": "^1.2.0",
-    "gl-quat": "^1.0.0"
+    "gl-quat": "^1.0.0",
+    "ray-triangle-intersection": "^1.0.3"
   },
   "scripts": {
     "start": "webpack-dev-server --mode development --open"
@@ -21,6 +21,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "ts-loader": "^5.3.0",
+    "@types/webgl2": "0.0.4",
     "@types/node": "^10.12.9"
   }
 }

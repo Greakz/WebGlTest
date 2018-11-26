@@ -1,6 +1,7 @@
-import { HasSingletons } from '../Singleton/HasSingletons';
+import { Mat4 } from '../Math/Matrix/mat';
+import { SceneObject } from '../Scene/SceneObject';
 
-export class DrawObject extends HasSingletons {
+export class DrawObject extends SceneObject {
     private initDone: boolean = false;
     initSelfAndChildren() {
 
@@ -14,14 +15,14 @@ export class DrawObject extends HasSingletons {
             this.update(time);
         }
     }
-    renderSelfAndChildren(GL: WebGLRenderingContext) {
+    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
         if(this.initDone) {
 
 
-            this.render(GL);
+            this.render(GL, projMat);
         }
     }
     init() {}
     update(time: number) {}
-    render(GL: WebGLRenderingContext) {}
+    render(GL: WebGL2RenderingContext, projMat: Mat4) {}
 }
