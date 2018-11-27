@@ -1,6 +1,7 @@
 import { Mat4 } from '../Math/Matrix/mat';
+import { HasLog } from '../Singleton/HasSingletons';
 
-export class SceneObject {
+export class SceneObject extends HasLog {
     id: number;
     setId(id: number) {
         this.id = id;

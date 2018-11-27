@@ -1,5 +1,5 @@
 import { Shader } from '../Shader/Shader';
 
 export interface ShaderProvider {
-    getShader(shader: Shader): Shader;
+    getShader<T extends Shader>(shader: T): T;
 }

@@ -1,8 +1,11 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
+import { Transformation } from './Model/Transformation';
 
 export class DrawObject extends SceneObject {
     private initDone: boolean = false;
+    transformation: Transformation = new Transformation();
+
     initSelfAndChildren() {
 
         this.init();

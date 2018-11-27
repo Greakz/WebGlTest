@@ -23,29 +23,28 @@ var VBOProviderSingleton = (function () {
         /**
          *  PRIVATE METHODS OF THE SINGLETON
          */
-
-        function getShaderNewOrExistant(shader: Shader): Shader {
+        function getShaderNewOrExistant<T extends Shader>(shader: T): T {
             for (let i = 0; i < loaded_shaders.length; i++) {
                 if (loaded_shaders[i].identifier === shader.shader_identifier) {
-                    return loaded_shaders[i].shader;
+                    let current: T = (loaded_shaders[i] as any);
+                    return current;
                 }
             }
             return initNewShader(shader);
         }
 
-        function initNewShader(shader: Shader): Shader {
+        function initNewShader<T extends Shader>(shader: T): T {
             ShaderLoader.readTextFile(
                 shader.shader_identifier,
                 (shaderContent: string) => {
                     ShaderLoader.shaderToDom(shaderContent, shader.shader_identifier);
 
-                    ShaderLoader.attachAndLinkShader(shader)
+                    ShaderLoader.attachAndLinkShader(shader);
+
                     loaded_shaders.push({
                         shader: shader,
                         identifier: shader.shader_identifier,
                     });
-                    // Load the rest of the shader here
-
                 }
             );
             return shader;
@@ -55,7 +54,7 @@ var VBOProviderSingleton = (function () {
          *  PUBLIC METHODS OF THE SINGLETON
          */
         return {
-            getShader(shader: Shader): Shader {
+            getShader<T extends Shader>(shader: T): T {
                 return getShaderNewOrExistant(shader);
             }
         };

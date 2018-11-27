@@ -17,7 +17,7 @@ abstract class ShaderCore {
 }
 
 
-export class Shader extends ShaderCore {
+export abstract class Shader extends ShaderCore {
     shader_identifier: string = 'default';
 
     constructor() {
@@ -25,10 +25,8 @@ export class Shader extends ShaderCore {
     }
 
     uf_modelMatrix: WebGLUniformLocation;
-    uf_projectionMatrix: WebGLUniformLocation;
     bindUniformLocations(GL: WebGL2RenderingContext) {
         this.uf_modelMatrix = GL.getUniformLocation(this.compiledProgram, "modelMatrix");
-        this.uf_projectionMatrix = GL.getUniformLocation(this.compiledProgram, "projectionMatrix");
     }
     attr_position: number;
     bindAttributeLocations(GL: WebGL2RenderingContext) {

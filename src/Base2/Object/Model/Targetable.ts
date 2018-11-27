@@ -1,10 +1,11 @@
-import { Vec3 } from '../../Math/Vector/vec';
+import { HitBox } from './HitBox/HitBox';
+import { Transformation } from './Transformation';
 
 export interface Targetable {
-    hitBox: any;
-    checkHitBox(ray: any): Vec3 | null;
+    transformation: Transformation;
+    hitBox: HitBox;
 }
 
 export function isTargetable(obj: any) {
-    return (obj.hasOwnProperty('hibBox') && typeof obj.checkHitBox === 'function')
+    return (obj.hitBox !== undefined && typeof obj.hitBox.checkHit === 'function')
 }

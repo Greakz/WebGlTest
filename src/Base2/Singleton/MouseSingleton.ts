@@ -1,8 +1,7 @@
 import { MousePosition } from './MousePosition';
 import { Vec2 } from '../Math/Vector/vec';
-import { mouseInstance } from '../../index';
-import { Hitable } from '../Object/Model/Hitable';
-import { Ray } from '../Math/Ray/Ray';
+import { Log } from './Log';
+import LogSingleton from './LogSingleton';
 
 var Mouse = (function () {
     /**
@@ -16,6 +15,7 @@ var Mouse = (function () {
          *  PRIVATE ATTRIBUTES OF THE SINGLETON
          */
 
+        var Log: Log = LogSingleton.getInstance();
         var x: number = 0;
         var y: number = 0;
 
@@ -23,7 +23,10 @@ var Mouse = (function () {
          *  PRIVATE METHODS OF THE SINGLETON
          */
             function bindListener() {
-                const overlay: HTMLElement = document.getElementById('overlay');
+                const overlay: HTMLElement | null = document.getElementById('overlay');
+                if(overlay === null) {
+                    Log.error('Mouse', 'Cant find overlay to track!')
+                }
                 overlay.addEventListener('mousemove', (e) => {
                     x = e.clientX;
                     y = e.clientY;
@@ -38,8 +41,14 @@ var Mouse = (function () {
                 bindListener();
             },
             get(): Vec2 {
-                return {x: 0, y: 0}
+                return {x: x, y: y}
             },
+            getLeftStatus(): boolean {
+                return false;
+            },
+            getRightStatus(): boolean {
+                return false;
+            }
         };
     }
 

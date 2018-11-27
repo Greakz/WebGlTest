@@ -1,5 +1,8 @@
 import LogSingleton from './LogSingleton';
 import { Canvas } from './Canvas';
+import { Log } from './Log';
+import { MousePosition } from './MousePosition';
+import MouseSingleton from './MouseSingleton';
 
 var Canvas = (function () {
     /**
@@ -13,7 +16,8 @@ var Canvas = (function () {
          *  PRIVATE ATTRIBUTES OF THE SINGLETON
          */
             // canvas Base Storage
-        var Log = LogSingleton.getInstance();
+        var Mouse: MousePosition = MouseSingleton.getInstance();
+        var Log: Log = LogSingleton.getInstance();
         var canvas: HTMLCanvasElement;
         var gl: WebGL2RenderingContext;
 
@@ -62,6 +66,7 @@ var Canvas = (function () {
             gl = canvas.getContext('webgl2');
             window.addEventListener('resize', () => adjustSize());
             adjustSize();
+            Mouse.init();
             Log.info('Canvas', 'Initialised Successfully...')
         }
 

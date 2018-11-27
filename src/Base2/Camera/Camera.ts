@@ -60,6 +60,13 @@ class CameraCore extends HasLog {
 
     }
 
+    getPosition(): Vec3 {
+        return this.position;
+    }
+    getTarget(): Vec3 {
+        return this.target;
+    }
+
     protected updatePerspectiveMatrix() {
         this.perspective_matrix = getPerspectiveMatrix(
             radians(this.fovY),
