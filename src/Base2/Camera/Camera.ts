@@ -11,7 +11,7 @@ import { addVec3 } from '../Math/Vector/add';
 import { Ray } from '../Math/Ray/Ray';
 import { HasLog } from '../Singleton/HasSingletons';
 
-class CameraCore extends HasLog {
+abstract class CameraCore extends HasLog {
     protected perspective_matrix: Mat4;
     protected look_at_matrix: Mat4;
 
@@ -148,7 +148,7 @@ class CameraCore extends HasLog {
     }
 }
 
-export class Camera extends CameraCore {
+export abstract class Camera extends CameraCore {
 
     update(time: number) {
 

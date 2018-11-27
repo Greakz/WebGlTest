@@ -1,9 +1,9 @@
-import { DrawObject } from '../../../Base2/Object/DrawObject';
-import { Triangle } from '../../Models/Triangle';
-import { Mat4 } from '../../../Base2/Math/Matrix/mat';
-import { Hitable } from '../../../Base2/Object/Model/Hitable';
-import { TriangleHitBox } from '../../Models/HitBox/TriangleHitbox';
-import { Vec3 } from '../../../Base2/Math/Vector/vec';
+import { DrawObject } from '../../../../Base2/Object/DrawObject';
+import { Triangle } from '../../../Models/Triangle';
+import { Mat4 } from '../../../../Base2/Math/Matrix/mat';
+import { Hitable } from '../../../../Base2/Object/Model/Hitable';
+import { TriangleHitBox } from '../../../Models/HitBox/TriangleHitbox';
+import { Vec3 } from '../../../../Base2/Math/Vector/vec';
 
 export class FirstObject extends DrawObject implements Hitable {
 

@@ -4,7 +4,7 @@ import CanvasSingleton from './Base2/Singleton/CanvasSingleton'
 import LogSingleton from './Base2/Singleton/LogSingleton'
 import { State } from './Base2/State/StateManager';
 import { ExampleStateManager } from './Base2Example/ExampleStateManager';
-import { ExampleScene } from './Base2Example/Scenes/ExampleScene';
+import { ExampleScene } from './Base2Example/Scenes/ExampleScene/ExampleScene';
 /*
     MAIN.TS
     This file is the Entry point of our Application.
