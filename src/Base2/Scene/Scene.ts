@@ -32,8 +32,9 @@ class SceneCore extends HasSingletons {
 
     renderSelfAndChildren(GL: WebGL2RenderingContext) {
         const projMat: Mat4 = this.camera.getProjectionMatrix();
+        this.preRender(GL, projMat);
         this.sceneObjects.forEach(sO => sO.renderSelfAndChildren(GL, projMat));
-        this.render(GL, projMat);
+        this.postRender(GL, projMat);
     }
 
     init() {
@@ -42,7 +43,9 @@ class SceneCore extends HasSingletons {
     update(time: number) {
     }
 
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {
+    preRender(GL: WebGL2RenderingContext, projMat: Mat4) {
+    }
+    postRender(GL: WebGL2RenderingContext, projMat: Mat4) {
     }
 
     private idCreationIndex: number = 0;
@@ -112,6 +115,8 @@ export class Scene extends SceneCore {
     update(time: number) {
     }
 
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {
+    preRender(GL: WebGL2RenderingContext, projMat: Mat4) {
+    }
+    postRender(GL: WebGL2RenderingContext, projMat: Mat4) {
     }
 }

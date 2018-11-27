@@ -8,7 +8,7 @@ export class TriangleHitBox extends HitBox {
         0.5, -0.5, 0
     ];
     private static indices: number[] = [
-        0, 1, 2, 2, 1, 0
+        0, 1, 2
     ];
     constructor(){
         super(hitBoxFromVerticesAndIndices(TriangleHitBox.vertices, TriangleHitBox.indices));
