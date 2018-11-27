@@ -23,14 +23,16 @@ var Canvas = (function () {
 
         //renderLoopThings
         var fps: number;
-        var waitForNextFrameInMs: number;
-
-        var lastUpdateTime: number = 0;
-        var currentlyInLoop: boolean = false;
+        var interval: number;
 
         var updateFunc: (time: number) => void;
         var renderFunc: (GL: WebGL2RenderingContext) => void;
 
+        var vendors = ['webkit', 'moz'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
 
         /**
          *  PRIVATE METHODS OF THE SINGLETON
@@ -47,7 +49,7 @@ var Canvas = (function () {
 
         function setNewFps(newFps: number) {
             fps = newFps;
-            waitForNextFrameInMs = 1000 / fps;
+            interval = 1000 / fps;
         }
 
         function adjustSize() {
@@ -61,7 +63,6 @@ var Canvas = (function () {
         function initC() {
             initDom();
             setNewFps(40);
-            lastUpdateTime = Date.now();
             canvas = document.querySelector('#canvas');
             gl = canvas.getContext('webgl2');
             window.addEventListener('resize', () => adjustSize());
@@ -70,6 +71,23 @@ var Canvas = (function () {
             Log.info('Canvas', 'Initialised Successfully...')
         }
 
+        var lastTime: number = (new Date()).getTime();
+        function loop() {
+            window.requestAnimationFrame(loop);
+            let currentTime = (new Date()).getTime();
+            let delta = (currentTime - lastTime);
+
+            if (delta > interval) {
+
+                // let the engine roll...!
+                updateFunc(currentTime);
+                renderFunc(gl);
+
+                lastTime = currentTime - (delta % interval);
+            }
+        }
+        /*
+        OLD LOOP
         function runLoop() {
             if (!currentlyInLoop) {
                 // mark that we started a loop
@@ -82,7 +100,7 @@ var Canvas = (function () {
 
                 // calculate how much time to wait for next draw call
                 const finishTime = Date.now();
-                const timeToWaitLeft: number = waitForNextFrameInMs - (finishTime - startTime);
+                const timeToWaitLeft: number = interval - (finishTime - startTime);
                 // finish Call
                 lastUpdateTime = startTime;
                 currentlyInLoop = false;
@@ -95,7 +113,7 @@ var Canvas = (function () {
                 }
             }
         }
-
+        */
         /**
          *  PUBLIC METHODS OF THE SINGLETON
          */
@@ -114,7 +132,7 @@ var Canvas = (function () {
                 Log.info('Canvas', 'Starting Application...');
                 renderFunc = renderFunction;
                 updateFunc = updateFunction;
-                runLoop();
+                loop();
             },
 
             getGl(): WebGL2RenderingContext {

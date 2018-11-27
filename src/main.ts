@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stateManager: ExampleStateManager = new ExampleStateManager(states);
     // Start the actual Application
     Canvas.init();
-    Canvas.setFps(10);
+    Canvas.setFps(80);
     Canvas.startApplication(
         (time: number) => stateManager.updateSelfAndChildren(time),
         (GL: WebGL2RenderingContext) => stateManager.renderSelfAndChildren(GL)
