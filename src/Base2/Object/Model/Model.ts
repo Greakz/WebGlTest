@@ -5,7 +5,7 @@ import { Mat4 } from '../../Math/Matrix/mat';
 
 export class Model extends HasSingletons{
 
-    protected vao: Vao;
+    protected vao: Vao<Shader>;
     protected shader: Shader;
     // comming soon
     protected hitbox: any;

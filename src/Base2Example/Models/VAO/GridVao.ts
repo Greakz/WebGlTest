@@ -1,21 +1,30 @@
 import { Vao } from '../../../Base2/Object/Model/VAO/Vao';
 import { ExampleShader } from '../../Shader/ExampleShader';
-import { GridVao } from './GridVao';
+const yGrid = -0.0001;
 
-export class TriangleVao extends Vao<ExampleShader> {
-    vao_identifier: string = 'triangle';
+export class GridVao extends Vao<ExampleShader> {
+    vao_identifier: string = 'grid';
     available_shader: string[] = ['example'];
-
-    protected vertices: number[] = [
-        0, 0.5, 0,
-        -0.5, -0.5, 0,
-        0.5, -0.5, 0
-    ];
-    protected indices: number[] = [
-        0, 1, 2
-    ];
-    constructor() {
+    protected vertices: number[];
+    protected indices: number[];
+    constructor(size: number) {
         super(GridVao.ShaderProvider.getShader(new ExampleShader()));
+        // Plane Vertex
+        this.vertices = [
+            -size, 0, -size,
+            -size, 0, size,
+            size, 0, -size,
+            size, 0, size
+        ];
+        // Grid Indices
+        this.indices = [
+            0, 1, 2, 1, 3, 2
+        ];
+        /*
+        for(let i = -size; i <= size; i++) {
+            this.pushVertex(i, size)
+        }
+        */
     }
 
     init(GL: WebGL2RenderingContext, shader: ExampleShader) {
@@ -40,5 +49,25 @@ export class TriangleVao extends Vao<ExampleShader> {
         if(!GL.isVertexArray(this.vao)) {
             Vao.Log.error('VAO', 'Cant create Vao: ' + this.vao_identifier)
         }
+    }
+
+    private pushVertex(i: number, size: number) {
+        // First Line
+        this.vertices.push(i);
+        this.vertices.push(yGrid);
+        this.vertices.push(-1 * size);
+
+        this.vertices.push(i);
+        this.vertices.push(yGrid);
+        this.vertices.push(size);
+
+        // Second Line
+        this.vertices.push(-1 * size);
+        this.vertices.push(yGrid);
+        this.vertices.push(i);
+
+        this.vertices.push(size);
+        this.vertices.push(yGrid);
+        this.vertices.push(i);
     }
 }

@@ -15,7 +15,6 @@ export class SceneObject extends HasLog {
         this.update(time)
     }
     renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
-
         this.render(GL, projMat)
     }
     init() {}

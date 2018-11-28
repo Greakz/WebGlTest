@@ -2,6 +2,7 @@ import { VAOProvider } from './VAOProvider';
 import { Vao } from '../Object/Model/VAO/Vao';
 import { Canvas } from './Canvas';
 import CanvasSingleton from './CanvasSingleton';
+import { Shader } from '../Shader/Shader';
 
 var VAOProviderSingleton = (function () {
     /**
@@ -15,12 +16,12 @@ var VAOProviderSingleton = (function () {
          *  PRIVATE ATTRIBUTES OF THE SINGLETON
          */
         var Canvas: Canvas = CanvasSingleton.getInstance();
-        var vaos: Vao[] = [];
+        var vaos: Vao<Shader>[] = [];
 
         /**
          *  PRIVATE METHODS OF THE SINGLETON
          */
-        function getVaoOrCreate(vao: Vao): Vao {
+        function getVaoOrCreate(vao: Vao<Shader>): Vao<Shader> {
             for (let i = 0; i < vaos.length; i++) {
                 if (vaos[i].vao_identifier === vao.vao_identifier) {
                     return vaos[i];
@@ -29,8 +30,8 @@ var VAOProviderSingleton = (function () {
             return initVao(vao);
         }
 
-        function initVao(vao: Vao): Vao {
-            vao.init(Canvas.getGl());
+        function initVao(vao: Vao<Shader>): Vao<Shader> {
+            vao.init(Canvas.getGl(), vao.shader);
             vaos.push(vao);
             return vao;
         }
@@ -39,7 +40,7 @@ var VAOProviderSingleton = (function () {
          *  PUBLIC METHODS OF THE SINGLETON
          */
         return {
-            getVao(vao: Vao): Vao {
+            getVao(vao: Vao<Shader>): Vao<Shader> {
                return getVaoOrCreate(vao);
             }
         };

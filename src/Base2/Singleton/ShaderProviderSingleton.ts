@@ -1,6 +1,8 @@
 import { ShaderProvider } from './ShaderProvider';
 import { Shader } from '../Shader/Shader';
 import { ShaderLoader } from './ShaderLoader.util';
+import { Log } from './Log';
+import LogSingleton from './LogSingleton';
 
 interface LoadedShader {
     identifier: string,
@@ -19,14 +21,15 @@ var VBOProviderSingleton = (function () {
          *  PRIVATE ATTRIBUTES OF THE SINGLETON
          */
         var loaded_shaders: LoadedShader[] = [];
-
+        var Log: Log = LogSingleton.getInstance();
         /**
          *  PRIVATE METHODS OF THE SINGLETON
          */
         function getShaderNewOrExistant<T extends Shader>(shader: T): T {
             for (let i = 0; i < loaded_shaders.length; i++) {
                 if (loaded_shaders[i].identifier === shader.shader_identifier) {
-                    let current: T = (loaded_shaders[i] as any);
+                    let current: T = (loaded_shaders[i].shader as any);
+                    Log.info('ShaderProvider', 'Request successful: ' + shader.shader_identifier + '  (hit)');
                     return current;
                 }
             }
@@ -34,6 +37,7 @@ var VBOProviderSingleton = (function () {
         }
 
         function initNewShader<T extends Shader>(shader: T): T {
+            Log.info('ShaderProvider', 'Missing Shader, call ShaderLoader!');
             ShaderLoader.readTextFile(
                 shader.shader_identifier,
                 (shaderContent: string) => {
@@ -47,6 +51,7 @@ var VBOProviderSingleton = (function () {
                     });
                 }
             );
+            Log.info('ShaderProvider', 'Request successful: ' + shader.shader_identifier + ' (miss)');
             return shader;
         }
 

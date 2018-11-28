@@ -50,8 +50,8 @@ abstract class StateManagerCore extends HasSingletons {
     }
 
     updateSelfAndChildren(time: number): void {
-        this.activeState.scene.updateSelfAndChildren(time);
         this.update(time);
+        this.activeState.scene.updateSelfAndChildren(time);
     }
     update(time: number): void {}
 

@@ -26,8 +26,8 @@ class SceneCore extends HasSingletons {
     updateSelfAndChildren(time: number) {
         this.camera.update(time);
         this.checkMouseHover();
-        this.sceneObjects.forEach(sO => sO.updateSelfAndChildren(time));
         this.update(time);
+        this.sceneObjects.forEach(sO => sO.updateSelfAndChildren(time));
     }
 
     renderSelfAndChildren(GL: WebGL2RenderingContext) {

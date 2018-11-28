@@ -1,43 +1,24 @@
 import { HasSingletons } from '../../../Singleton/HasSingletons';
+import { Shader } from '../../../Shader/Shader';
 
-export interface VaoOptions {
-}
-
-export class Vao extends HasSingletons {
+export class Vao<S extends Shader> extends HasSingletons {
     vao_identifier: string = 'default';
-
-    private vao: WebGLVertexArrayObject;
+    shader: S;
+    protected vao: WebGLVertexArrayObject;
     protected vertices: number[] = [];
     protected indices: number[] = [];
-    protected options: VaoOptions;
-    constructor(options: VaoOptions) {
+    constructor(shader: S) {
         super();
-        this.options = options;
+        this.shader = shader;
     }
 
-    init(GL: WebGL2RenderingContext) {
-        let indexBuffer: WebGLBuffer = GL.createBuffer();
-        let vertexBuffer: WebGLBuffer = GL.createBuffer();
-
-        let vao: WebGLVertexArrayObject = GL.createVertexArray();
-        GL.bindVertexArray(vao);
-
-        GL.bindBuffer(GL.ARRAY_BUFFER, vertexBuffer);
-        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, indexBuffer);
-
-        GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(this.vertices), GL.STATIC_DRAW);
-        GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), GL.STATIC_DRAW);
-
-
-        this.vao = vao;
-        GL.bindVertexArray(null);
-
+    init(GL: WebGL2RenderingContext, shader: S) {
         if(!GL.isVertexArray(this.vao)) {
             Vao.Log.error('VAO', 'Cant create Vao: ' + this.vao_identifier)
         }
     }
 
-    bind(GL: WebGL2RenderingContext): void {
-        GL.bindVertexArray(this.vao);
+    get(): WebGLVertexArrayObject {
+        return this.vao;
     }
 }
