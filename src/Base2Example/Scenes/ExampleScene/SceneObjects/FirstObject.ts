@@ -1,5 +1,5 @@
 import { DrawObject } from '../../../../Base2/Object/DrawObject';
-import { Triangle } from '../../../Models/Triangle';
+import { TriangleModel } from '../../../Models/TriangleModel';
 import { Mat4 } from '../../../../Base2/Math/Matrix/mat';
 import { Hitable } from '../../../../Base2/Object/Model/Hitable';
 import { TriangleHitBox } from '../../../Models/HitBox/TriangleHitbox';
@@ -7,10 +7,10 @@ import { Vec3 } from '../../../../Base2/Math/Vector/vec';
 
 export class FirstObject extends DrawObject implements Hitable {
 
-    private model: Triangle;
+    private model: TriangleModel;
 
     init() {
-        this.model = new Triangle();
+        this.model = new TriangleModel();
         this.model.init();
     }
 

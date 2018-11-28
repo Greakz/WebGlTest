@@ -1,20 +1,23 @@
 import { Vao } from '../../../Base2/Object/Model/VAO/Vao';
 import { ExampleShader } from '../../Shader/ExampleShader';
 
-export class TriangleVao extends Vao<ExampleShader> {
-    vao_identifier: string = 'triangle';
-
-    protected vertices: number[] = [
-        0, 1, 0,
-        -0.5, 0, 0,
-        0.5, 0, 0
-    ];
-    protected indices: number[] = [
-        0, 1, 2
-    ];
-
-    constructor() {
-        super(TriangleVao.ShaderProvider.getShader(new ExampleShader()));
+export class PlaneVao extends Vao<ExampleShader> {
+    vao_identifier: string = 'plane';
+    protected vertices: number[];
+    protected indices: number[];
+    constructor(size: number) {
+        super(PlaneVao.ShaderProvider.getShader(new ExampleShader()));
+        // Plane Vertex
+        this.vertices = [
+            -size, 0, -size,
+            -size, 0, size,
+            size, 0, -size,
+            size, 0, size
+        ];
+        // Grid Indices
+        this.indices = [
+            0, 1, 2, 1, 3, 2
+        ];
     }
 
     init(GL: WebGL2RenderingContext, shader: ExampleShader) {
@@ -36,7 +39,7 @@ export class TriangleVao extends Vao<ExampleShader> {
         this.vao = vao;
         GL.bindVertexArray(null);
 
-        if (!GL.isVertexArray(this.vao)) {
+        if(!GL.isVertexArray(this.vao)) {
             Vao.Log.error('VAO', 'Cant create Vao: ' + this.vao_identifier)
         }
     }

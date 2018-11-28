@@ -1,13 +1,13 @@
 import { DrawObject } from '../../../../Base2/Object/DrawObject';
 import { Mat4 } from '../../../../Base2/Math/Matrix/mat';
-import { GridModel } from '../../../Models/GridModel';
+import { EditorPlaneModel } from '../../../Models/EdiorPlaneModel';
 
 export class Grid extends DrawObject {
 
-    private model: GridModel;
+    private model: EditorPlaneModel;
 
     init() {
-        this.model = new GridModel(3);
+        this.model = new EditorPlaneModel(3);
         this.model.init();
     }
 

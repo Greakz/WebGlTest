@@ -21,8 +21,6 @@ export class DrawObject extends SceneObject {
     renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
         if(this.initDone) {
 
-            console.log(projMat);
-
             this.render(GL, projMat);
         }
     }

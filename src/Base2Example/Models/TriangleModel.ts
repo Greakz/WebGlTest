@@ -4,9 +4,10 @@ import { mat4ToF32 } from '../../Base2/Math/Matrix/matTo';
 import { Mat4 } from '../../Base2/Math/Matrix/mat';
 import { ExampleShader } from '../Shader/ExampleShader';
 
-export class Triangle extends Model {
+export class TriangleModel extends Model {
 
     protected shader: ExampleShader;
+    protected vao: TriangleVao;
 
     constructor() {
         super();

@@ -2,13 +2,14 @@ import { Vao } from './VAO/Vao';
 import { HasSingletons } from '../../Singleton/HasSingletons';
 import { Shader } from '../../Shader/Shader';
 import { Mat4 } from '../../Math/Matrix/mat';
+import { HitBox } from './HitBox/HitBox';
 
 export class Model extends HasSingletons{
 
-    protected vao: Vao<Shader>;
-    protected shader: Shader;
-    // comming soon
-    protected hitbox: any;
+    // Models can have things like:
+
+    // protected planeVao: Vao<Shader>;
+    // protected hitbox: HitBox;
 
     constructor() {
         super();

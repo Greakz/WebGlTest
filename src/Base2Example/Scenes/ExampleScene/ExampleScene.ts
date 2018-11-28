@@ -11,7 +11,7 @@ export class ExampleScene extends Scene {
     constructor() {
         super();
         this.camera = new ExampleCamera(
-            {x: 0, y: 1, z: 6},
+            {x: 0, y: 2, z: 6},
             {x: 0, y: 0, z: 0}
         );
         this.addSceneObject(new Grid());
@@ -28,11 +28,11 @@ export class ExampleScene extends Scene {
     }
 
     preRender(GL: WebGL2RenderingContext, projMat: Mat4) {
-        // L.enable(GL.DEPTH_TEST);
-        // GL.depthFunc(GL.LEQUAL);
+        GL.enable(GL.DEPTH_TEST);
+        GL.depthFunc(GL.LEQUAL);
 
-        // GL.enable(GL.CULL_FACE);
-        // GL.cullFace(GL.BACK);
+        GL.enable(GL.CULL_FACE);
+        GL.cullFace(GL.BACK);
 
         GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
         GL.enable(GL.BLEND);

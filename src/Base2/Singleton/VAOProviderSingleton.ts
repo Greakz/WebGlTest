@@ -21,16 +21,16 @@ var VAOProviderSingleton = (function () {
         /**
          *  PRIVATE METHODS OF THE SINGLETON
          */
-        function getVaoOrCreate(vao: Vao<Shader>): Vao<Shader> {
+        function getVaoOrCreate<T extends Vao<Shader>>(vao: T): T {
             for (let i = 0; i < vaos.length; i++) {
                 if (vaos[i].vao_identifier === vao.vao_identifier) {
-                    return vaos[i];
+                    return (vaos[i] as any);
                 }
             }
             return initVao(vao);
         }
 
-        function initVao(vao: Vao<Shader>): Vao<Shader> {
+        function initVao<T extends Vao<Shader>>(vao: T): T {
             vao.init(Canvas.getGl(), vao.shader);
             vaos.push(vao);
             return vao;
@@ -40,7 +40,7 @@ var VAOProviderSingleton = (function () {
          *  PUBLIC METHODS OF THE SINGLETON
          */
         return {
-            getVao(vao: Vao<Shader>): Vao<Shader> {
+            getVao<T extends Vao<Shader>>(vao: T): T {
                return getVaoOrCreate(vao);
             }
         };
