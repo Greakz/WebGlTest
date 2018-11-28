@@ -1,8 +1,19 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { HasLog } from '../Singleton/HasSingletons';
+import { Scene } from './Scene';
 
-export class SceneObject extends HasLog {
+abstract class SceneObjectCore extends HasLog {
+
+    protected parent: Scene | SceneObject;
+    constructor(parent: Scene | SceneObject) {
+        super();
+        this.parent = parent;
+    }
+}
+
+export class SceneObject extends SceneObjectCore {
     id: number;
+
     setId(id: number) {
         this.id = id;
     }

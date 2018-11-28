@@ -1,6 +1,6 @@
 import { HitBoxPolygon } from './HitBoxPolygon';
 
-export function hitBoxFromVerticesAndIndices(vertex: number[], indices: number[]) {
+export function getHitBoxPolygonsFromVertexAndIndices(vertex: number[], indices: number[]) {
     let hitBoxPolygons: HitBoxPolygon[] = [];
     for(let i = 0; i < indices.length; i+= 3) {
 

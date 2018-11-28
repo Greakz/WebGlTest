@@ -5,12 +5,19 @@ const yGrid = 0.0001;
 export class GridVao extends Vao<ExampleShader> {
     vao_identifier: string = 'grid';
     protected vertices: number[] = [];
-    constructor(size: number) {
+    drawVertices: number = 0;
+    constructor(size: number, centerBlockLine?: boolean) {
         super(GridVao.ShaderProvider.getShader(new ExampleShader()));
-        for(let i = -size; i <= size; i++) {
-            this.pushVertex(i, size)
-        }
+        if(!centerBlockLine) {
+            for(let i = -size; i <= size; i++) {
+                this.pushVertex(i, size)
 
+            }
+        } else {
+            for(let i = -size; i <= size + 1; i++) {
+                this.pushVertex(i - 0.5, size + 0.5)
+            }
+        }
     }
 
     init(GL: WebGL2RenderingContext, shader: ExampleShader) {
@@ -20,10 +27,7 @@ export class GridVao extends Vao<ExampleShader> {
         GL.bindVertexArray(vao);
 
         GL.bindBuffer(GL.ARRAY_BUFFER, vertexBuffer);
-        console.log(this.vertices);
-
         GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(this.vertices), GL.STATIC_DRAW);
-
         GL.vertexAttribPointer(this.shader.attr_position, 3, GL.FLOAT, false, 0, 0);
         GL.enableVertexAttribArray(this.shader.attr_position);
 
@@ -36,6 +40,7 @@ export class GridVao extends Vao<ExampleShader> {
     }
 
     private pushVertex(i: number, size: number) {
+        this.drawVertices += 4;
         // First Line
         this.vertices.push(i);
         this.vertices.push(yGrid);

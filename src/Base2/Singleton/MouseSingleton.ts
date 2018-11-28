@@ -31,6 +31,9 @@ var Mouse = (function () {
                     x = e.clientX;
                     y = e.clientY;
                 });
+                overlay.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                });
             }
 
         /**

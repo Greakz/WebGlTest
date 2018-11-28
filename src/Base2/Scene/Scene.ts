@@ -90,6 +90,11 @@ class SceneCore extends HasSingletons {
             this.hitObjects[this.hoveredObjectIndex].isHovered = true;
             this.hitObjects[this.hoveredObjectIndex].hoverPoint = this.hoverPointIn3DSpace;
         }
+        if(hoveredBefore !== this.hoveredObjectIndex) {
+            if(hoveredBefore !== 0) {
+
+            }
+        }
     }
 }
 

@@ -24,6 +24,7 @@ var Canvas = (function () {
         //renderLoopThings
         var fps: number;
         var interval: number;
+        var clickListenerDiv: string = 'overlay';
 
         var updateFunc: (time: number) => void;
         var renderFunc: (GL: WebGL2RenderingContext) => void;
@@ -126,6 +127,14 @@ var Canvas = (function () {
 
             setFps(fps: number) {
                 setNewFps(fps);
+            },
+
+            setClickListenerPlane(newDivListener: string) {
+                clickListenerDiv = newDivListener;
+            },
+
+            getClickListenerPlane(): string {
+                return clickListenerDiv;
             },
 
             startApplication(updateFunction: (time: number) => void, renderFunction: (GL: WebGL2RenderingContext) => void) {

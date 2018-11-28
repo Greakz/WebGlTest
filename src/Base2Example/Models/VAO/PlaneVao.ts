@@ -5,14 +5,16 @@ export class PlaneVao extends Vao<ExampleShader> {
     vao_identifier: string = 'plane';
     protected vertices: number[];
     protected indices: number[];
-    constructor(size: number) {
+    constructor(size: number, centerBlockLine?: boolean) {
         super(PlaneVao.ShaderProvider.getShader(new ExampleShader()));
+        this.vao_identifier = 'plane' + size + ((centerBlockLine) ? 'c' : '');
         // Plane Vertex
+        const add = (centerBlockLine) ? 0.5 : 0;
         this.vertices = [
-            -size, 0, -size,
-            -size, 0, size,
-            size, 0, -size,
-            size, 0, size
+            -size - add, 0, -size - add,
+            -size - add, 0, size + add,
+            size + add, 0, -size - add,
+            size + add, 0, size + add
         ];
         // Grid Indices
         this.indices = [

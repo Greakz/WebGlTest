@@ -11,12 +11,11 @@ export class ExampleScene extends Scene {
     constructor() {
         super();
         this.camera = new ExampleCamera(
-            {x: 0, y: 2, z: 6},
+            {x: 0, y: 3, z: 10},
             {x: 0, y: 0, z: 0}
         );
-        this.addSceneObject(new Grid());
-        this.addSceneObject(new FirstObject());
-
+        this.addSceneObject(new Grid(this));
+        this.addSceneObject(new FirstObject(this));
     }
 
     init() {
