@@ -5,4 +5,5 @@ export interface MousePosition {
     getLeftStatus(): boolean;
     getRightStatus(): boolean;
     init(): void;
+    addScrollEvent(cllbck: (delta: number) =>void): void
 }

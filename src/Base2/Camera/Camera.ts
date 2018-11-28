@@ -10,6 +10,7 @@ import { scaleVec3 } from '../Math/Vector/scale';
 import { addVec3 } from '../Math/Vector/add';
 import { Ray } from '../Math/Ray/Ray';
 import { HasLog } from '../Singleton/HasSingletons';
+import { getScalingMatrix } from '../Math/Matrix/scaling';
 
 abstract class CameraCore extends HasLog {
     protected perspective_matrix: Mat4;
@@ -29,6 +30,11 @@ abstract class CameraCore extends HasLog {
         this.position = position;
         this.target = target;
         this.fovY = fovY;
+        window.addEventListener('resize', () => {
+            this.calculateWindowSize();
+        });
+        this.calculateWindowSize();
+        Camera.Log.info('Camera', 'Created!')
     }
 
     screenRay(screenX: number, screenY: number): Ray {
@@ -36,11 +42,6 @@ abstract class CameraCore extends HasLog {
     }
 
     init() {
-        window.addEventListener('resize', () => {
-            this.calculateWindowSize();
-        });
-        this.calculateWindowSize();
-        Camera.Log.info('Camera', 'Initialised!')
     }
 
     update(time: number) {
@@ -55,7 +56,7 @@ abstract class CameraCore extends HasLog {
             );
         } else {
             Camera.Log.warning('Camera', 'Got asked for Projection Matrix. Camera not initialised!');
-            return identity()
+            return getScalingMatrix(0, 0, 0);
         }
 
     }
@@ -92,15 +93,20 @@ abstract class CameraCore extends HasLog {
     private perspInit: boolean = false;
 
     private calculateWindowSize() {
-        const newHeight = document.getElementById('container').clientHeight;
-        const newWidth = document.getElementById('container').clientWidth;
-        if(newWidth === undefined || newHeight === undefined) {
-            Camera.Log.error('Camera', 'Height or Width of Container is undefined!')
+        const container: HTMLElement | null = document.getElementById('container');
+        if(container !== null) {
+            const newHeight = document.getElementById('container').clientHeight;
+            const newWidth = document.getElementById('container').clientWidth;
+            if(newWidth === undefined || newHeight === undefined) {
+                Camera.Log.error('Camera', 'Height or Width of Container is undefined!')
+            }
+            this.screenHeight = newHeight;
+            this.screenWidth = newWidth;
+            this.aspect = this.screenWidth / this.screenHeight;
+            this.updatePerspectiveMatrix();
+        }else {
+            setTimeout(() => this.calculateWindowSize(), 300)
         }
-        this.screenHeight = newHeight;
-        this.screenWidth = newWidth;
-        this.aspect = this.screenWidth / this.screenHeight;
-        this.updatePerspectiveMatrix();
     }
 
     private calculateScreenPositionRay(screenX: number, screenY: number): Ray {

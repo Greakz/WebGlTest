@@ -17,7 +17,6 @@ export class FirstObject extends DrawObject implements Hitable {
     update(time) {
         if (this.isHovered) {
             this.model.setColor({x: 0.5, y: 0.1, z: 0.1, w: 1});
-            FirstObject.Log.info('FirstObject', 'I am Hovered')
         } else {
             this.model.setColor({x: 0, y: 0, z: 0, w: 1});
         }

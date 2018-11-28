@@ -3,6 +3,8 @@ import { Vao } from '../Object/Model/VAO/Vao';
 import { Canvas } from './Canvas';
 import CanvasSingleton from './CanvasSingleton';
 import { Shader } from '../Shader/Shader';
+import { Log } from './Log';
+import LogSingleton from './LogSingleton';
 
 var VAOProviderSingleton = (function () {
     /**
@@ -15,6 +17,7 @@ var VAOProviderSingleton = (function () {
         /**
          *  PRIVATE ATTRIBUTES OF THE SINGLETON
          */
+        var Log: Log = LogSingleton.getInstance();
         var Canvas: Canvas = CanvasSingleton.getInstance();
         var vaos: Vao<Shader>[] = [];
 
@@ -33,12 +36,14 @@ var VAOProviderSingleton = (function () {
         function initVao<T extends Vao<Shader>>(vao: T): T {
             vao.init(Canvas.getGl(), vao.shader);
             vaos.push(vao);
+            Log.info('VaoProvider', 'Created Vao: ' + vao.vao_identifier + '!');
             return vao;
         }
 
         /**
          *  PUBLIC METHODS OF THE SINGLETON
          */
+        Log.info('VaoProvider', 'VAO Provider initialised!');
         return {
             getVao<T extends Vao<Shader>>(vao: T): T {
                return getVaoOrCreate(vao);

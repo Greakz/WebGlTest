@@ -111,10 +111,10 @@ export class ClickableDrawObject extends SceneObject implements Clickable {
         }
     }
 
-    private leftClickWasWhileHover: boolean = false;
-    private rightClickWasWhileHover: boolean = false;
+    protected leftClickWasWhileHover: boolean = false;
+    protected rightClickWasWhileHover: boolean = false;
 
-    private mouseDown(left: boolean) {
+    protected mouseDown(left: boolean) {
         if (this.isHovered) {
             if (left) {
                 this.onLeftDown();
@@ -132,7 +132,7 @@ export class ClickableDrawObject extends SceneObject implements Clickable {
         }
     }
 
-    private mouseUp(left: boolean) {
+    protected mouseUp(left: boolean) {
         if (this.isHovered) {
             if (left) {
                 this.onLeftUp();
@@ -153,6 +153,5 @@ export class ClickableDrawObject extends SceneObject implements Clickable {
             }
         }
     }
-
 
 }

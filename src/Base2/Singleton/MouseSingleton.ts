@@ -18,6 +18,9 @@ var Mouse = (function () {
         var Log: Log = LogSingleton.getInstance();
         var x: number = 0;
         var y: number = 0;
+        var leftStatus: boolean = false;
+        var rightStatus: boolean = false;
+        var wheel: number = 0;
 
         /**
          *  PRIVATE METHODS OF THE SINGLETON
@@ -34,6 +37,41 @@ var Mouse = (function () {
                 overlay.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
                 });
+                overlay.addEventListener('mousedown', (e: any) => {
+                    let isRightMB;
+                    if ('which' in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+                        isRightMB = e.which == 3;
+                    else if ('button' in e)  // IE, Opera
+                        isRightMB = e.button == 2;
+
+                    if (isRightMB) {
+                        rightStatus = true;
+                    } else {
+                        leftStatus = true;
+                    }
+                });
+                overlay.addEventListener('mouseup', (e: any) => {
+                    let isRightMB;
+                    if ('which' in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+                        isRightMB = e.which == 3;
+                    else if ('button' in e)  // IE, Opera
+                        isRightMB = e.button == 2;
+
+                    if (isRightMB) {
+                        rightStatus = false;
+                    } else {
+                        leftStatus = false;
+                    }
+                });
+
+            }
+
+            function bindNewLister(cllbck: (delta: number) =>void){
+                const overlay: HTMLElement | null = document.getElementById('overlay');
+                if(overlay === null) {
+                    Log.error('Mouse', 'Cant find overlay to add wheel event!')
+                }
+                overlay.addEventListener('wheel', (e: any) => cllbck(e.deltaY));
             }
 
         /**
@@ -47,10 +85,13 @@ var Mouse = (function () {
                 return {x: x, y: y}
             },
             getLeftStatus(): boolean {
-                return false;
+                return leftStatus;
             },
             getRightStatus(): boolean {
-                return false;
+                return rightStatus;
+            },
+            addScrollEvent(cllbck: (delta: number) =>void): void {
+                bindNewLister(cllbck);
             }
         };
     }

@@ -18,6 +18,14 @@ export class ExampleScene extends Scene {
         this.addSceneObject(new FirstObject(this));
     }
 
+    addObjectAt(x: number, z: number) {
+        const newObj = new FirstObject(this);
+        newObj.initSelfAndChildren();
+        newObj.transformation.moveZ(z);
+        newObj.transformation.moveX(x);
+        this.addSceneObject(newObj);
+    }
+
     init() {
 
     }

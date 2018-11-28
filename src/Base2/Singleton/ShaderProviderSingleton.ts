@@ -29,7 +29,6 @@ var VBOProviderSingleton = (function () {
             for (let i = 0; i < loaded_shaders.length; i++) {
                 if (loaded_shaders[i].identifier === shader.shader_identifier) {
                     let current: T = (loaded_shaders[i].shader as any);
-                    Log.info('ShaderProvider', 'Request successful: ' + shader.shader_identifier + '  (hit)');
                     return current;
                 }
             }
@@ -37,7 +36,7 @@ var VBOProviderSingleton = (function () {
         }
 
         function initNewShader<T extends Shader>(shader: T): T {
-            Log.info('ShaderProvider', 'Missing Shader, call ShaderLoader!');
+            Log.info('ShaderProvider', 'Missing Shader: ' + shader.shader_identifier + '!');
             ShaderLoader.readTextFile(
                 shader.shader_identifier,
                 (shaderContent: string) => {
@@ -51,13 +50,13 @@ var VBOProviderSingleton = (function () {
                     });
                 }
             );
-            Log.info('ShaderProvider', 'Request successful: ' + shader.shader_identifier + ' (miss)');
             return shader;
         }
 
         /**
          *  PUBLIC METHODS OF THE SINGLETON
          */
+        Log.info('ShaderProvider', 'Shader Provider initialised!');
         return {
             getShader<T extends Shader>(shader: T): T {
                 return getShaderNewOrExistant(shader);

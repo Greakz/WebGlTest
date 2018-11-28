@@ -10,4 +10,6 @@ export interface Canvas {
     setClickListenerPlane(newContainerId: string);
 
     getClickListenerPlane(): string;
+
+    getMeasuredFps(): number;
 }

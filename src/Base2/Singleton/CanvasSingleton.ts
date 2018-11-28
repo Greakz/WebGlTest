@@ -39,7 +39,7 @@ var Canvas = (function () {
          *  PRIVATE METHODS OF THE SINGLETON
          */
         function initDom() {
-            const content: string = '<div id="container"><canvas id="canvas" /></div><div id="overlay"></div><div id="shader-space" />';
+            const content: string = '<div id="container"><canvas id="canvas" /></div><div id="fps"></div><div id="overlay"></div><div id="shader-space" />';
             const root: HTMLElement | null = document.getElementById('root');
             if (root === null) {
                 Log.error('Canvas', 'Cant find root node!', true);
@@ -73,10 +73,15 @@ var Canvas = (function () {
         }
 
         var lastTime: number = (new Date()).getTime();
+        var measuredFps = 0;
+        var framesInThisSecond = 0;
+        var lastSeconds = (new Date()).getSeconds();
+        var second = (new Date()).getSeconds();
         function loop() {
             window.requestAnimationFrame(loop);
             let currentTime = (new Date()).getTime();
             let delta = (currentTime - lastTime);
+            second = (new Date()).getSeconds();
 
             if (delta > interval) {
 
@@ -84,37 +89,23 @@ var Canvas = (function () {
                 updateFunc(currentTime);
                 renderFunc(gl);
 
+
+                if(lastSeconds === second) {
+                    framesInThisSecond++;
+                }else {
+                    measuredFps = framesInThisSecond;
+                    framesInThisSecond = 1;
+                    lastSeconds = second;
+                    displayFps();
+                }
+
                 lastTime = currentTime - (delta % interval);
             }
         }
-        /*
-        OLD LOOP
-        function runLoop() {
-            if (!currentlyInLoop) {
-                // mark that we started a loop
-                currentlyInLoop = true;
-                const startTime = Date.now();
 
-                // let the engine roll...!
-                updateFunc(startTime);
-                renderFunc(gl);
-
-                // calculate how much time to wait for next draw call
-                const finishTime = Date.now();
-                const timeToWaitLeft: number = interval - (finishTime - startTime);
-                // finish Call
-                lastUpdateTime = startTime;
-                currentlyInLoop = false;
-                if (timeToWaitLeft > 0) {
-                    setTimeout(() => {
-                        runLoop()
-                    }, timeToWaitLeft);
-                } else {
-                    setTimeout(() => runLoop(), 1);
-                }
-            }
+        function displayFps() {
+            document.getElementById('fps').innerHTML = 'FPS:' + measuredFps.toString();
         }
-        */
         /**
          *  PUBLIC METHODS OF THE SINGLETON
          */
@@ -127,6 +118,10 @@ var Canvas = (function () {
 
             setFps(fps: number) {
                 setNewFps(fps);
+            },
+
+            getMeasuredFps(): number {
+                return measuredFps;
             },
 
             setClickListenerPlane(newDivListener: string) {
