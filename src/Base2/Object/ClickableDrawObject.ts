@@ -1,13 +1,13 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
 import { Transformation } from './Model/Transformation';
-import { Clickable } from './Clickable';
+import { ClickAble } from './Implements/Clickable';
 import { HitBox } from './Model/HitBox/HitBox';
 import { Vec3 } from '../Math/Vector/vec';
 import { Canvas } from '../Singleton/Canvas';
 import CanvasSingleton from '../Singleton/CanvasSingleton';
 
-export class ClickableDrawObject extends SceneObject implements Clickable {
+export class ClickAbleDrawObject extends SceneObject implements ClickAble {
     private initDone: boolean = false;
     transformation: Transformation = new Transformation();
 
@@ -41,7 +41,7 @@ export class ClickableDrawObject extends SceneObject implements Clickable {
     render(GL: WebGL2RenderingContext, projMat: Mat4) {
     }
 
-    // Clickable Interface
+    // ClickAble Interface
     isHovered: boolean;
     hoverPoint: Vec3 | null;
     hitBox: HitBox;

@@ -35,6 +35,7 @@ abstract class CameraCore extends HasLog {
         });
         this.calculateWindowSize();
         Camera.Log.info('Camera', 'Created!')
+        this.updateLookAtMatrix();
     }
 
     screenRay(screenX: number, screenY: number): Ray {
@@ -105,7 +106,7 @@ abstract class CameraCore extends HasLog {
             this.aspect = this.screenWidth / this.screenHeight;
             this.updatePerspectiveMatrix();
         }else {
-            setTimeout(() => this.calculateWindowSize(), 300)
+            setTimeout(() => this.calculateWindowSize(), 20)
         }
     }
 

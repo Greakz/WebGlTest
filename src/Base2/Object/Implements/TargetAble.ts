@@ -1,13 +1,13 @@
-import { isTargetable, Targetable } from './Targetable';
 import { Vec3 } from '../../Math/Vector/vec';
+import { HitAble, isHitAble } from './HitAble';
 
-export interface Hitable extends Targetable{
+export interface TargetAble extends HitAble {
     isHovered: boolean;
     hoverPoint: Vec3 | null
 }
 
-export function isHitable(obj: any) {
-    return isTargetable(obj) && (
+export function isTargetAble(obj: any) {
+    return isHitAble(obj) && (
         obj.hasOwnProperty('isHovered')
         &&obj.hasOwnProperty('isActive')
     )

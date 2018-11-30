@@ -5,7 +5,7 @@ import { ExampleShader } from '../Shader/ExampleShader';
 import { PlaneVao } from './VAO/PlaneVao';
 import { GridVao } from './VAO/GridVao';
 
-export class EditorPlaneModel extends Model {
+export class EditorGridModel extends Model {
 
     protected planeVao: PlaneVao;
     protected gridVao: GridVao;
@@ -23,8 +23,8 @@ export class EditorPlaneModel extends Model {
     }
 
     init() {
-        this.planeVao = EditorPlaneModel.VAOProvider.getVao(new PlaneVao(this.size, this.centerBlockLine));
-        this.gridVao = EditorPlaneModel.VAOProvider.getVao(new GridVao(this.size, this.centerBlockLine));
+        this.planeVao = EditorGridModel.VAOProvider.getVao(new PlaneVao(this.size, this.centerBlockLine));
+        this.gridVao = EditorGridModel.VAOProvider.getVao(new GridVao(this.size, this.centerBlockLine));
     }
 
     render(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4) {

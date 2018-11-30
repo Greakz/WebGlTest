@@ -1,6 +1,6 @@
 import { World } from '../../Base/World';
 import { Camera } from '../../Base/Camera';
-import { Cube } from '../../WorldObjects/Cube';
+import { Cube } from '../../WorldObjects/MonoColorCube';
 import { WorldObject } from '../../Base/WorldObject';
 import { Grid } from '../../WorldObjects/Grid';
 import { Plane } from '../../WorldObjects/Plane';

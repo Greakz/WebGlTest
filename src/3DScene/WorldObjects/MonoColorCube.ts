@@ -1,8 +1,6 @@
-import { getNoTransform, Transformation, WorldObject } from '../Base/WorldObject';
-import { SimpleShader } from '../Shaders/SimpleShader';
+import { getNoTransform, WorldObject } from '../Base/WorldObject';
 import { Mat4 } from '../Base/MathTypes/Types/matrix';
 import { mat4ToFloat32Array } from '../Base/MathTypes/matrix.util';
-import { mouseInstance } from '../../index';
 import { Vec3, Vec4 } from '../Base/MathTypes/Types/vectors';
 import { Ray } from '../Base/Ray';
 import { MonoColorShader } from '../Shaders/MonoColorShader';

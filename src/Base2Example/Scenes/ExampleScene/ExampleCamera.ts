@@ -16,28 +16,29 @@ export class ExampleCamera extends Camera {
 
     init() {
         ExampleCamera.MousePosition.addScrollEvent((delta: number) => {
-            this.cameraDistance += (delta / 3);
+            this.cameraDistance += (delta > 0) ? 1 : -1;
         });
         this.updateCameraPosition();
     }
 
     update(time: number) {
         this.trackMouseMovement();
-        this.updateLookAtMatrix();
     }
 
     updatedCameraDistance: number = 0;
     trackMouseMovement() {
         if (ExampleCamera.MousePosition.getRightStatus()) {
-            let distanceX = 0;
-            distanceX = ExampleCamera.MousePosition.get().x - this.mouseXLastFrame;
+            // Move X
+            let distanceX = ExampleCamera.MousePosition.get().x - this.mouseXLastFrame;
+            this.cameraPosition += (-1 * (distanceX / 1000) * Math.PI * 2) % (2 * Math.PI);
+            // Move Y
             const distanceY = ExampleCamera.MousePosition.get().y - this.mouseYLastFrame;
             this.cameraAngle += (distanceY / 5);
             this.cameraAngle = Math.min(85, this.cameraAngle);
             this.cameraAngle = Math.max(5, this.cameraAngle);
-            this.cameraPosition += (-1 * (distanceX / 1000) * Math.PI * 2) % (2 * Math.PI);
             this.updateCameraPosition()
         } else if(this.updatedCameraDistance !== this.cameraDistance) {
+            // If Scroll Wheel did S.Th.
             this.updateCameraPosition();
         }
         this.mouseXLastFrame = ExampleCamera.MousePosition.get().x;
@@ -54,5 +55,6 @@ export class ExampleCamera extends Camera {
             z: Math.cos(this.cameraPosition) * flatDistance
         };
         this.updatedCameraDistance = this.cameraDistance;
+        this.updateLookAtMatrix();
     }
 }

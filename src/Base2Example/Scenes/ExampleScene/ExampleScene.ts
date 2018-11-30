@@ -3,6 +3,8 @@ import { FirstObject } from './SceneObjects/FirstObject';
 import { ExampleCamera } from './ExampleCamera';
 import { Mat4 } from '../../../Base2/Math/Matrix/mat';
 import { Grid } from './SceneObjects/Grid';
+import { MonoColorCube } from './SceneObjects/MonoColorCube';
+import { TextureCube } from './SceneObjects/TextureCube';
 
 export class ExampleScene extends Scene {
 
@@ -15,14 +17,14 @@ export class ExampleScene extends Scene {
             {x: 0, y: 0, z: 0}
         );
         this.addSceneObject(new Grid(this));
-        this.addSceneObject(new FirstObject(this));
     }
 
     addObjectAt(x: number, z: number) {
-        const newObj = new FirstObject(this);
+        const newObj = new TextureCube(this);
         newObj.initSelfAndChildren();
         newObj.transformation.moveZ(z);
         newObj.transformation.moveX(x);
+        newObj.transformation.moveY(0.5);
         this.addSceneObject(newObj);
     }
 

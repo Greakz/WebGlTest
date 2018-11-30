@@ -1,6 +1,6 @@
-import { Hitable, isHitable } from './Model/Hitable';
+import { isTargetAble, TargetAble } from './TargetAble';
 
-export interface Clickable extends Hitable{
+export interface ClickAble extends TargetAble{
     onLeftClick();
     onLeftDown();
     onLeftUp()
@@ -9,8 +9,8 @@ export interface Clickable extends Hitable{
     onRightUp();
 }
 
-export function isClickable(obj: any) {
-    return isHitable(obj) && (
+export function isClickAble(obj: any) {
+    return isTargetAble(obj) && (
         typeof obj.onLeftClick === 'function'
         && typeof obj.onLeftDown === 'function'
         && typeof obj.onLeftUp === 'function'

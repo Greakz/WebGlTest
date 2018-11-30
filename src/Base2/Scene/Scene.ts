@@ -5,16 +5,16 @@ import { Camera } from '../Camera/Camera';
 import { Mat4 } from '../Math/Matrix/mat';
 import { MousePosition } from '../Singleton/MousePosition';
 import MouseSingleton from '../Singleton/MouseSingleton';
-import { Hitable, isHitable } from '../Object/Model/Hitable';
+import { TargetAble } from '../Object/Implements/TargetAble';
 import { Vec2, Vec3 } from '../Math/Vector/vec';
 import { Ray } from '../Math/Ray/Ray';
-import { isTargetable } from '../Object/Model/Targetable';
+import { isHitAble } from '../Object/Implements/HitAble';
 
 class SceneCore extends HasSingletons {
     protected static MousePosition: MousePosition = MouseSingleton.getInstance();
     protected camera: Camera;
     protected sceneObjects: SceneObject[] = [];
-    protected hitObjects: Hitable[] = [];
+    protected hitObjects: TargetAble[] = [];
     protected sceneEvents: SceneEvent[] = [];
 
     initSelfAndChildren() {
@@ -54,7 +54,7 @@ class SceneCore extends HasSingletons {
         obj.setId(this.idCreationIndex);
         this.idCreationIndex++;
         this.sceneObjects.push(obj);
-        if (isTargetable(obj)) {
+        if (isHitAble(obj)) {
             this.addToHitObjects(obj);
         }
     }
@@ -72,7 +72,7 @@ class SceneCore extends HasSingletons {
         let hoveredBefore = this.hoveredObjectIndex;
         this.hoveredObjectIndex = -1;
         this.hoverPointIn3DSpace = this.hitObjects.reduce(
-            (acc: Vec3 | null, hitObject: Hitable, index: number) => {
+            (acc: Vec3 | null, hitObject: TargetAble, index: number) => {
                 let checkHit: Vec3 | null = hitObject.hitBox.checkHit(mouseRay, hitObject.transformation.getMatrix(), this.camera.getPosition());
                 if (checkHit !== null) {
                     this.hoveredObjectIndex = index;

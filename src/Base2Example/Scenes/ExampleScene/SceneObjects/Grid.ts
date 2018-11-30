@@ -1,23 +1,23 @@
 import { Mat4 } from '../../../../Base2/Math/Matrix/mat';
-import { EditorPlaneModel } from '../../../Models/EdiorPlaneModel';
+import { EditorGridModel } from '../../../Models/EdiorGridModel';
 import { GridHitBox } from '../../../Models/HitBox/GridHitbox';
 import { Vec3 } from '../../../../Base2/Math/Vector/vec';
 import { PlaneModel } from '../../../Models/PlaneModel';
 import { multiplyArrayOfMatrices } from '../../../../Base2/Math/Matrix/multiply';
 import { getTranslationMatrix } from '../../../../Base2/Math/Matrix/translation';
-import { ClickableDrawObject } from '../../../../Base2/Object/ClickableDrawObject';
+import { ClickAbleDrawObject } from '../../../../Base2/Object/ClickableDrawObject';
 import { ExampleScene } from '../ExampleScene';
 
-export class Grid extends ClickableDrawObject{
+export class Grid extends ClickAbleDrawObject{
 
-    private model: EditorPlaneModel;
+    private model: EditorGridModel;
     private hoverModel: PlaneModel;
     private size: number = 5;
     private centerBlockLine: boolean = true;
     protected parent: ExampleScene;
 
     init() {
-        this.model = new EditorPlaneModel(this.size, this.centerBlockLine);
+        this.model = new EditorGridModel(this.size, this.centerBlockLine);
         this.model.init();
         this.hoverModel = new PlaneModel();
         this.hoverModel.init();
@@ -55,7 +55,7 @@ export class Grid extends ClickableDrawObject{
 
     // targetable
     hitBox: GridHitBox = new GridHitBox(this.size, this.centerBlockLine);
-    // Hitable
+    // TargetAble
     isHovered: boolean = false;
     hoverPoint: Vec3 | null = null;
 }

@@ -1,11 +1,11 @@
 import { DrawObject } from '../../../../Base2/Object/DrawObject';
 import { TriangleModel } from '../../../Models/TriangleModel';
 import { Mat4 } from '../../../../Base2/Math/Matrix/mat';
-import { Hitable } from '../../../../Base2/Object/Model/Hitable';
+import { TargetAble } from '../../../../Base2/Object/Implements/TargetAble';
 import { TriangleHitBox } from '../../../Models/HitBox/TriangleHitbox';
 import { Vec3 } from '../../../../Base2/Math/Vector/vec';
 
-export class FirstObject extends DrawObject implements Hitable {
+export class FirstObject extends DrawObject implements TargetAble {
 
     private model: TriangleModel;
 
@@ -28,7 +28,7 @@ export class FirstObject extends DrawObject implements Hitable {
 
     // targetable
     hitBox: TriangleHitBox = new TriangleHitBox();
-    // Hitable
+    // TargetAble
     isHovered: boolean = false;
     hoverPoint: Vec3 | null = null;
 }
