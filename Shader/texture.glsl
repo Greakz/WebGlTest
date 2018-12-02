@@ -4,15 +4,16 @@
     Vertex-Shader Source
 */
 //#VERTEX-SHADER#//
-attribute vec3 vertexPosition;
-attribute vec2 aTextureCoord;
+#version 300 es
+in vec3 vertexPosition;
+in vec2 aTextureCoord;
 
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform vec4 color;
 
-varying vec2 vTextureCoord;
-varying vec4 vColor;
+out vec2 vTextureCoord;
+out vec4 vColor;
 
 void main(void) {
     gl_Position = viewMatrix * modelMatrix *  vec4(vertexPosition, 1.0);
@@ -23,13 +24,15 @@ void main(void) {
     Fragment-Shader Source
 */
 //#FRAGMENT-SHADER#//
+#version 300 es
 precision mediump float;
-varying vec2 vTextureCoord;
-varying vec4 vColor;
+in vec2 vTextureCoord;
+in vec4 vColor;
+out vec4 fragmentColor;
 
 uniform sampler2D uSampler;
 
 void main(void) {
-uSampler;
-gl_FragColor = (vColor * texture2D(uSampler, vTextureCoord));
+    uSampler;
+    fragmentColor = (vColor * texture(uSampler, vTextureCoord));
 }

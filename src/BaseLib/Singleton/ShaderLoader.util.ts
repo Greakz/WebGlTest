@@ -46,10 +46,23 @@ export abstract class ShaderLoader {
             fragParsed = vertexParsed[0].split('//#FRAGMENT-SHADER#//');
             fragSource = fragParsed[1];
         }
+        fragSource = ShaderLoader.killEmptyLines(fragSource);
+        vertexSource = ShaderLoader.killEmptyLines(vertexSource);
         const vs = ShaderLoader.buildVertexShaderWithSource(id, vertexSource);
         const fs = ShaderLoader.buildFragmentShaderWithSource(id, fragSource);
         const compiledProgram = ShaderLoader.buildShaderProgram(id, vs, fs);
         finisherCallBack(compiledProgram, ShaderLoader.Canvas.getGl());
+    }
+
+    static killEmptyLines(value: string): string {
+        const parts = value.split('\n');
+        let result: string = '';
+        for(let i = 0; i < parts.length; i++) {
+            if(parts[i].trim() !== '') {
+                result += parts[i] + '\n';
+            }
+        }
+        return result;
     }
 
     static buildShaderProgram(id: string, vs_shader: WebGLShader, fs_shader: WebGLShader): WebGLProgram {
