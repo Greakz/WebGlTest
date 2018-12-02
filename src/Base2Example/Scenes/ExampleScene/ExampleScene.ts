@@ -1,9 +1,7 @@
 import { Scene } from '../../../Base2/Scene/Scene';
-import { FirstObject } from './SceneObjects/FirstObject';
 import { ExampleCamera } from './ExampleCamera';
 import { Mat4 } from '../../../Base2/Math/Matrix/mat';
 import { Grid } from './SceneObjects/Grid';
-import { MonoColorCube } from './SceneObjects/MonoColorCube';
 import { TextureCube } from './SceneObjects/TextureCube';
 
 export class ExampleScene extends Scene {

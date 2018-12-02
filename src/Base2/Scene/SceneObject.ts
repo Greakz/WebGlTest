@@ -1,8 +1,8 @@
 import { Mat4 } from '../Math/Matrix/mat';
-import { HasLog } from '../Singleton/HasSingletons';
+import { HasLog, HasSingletons } from '../Singleton/HasSingletons';
 import { Scene } from './Scene';
 
-abstract class SceneObjectCore extends HasLog {
+abstract class SceneObjectCore extends HasSingletons {
 
     protected parent: Scene | SceneObject;
     constructor(parent: Scene | SceneObject) {
