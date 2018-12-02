@@ -1,6 +1,6 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
-import { Transformation } from './Model/Transformation';
+import { Transformation } from './Transformation';
 
 export class DrawObject extends SceneObject {
     private initDone: boolean = false;

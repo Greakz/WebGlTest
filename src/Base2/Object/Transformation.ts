@@ -1,10 +1,10 @@
-import { Vec3 } from '../../Math/Vector/vec';
-import { multiplyArrayOfMatrices } from '../../Math/Matrix/multiply';
-import { getScalingMatrix } from '../../Math/Matrix/scaling';
-import { getRotationXMatrix, getRotationYMatrix, getRotationZMatrix } from '../../Math/Matrix/rotation';
-import { radians } from '../../Math/radians';
-import { getTranslationMatrix } from '../../Math/Matrix/translation';
-import { Mat4 } from '../../Math/Matrix/mat';
+import { Vec3 } from '../Math/Vector/vec';
+import { multiplyArrayOfMatrices } from '../Math/Matrix/multiply';
+import { getScalingMatrix } from '../Math/Matrix/scaling';
+import { getRotationXMatrix, getRotationYMatrix, getRotationZMatrix } from '../Math/Matrix/rotation';
+import { radians } from '../Math/radians';
+import { getTranslationMatrix } from '../Math/Matrix/translation';
+import { Mat4 } from '../Math/Matrix/mat';
 
 
 export class Transformation {

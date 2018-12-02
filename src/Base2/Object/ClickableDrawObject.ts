@@ -1,8 +1,8 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
-import { Transformation } from './Model/Transformation';
+import { Transformation } from './Transformation';
 import { ClickAble } from './Implements/Clickable';
-import { HitBox } from './Model/HitBox/HitBox';
+import { HitBox } from './Model2/HitBox/HitBox';
 import { Vec3 } from '../Math/Vector/vec';
 import { Canvas } from '../Singleton/Canvas';
 import CanvasSingleton from '../Singleton/CanvasSingleton';

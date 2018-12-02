@@ -1,5 +1,5 @@
 import { ArrayBufferData } from '../DataArrays/ArrayBufferData';
-import { Asset } from './TextureSource';
+import { Asset } from '../Asset/Asset';
 import { HasSingletons } from '../../../Singleton/HasSingletons';
 import { Shader } from '../../../Shader/Shader';
 

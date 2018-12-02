@@ -1,5 +1,5 @@
-import { HitBox } from '../../../Base2/Object/Model/HitBox/HitBox';
-import { getHitBoxPolygonsFromVertexAndIndices } from '../../../Base2/Object/Model/HitBox/util';
+import { HitBox } from '../../../Base2/Object/Model2/HitBox/HitBox';
+import { getHitBoxPolygonsFromVertexAndIndices } from '../../../Base2/Object/Model2/HitBox/util';
 
 export class CubeHitBox extends HitBox {
 

@@ -1,5 +1,5 @@
 import { TextureMap } from '../../../../../Base2/Object/Model2/Texture/TextureMap';
-import { Asset } from '../../../../../Base2/Object/Model2/Texture/TextureSource';
+import { Asset } from '../../../../../Base2/Object/Model2/Asset/Asset';
 import { ArrayBufferData } from '../../../../../Base2/Object/Model2/DataArrays/ArrayBufferData';
 import { WoodAsset } from '../../../Assets/WoodAsset';
 
