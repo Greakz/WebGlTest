@@ -1,6 +1,6 @@
 import { ShaderProvider } from './ShaderProvider';
 import { Shader } from '../Shader/Shader';
-import { ShaderLoader } from './ShaderLoader.util';
+import { ShaderLoader } from './ShaderLoader2.util';
 import { Log } from './Log';
 import LogSingleton from './LogSingleton';
 
@@ -39,17 +39,16 @@ var VBOProviderSingleton = (function () {
             Log.info('ShaderProvider', 'Missing Shader: ' + shader.shader_identifier + '!');
             ShaderLoader.readTextFile(
                 shader.shader_identifier,
-                (shaderContent: string) => {
-                    ShaderLoader.shaderToDom(shaderContent, shader.shader_identifier);
-
-                    ShaderLoader.attachAndLinkShader(shader);
-
+                (compiledProgram: WebGLProgram, gl: WebGL2RenderingContext) => {
+                    shader.setProgram(compiledProgram, gl);
                     loaded_shaders.push({
                         shader: shader,
                         identifier: shader.shader_identifier,
                     });
+                    console.log('in async')
                 }
             );
+            console.log('behind async')
             return shader;
         }
 

@@ -1,10 +1,6 @@
 abstract class ShaderCore {
-    protected vertexShader: WebGLShader;
-    protected fragmentShader: WebGLShader;
     protected compiledProgram: WebGLProgram;
-    setProgram(vs: WebGLShader, fs: WebGLShader, cp: WebGLProgram, GL: WebGL2RenderingContext) {
-        this.vertexShader = vs;
-        this.fragmentShader = fs;
+    setProgram(cp: WebGLProgram, GL: WebGL2RenderingContext) {
         this.compiledProgram = cp;
         this.bindUniformLocations(GL);
         this.bindAttributeLocations(GL);
