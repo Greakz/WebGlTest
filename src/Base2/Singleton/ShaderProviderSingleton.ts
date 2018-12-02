@@ -1,6 +1,6 @@
 import { ShaderProvider } from './ShaderProvider';
 import { Shader } from '../Shader/Shader';
-import { ShaderLoader } from './ShaderLoader2.util';
+import { ShaderLoader } from './ShaderLoader.util';
 import { Log } from './Log';
 import LogSingleton from './LogSingleton';
 
