@@ -12,8 +12,8 @@ export class TextureShader extends Shader {
     uf_color: WebGLUniformLocation;
     bindUniformLocations(GL: WebGL2RenderingContext) {
         this.uf_modelMatrix = GL.getUniformLocation(this.compiledProgram, "modelMatrix");
-        this.uf_projectionMatrix = GL.getUniformLocation(this.compiledProgram, "projectionMatrix");
-        this.uf_uSample = GL.getUniformLocation(this.compiledProgram, "uSample");
+        this.uf_projectionMatrix = GL.getUniformLocation(this.compiledProgram, "viewMatrix");
+        this.uf_uSample = GL.getUniformLocation(this.compiledProgram, "uSampler");
         this.uf_color = GL.getUniformLocation(this.compiledProgram, "color");
     }
     attr_position: number;

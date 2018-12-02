@@ -6,7 +6,7 @@ import { WoodTexture } from '../Texture/WoodTexture';
 const yGrid = 0.0001;
 
 export class TextureCubeVao extends Vao<TextureShader> {
-    vao_identifier: string = 'cube';
+    vao_identifier: string = 'cubet';
     protected vertices: number[] = [
         // vordere Fläche
         -0.5, -0.5, 0.5,

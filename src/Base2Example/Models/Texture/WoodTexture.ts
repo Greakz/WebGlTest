@@ -45,8 +45,8 @@ export class WoodTexture extends Texture {
         this.buffer = GL.createBuffer();
         GL.bindBuffer(GL.ARRAY_BUFFER, this.buffer);
         GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(this.texture_coordinates), GL.STATIC_DRAW);
-        GL.enableVertexAttribArray(shader.texture_position);
         GL.vertexAttribPointer(shader.texture_position, 2, GL.FLOAT, false, 0, 0);
+        GL.enableVertexAttribArray(shader.texture_position);
     }
 
     bindTexture(GL: WebGL2RenderingContext, shader: TextureShader) {

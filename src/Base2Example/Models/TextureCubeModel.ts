@@ -22,7 +22,6 @@ export class TextureCubeModel extends Model {
 
     render(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4) {
         if(this.texture.isReady()) {
-            console.log('render')
             GL.bindVertexArray(this.vao.get());
 
             GL.useProgram(this.vao.shader.getProgram());
