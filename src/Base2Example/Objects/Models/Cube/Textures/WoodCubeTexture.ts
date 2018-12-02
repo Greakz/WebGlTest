@@ -1,6 +1,6 @@
-import { TextureMap } from '../../../../../Base2/Object/Model2/Texture/TextureMap';
-import { Asset } from '../../../../../Base2/Object/Model2/Asset/Asset';
-import { ArrayBufferData } from '../../../../../Base2/Object/Model2/DataArrays/ArrayBufferData';
+import { TextureMap } from '../../../../../Base2/Object/Model/Texture/TextureMap';
+import { Asset } from '../../../../../Base2/Object/Model/Asset/Asset';
+import { ArrayBufferData } from '../../../../../Base2/Object/Model/DataArrays/ArrayBufferData';
 import { WoodAsset } from '../../../Assets/WoodAsset';
 
 export class WoodCubeTexture extends TextureMap {

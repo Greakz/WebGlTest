@@ -1,4 +1,4 @@
-import { HitBox } from '../Model2/HitBox/HitBox';
+import { HitBox } from '../Model/HitBox/HitBox';
 import { Transformation } from '../Transformation';
 
 export interface HitAble {

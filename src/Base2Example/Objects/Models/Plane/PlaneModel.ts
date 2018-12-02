@@ -1,5 +1,5 @@
-import { Model } from '../../../../Base2/Object/Model2/Model';
-import { TextureMap } from '../../../../Base2/Object/Model2/Texture/TextureMap';
+import { Model } from '../../../../Base2/Object/Model/Model';
+import { TextureMap } from '../../../../Base2/Object/Model/Texture/TextureMap';
 import { mat4ToF32 } from '../../../../Base2/Math/Matrix/matTo';
 import { Mat4 } from '../../../../Base2/Math/Matrix/mat';
 import { Vec4 } from '../../../../Base2/Math/Vector/vec';

@@ -1,7 +1,7 @@
-import { Model } from '../../../../Base2/Object/Model2/Model';
+import { Model } from '../../../../Base2/Object/Model/Model';
 import { TextureShader } from '../../../Shader/TextureShader';
 import { CubeMesh } from '../../Meshes/CubeMesh';
-import { TextureMap } from '../../../../Base2/Object/Model2/Texture/TextureMap';
+import { TextureMap } from '../../../../Base2/Object/Model/Texture/TextureMap';
 import { WoodCubeTexture } from './Textures/WoodCubeTexture';
 import { mat4ToF32 } from '../../../../Base2/Math/Matrix/matTo';
 import { Mat4 } from '../../../../Base2/Math/Matrix/mat';

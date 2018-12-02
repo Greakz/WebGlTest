@@ -1,6 +1,6 @@
-import { Mesh } from '../../../Base2/Object/Model2/Mesh/Mesh';
-import { ArrayBufferData } from '../../../Base2/Object/Model2/DataArrays/ArrayBufferData';
-import { ArrayElementBufferData } from '../../../Base2/Object/Model2/DataArrays/ArrayElementBufferData';
+import { Mesh } from '../../../Base2/Object/Model/Mesh/Mesh';
+import { ArrayBufferData } from '../../../Base2/Object/Model/DataArrays/ArrayBufferData';
+import { ArrayElementBufferData } from '../../../Base2/Object/Model/DataArrays/ArrayElementBufferData';
 
 export class CubeMesh extends Mesh {
     mesh_identifier: string = 'cube-mesh';

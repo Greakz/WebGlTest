@@ -3,7 +3,7 @@ import CanvasSingleton from './CanvasSingleton';
 import { Log } from './Log';
 import LogSingleton from './LogSingleton';
 import { AssetProvider } from './AssetProvider';
-import { Asset } from '../Object/Model2/Asset/Asset';
+import { Asset } from '../Object/Model/Asset/Asset';
 
 var AssetProviderSingleton = (function () {
     /**

@@ -3,7 +3,7 @@ import CanvasSingleton from './CanvasSingleton';
 import { Log } from './Log';
 import LogSingleton from './LogSingleton';
 import { MeshProvider } from './MeshProvider';
-import { Mesh } from '../Object/Model2/Mesh/Mesh';
+import { Mesh } from '../Object/Model/Mesh/Mesh';
 
 var AssetProviderSingleton = (function () {
     /**
