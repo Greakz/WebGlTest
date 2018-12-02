@@ -9,7 +9,7 @@ export class TextureCubeModel extends Model {
 
     protected vao: TextureCubeVao;
     texture: WoodTexture;
-    color: Vec4 = {x: 0, y: 0, z: 0, w: 0};
+    color: Vec4 = {x: 1, y: 0.5, z: 0.5, w: 1};
 
     constructor() {
         super();
@@ -29,10 +29,7 @@ export class TextureCubeModel extends Model {
             GL.uniformMatrix4fv(this.vao.shader.uf_projectionMatrix, false, mat4ToF32(projMat));
             GL.uniform4f(this.vao.shader.uf_color, this.color.x, this.color.y, this.color.z, this.color.w);
 
-            // bind texture
-            GL.activeTexture(GL.TEXTURE0);
-            GL.bindTexture(GL.TEXTURE_2D, this.texture.texture);
-            GL.uniform1i(this.vao.shader.uf_uSample, 0);
+            this.texture.bindTexture(GL, this.vao.shader);
 
             GL.drawElements(GL.TRIANGLES, 36, GL.UNSIGNED_SHORT, 0);
         }

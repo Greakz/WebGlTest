@@ -43,8 +43,8 @@ export class ExampleScene extends Scene {
         GL.enable(GL.CULL_FACE);
         GL.cullFace(GL.BACK);
 
-        GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
         GL.enable(GL.BLEND);
+        GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
 
         GL.clearColor(0.35, 0.35, 0.35, 1.0);
         GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);

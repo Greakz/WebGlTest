@@ -6,7 +6,7 @@
       uniform sampler2D uSampler;
 
       void main(void) {
-        gl_FragColor = texture2D(uSampler, vTextureCoord);
+        gl_FragColor = (vColor * texture2D(uSampler, vTextureCoord));
       }
 </script>
 <script id="texture-vs" type="x-shader/x-vertex">
