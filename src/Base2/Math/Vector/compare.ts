@@ -1,5 +1,4 @@
-import { Vec3 } from '../../../3DScene/Base/MathTypes/Types/vectors';
-import { Vec4 } from './vec';
+import { Vec3, Vec4 } from './vec';
 
 export function compareVec3AGreaterB(a: Vec3, b: Vec3) {
     return (

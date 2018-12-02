@@ -4,13 +4,14 @@ import { multiplyMatrices } from '../Math/Matrix/multiply';
 import { lookAtMatrix } from '../Math/Matrix/lookAt';
 import { getPerspectiveMatrix } from '../Math/Matrix/perspective';
 import { radians } from '../Math/radians';
-import { identity } from '../Math/Matrix/identity';
-import { crossProductVec3, normalizeVec3, subtractVec3s } from '../../3DScene/Base/MathTypes/vector.util';
 import { scaleVec3 } from '../Math/Vector/scale';
 import { addVec3 } from '../Math/Vector/add';
 import { Ray } from '../Math/Ray/Ray';
 import { HasLog } from '../Singleton/HasSingletons';
 import { getScalingMatrix } from '../Math/Matrix/scaling';
+import { normalizeVec3 } from '../Math/Vector/normalize';
+import { subtractVec3 } from '../Math/Vector/subtract';
+import { crossProductVec3 } from '../Math/Vector/crossProduct';
 
 abstract class CameraCore extends HasLog {
     protected perspective_matrix: Mat4;
@@ -119,7 +120,7 @@ abstract class CameraCore extends HasLog {
             mouse_x /= (this.screenWidth / 2);
 
             // vectors
-            let view: Vec3 = subtractVec3s(this.target, this.position);
+            let view: Vec3 = subtractVec3(this.target, this.position);
             view = normalizeVec3(view);
 
             let horiz: Vec3 = crossProductVec3(view, this.up);
@@ -145,7 +146,7 @@ abstract class CameraCore extends HasLog {
                 positionToNearPlaneCenter
             );
             let pos: Vec3 = addVec3(addVec3(nearPlaneCenter, xPosOnNearPlane), yPosOnNearPlane);
-            let direction: Vec3 = subtractVec3s(pos, this.position);
+            let direction: Vec3 = subtractVec3(pos, this.position);
 
             return {
                 position: pos,

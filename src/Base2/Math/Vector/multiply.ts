@@ -1,7 +1,6 @@
 import { Mat4 } from '../Matrix/mat';
-import { Vec4 } from './vec';
+import { Vec3, Vec4 } from './vec';
 import { mat4ToFlat } from '../Matrix/matTo';
-import { Vec3 } from '../../../3DScene/Base/MathTypes/Types/vectors';
 
 export function multiplyMat4Vec3(matrixIn: Mat4, pointIn: Vec3): Vec3 {
     const res: Vec4 =  multiplyMat4Vec4(matrixIn, {...pointIn, w: 1});

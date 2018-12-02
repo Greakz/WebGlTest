@@ -1,6 +1,5 @@
-import { Vec3 } from '../../../3DScene/Base/MathTypes/Types/vectors';
 import { lengthVec3, lengthVec4 } from './length';
-import { Vec4 } from './vec';
+import { Vec3, Vec4 } from './vec';
 
 export function normalizeVec3(vec: Vec3): Vec3 {
     const length = lengthVec3(vec);

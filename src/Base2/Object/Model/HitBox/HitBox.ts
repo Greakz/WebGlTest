@@ -5,7 +5,6 @@ import { Ray } from '../../../Math/Ray/Ray';
 import { multiplyMat4Vec3 } from '../../../Math/Vector/multiply';
 import { compareVec3AGreaterB } from '../../../Math/Vector/compare';
 import { subtractVec3 } from '../../../Math/Vector/subtract';
-import { subtractVec3s } from '../../../../3DScene/Base/MathTypes/vector.util';
 var intersect = require('ray-triangle-intersection')
 
 export class HitBox {
@@ -23,7 +22,7 @@ export class HitBox {
                 const result = intersect([], pt, dir, tri);
                 if(result !== null) {
                     let res: Vec3 = {x: result[0], y: result[1], z: result[2]};
-                    if(acc === null || compareVec3AGreaterB(subtractVec3(acc, camPos), subtractVec3s(res, camPos))) {
+                    if(acc === null || compareVec3AGreaterB(subtractVec3(acc, camPos), subtractVec3(res, camPos))) {
                         return res
                     }
                 }

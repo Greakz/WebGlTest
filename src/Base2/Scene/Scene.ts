@@ -9,7 +9,6 @@ import { TargetAble } from '../Object/Implements/TargetAble';
 import { Vec2, Vec3 } from '../Math/Vector/vec';
 import { Ray } from '../Math/Ray/Ray';
 import { isHitAble } from '../Object/Implements/HitAble';
-import { subtractVec3s } from '../../3DScene/Base/MathTypes/vector.util';
 import { compareVec3AGreaterB } from '../Math/Vector/compare';
 import { subtractVec3 } from '../Math/Vector/subtract';
 
@@ -79,7 +78,7 @@ class SceneCore extends HasSingletons {
             (acc: Vec3 | null, hitObject: TargetAble, index: number) => {
                 let checkHit: Vec3 | null = hitObject.hitBox.checkHit(mouseRay, hitObject.transformation.getMatrix(), this.camera.getPosition());
                 if (checkHit !== null) {
-                    if (acc !== null && compareVec3AGreaterB(subtractVec3(acc, mouseRay.position), subtractVec3s(checkHit, mouseRay.position))) {
+                    if (acc !== null && compareVec3AGreaterB(subtractVec3(acc, mouseRay.position), subtractVec3(checkHit, mouseRay.position))) {
                         this.hoveredObjectIndex = index;
                         return checkHit;
                     } else if(acc === null) {
