@@ -19,7 +19,11 @@ export class TextureCube extends ClickAbleDrawObject {
     }
 
     update(time) {
-
+        if(this.isHovered) {
+            this.model.color = {x: 1, y: 0.5, z: 0.5, w: 1.0};
+        }else {
+            this.model.color = {x: 1, y: 1, z: 1, w: 0.9};
+        }
     }
     render(GL: WebGL2RenderingContext, projMat: Mat4) {
         this.model.render(GL, projMat, this.transformation.getMatrix());
