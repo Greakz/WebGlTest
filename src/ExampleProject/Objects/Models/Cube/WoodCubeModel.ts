@@ -12,7 +12,7 @@ export class WoodCubeModel extends Model<TextureShader> {
     shader: TextureShader = WoodCubeModel.ShaderProvider.getShader(new TextureShader());
     mesh: CubeMesh = WoodCubeModel.MeshProvider.getMesh(new CubeMesh());
     textures: TextureMap[] = [
-        new WoodCubeTexture()
+        new WoodCubeTexture(),
     ];
     color: Vec4 = {x: 1.0, y: 1.0, z: 1.0, w: 1.0};
 
