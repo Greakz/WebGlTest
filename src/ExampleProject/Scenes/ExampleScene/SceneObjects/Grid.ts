@@ -50,12 +50,24 @@ export class Grid extends ClickAbleDrawObject{
         this.x = Math.floor(this.hoverPoint.x + 0.5);
         this.z = Math.floor(this.hoverPoint.z + 0.5)
     }
+    onRightDown() {
+        this.x = Math.floor(this.hoverPoint.x + 0.5);
+        this.z = Math.floor(this.hoverPoint.z + 0.5)
+    }
 
     onLeftClick() {
         let x = Math.floor(this.hoverPoint.x + 0.5), z = Math.floor(this.hoverPoint.z + 0.5);
         Grid.Log.info('Grid', 'I got Left Clicked on ' + x + '/' + z);
         if(x === this.x && z === this.z) {
-            this.parent.addObjectAt(x, z);
+            this.parent.addObjectAt(x, z, true);
+        }
+    }
+    onRightClick() {
+        let x = Math.floor(this.hoverPoint.x + 0.5), z = Math.floor(this.hoverPoint.z + 0.5);
+        Grid.Log.info('Grid', 'I got Right Clicked on ' + x + '/' + z);
+        if(x === this.x && z === this.z) {
+            console.log('add s')
+            this.parent.addObjectAt(x, z, false);
         }
     }
 

@@ -2,7 +2,8 @@ import { Scene } from '../../../BaseLib/Scene/Scene';
 import { ExampleCamera } from './ExampleCamera';
 import { Mat4 } from '../../../BaseLib/Math/Matrix/mat';
 import { Grid } from './SceneObjects/Grid';
-import { TextureCube } from './SceneObjects/TextureCube';
+import { WoodCube } from './SceneObjects/WoodCube';
+import { StoneCube } from './SceneObjects/StoneCube';
 
 export class ExampleScene extends Scene {
 
@@ -17,8 +18,15 @@ export class ExampleScene extends Scene {
         this.addSceneObject(new Grid(this));
     }
 
-    addObjectAt(x: number, z: number) {
-        const newObj = new TextureCube(this);
+    addObjectAt(x: number, z: number, wood: boolean) {
+        let newObj;
+        if(wood) {
+            console.log('add wood object')
+            newObj = new WoodCube(this);
+        } else {
+            console.log('add stone object')
+            newObj = new StoneCube(this);
+        }
         newObj.initSelfAndChildren();
         newObj.transformation.moveZ(z);
         newObj.transformation.moveX(x);

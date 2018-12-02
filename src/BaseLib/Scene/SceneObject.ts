@@ -1,6 +1,6 @@
-import { Mat4 } from '../Math/Matrix/mat';
-import { HasLog, HasSingletons } from '../Singleton/HasSingletons';
 import { Scene } from './Scene';
+import { HasSingletons } from '../Singleton/HasSingletons';
+import { Mat4 } from '../Math/Matrix/mat';
 
 abstract class SceneObjectCore extends HasSingletons {
 

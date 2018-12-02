@@ -39,7 +39,7 @@ var Canvas = (function () {
          *  PRIVATE METHODS OF THE SINGLETON
          */
         function initDom() {
-            const content: string = '<div id="container"><canvas id="canvas" /></div><div id="fps"></div><div id="overlay"></div><div id="shader-space" />';
+            const content: string = '<div id="container"><canvas id="canvas" /></div><div id="fps"></div><div id="overlay"></div>';
             const root: HTMLElement | null = document.getElementById('root');
             if (root === null) {
                 Log.error('Canvas', 'Cant find root node!', true);

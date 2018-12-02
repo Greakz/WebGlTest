@@ -1,11 +1,11 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
 import { Transformation } from './Transformation';
-import { ClickAble } from './Implements/Clickable';
-import { HitBox } from './Model/HitBox/HitBox';
 import { Vec3 } from '../Math/Vector/vec';
 import { Canvas } from '../Singleton/Canvas';
 import CanvasSingleton from '../Singleton/CanvasSingleton';
+import { ClickAble } from './Implements/Clickable';
+import { HitBox } from './Model/HitBox/HitBox';
 
 export class ClickAbleDrawObject extends SceneObject implements ClickAble {
     private initDone: boolean = false;

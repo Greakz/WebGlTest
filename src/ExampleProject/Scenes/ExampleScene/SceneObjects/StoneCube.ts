@@ -5,14 +5,15 @@ import { ClickAbleDrawObject } from '../../../../BaseLib/Object/ClickableDrawObj
 import { ExampleScene } from '../ExampleScene';
 import { CubeHitBox } from '../../../Objects/HitBox/CubeHitBox';
 import { WoodCubeModel } from '../../../Objects/Models/Cube/WoodCubeModel';
+import { StoneCubeModel } from '../../../Objects/Models/Cube/StoneCubeModel';
 
-export class TextureCube extends ClickAbleDrawObject {
+export class StoneCube extends ClickAbleDrawObject {
 
-    private model: WoodCubeModel;
+    private model: StoneCubeModel;
     protected parent: ExampleScene;
 
     init() {
-        this.model = new WoodCubeModel()
+        this.model = new StoneCubeModel();
         this.model.createModel()
     }
 
@@ -20,7 +21,7 @@ export class TextureCube extends ClickAbleDrawObject {
         if (this.isHovered) {
             this.model.color = {x: 1, y: 0.5, z: 0.5, w: 1.0};
         } else {
-            this.model.color = {x: 1, y: 1, z: 1, w: 0.9};
+            this.model.color = {x: 1, y: 1, z: 1, w: 1.0};
         }
     }
 
