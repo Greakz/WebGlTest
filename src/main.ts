@@ -1,10 +1,10 @@
-import { Canvas } from './Base2/Singleton/Canvas'
-import { Log } from './Base2/Singleton/Log'
-import CanvasSingleton from './Base2/Singleton/CanvasSingleton'
-import LogSingleton from './Base2/Singleton/LogSingleton'
-import { State } from './Base2/State/StateManager';
-import { ExampleStateManager } from './Base2Example/ExampleStateManager';
-import { ExampleScene } from './Base2Example/Scenes/ExampleScene/ExampleScene';
+import { Canvas } from './BaseLib/Singleton/Canvas'
+import { Log } from './BaseLib/Singleton/Log'
+import CanvasSingleton from './BaseLib/Singleton/CanvasSingleton'
+import LogSingleton from './BaseLib/Singleton/LogSingleton'
+import { State } from './BaseLib/State/StateManager';
+import { ExampleStateManager } from './ExampleProject/ExampleStateManager';
+import { ExampleScene } from './ExampleProject/Scenes/ExampleScene/ExampleScene';
 /*
     MAIN.TS
     This file is the Entry point of our Application.
