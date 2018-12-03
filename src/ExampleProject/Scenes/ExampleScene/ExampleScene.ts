@@ -18,8 +18,8 @@ export class ExampleScene extends Scene {
         );
         this.addSceneObject(new Grid(this));
         let lightSource = new DirectionalLight(
-            {x: 1, y: 0.5, z: 1},
-            {x: 1.0, y: 0.0, z: 0.0, w: 1}
+            {x: 1, y: 1, z: 1},
+            {x: 1.0, y: 1.0, z: 1, w: 1}
         );
         let lightFromCube = new StoneCube(this);
         lightFromCube.transformation.moveX(lightSource.direction.x).moveY(lightSource.direction.y).moveZ(lightSource.direction.z);
@@ -27,8 +27,8 @@ export class ExampleScene extends Scene {
         this.sceneLightning.addDirectionalLight(lightSource);
 
         this.sceneLightning.addDirectionalLight(new DirectionalLight(
-            {x: 1, y: -0.5, z: -1},
-            {x: 0.0, y: 0.0, z: 1.0, w: 1}
+            {x: -1, y: -1, z: -1},
+            {x: 0.0, y: 0, z: 1.0, w: 1}
         ));
 
     }

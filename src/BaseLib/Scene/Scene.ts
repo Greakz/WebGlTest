@@ -60,6 +60,7 @@ class SceneCore extends HasSingletons {
         obj.setId(this.idCreationIndex);
         this.idCreationIndex++;
         this.sceneObjects.push(obj);
+        console.log(this.sceneObjects.length)
         if (isHitAble(obj)) {
             this.addToHitObjects(obj);
         }

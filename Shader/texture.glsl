@@ -49,13 +49,13 @@ uniform int directionalLightsCount;
 // uniform vec3 punctualLights[32];
 // uniform int punctualLightsCount;
 
-vec4 calculateDirectionalLight() {
+vec4 getDiffuseDirectionalLight() {
     float summedDifferedLightStrenght = 0.0;
     vec4 summedDiffLight = vec4(0.0);
     for(int i = 0; i < directionalLightsCount; i++) {
 
         vec3 dl_direction = vec3(directionalLightDirections[i * 3], directionalLightDirections[i * 3 + 1], directionalLightDirections[i * 3 + 2]);
-        float directional = dot(dl_direction, faceNormal) / (length(faceNormal) * length(dl_direction));
+        float directional = dot(faceNormal, dl_direction);
 
         directional *= -1.0;
 
@@ -67,15 +67,12 @@ vec4 calculateDirectionalLight() {
             (directionalLightColors[i * 4 + 3] * summedDifferedLightStrenght) + summedDiffLight.w
         );
     }
-    summedDifferedLightStrenght /= float(directionalLightsCount);
-    summedDiffLight /= vec4(float(directionalLightsCount));
-    // summedDiffLight *= vec4(summedDifferedLightStrenght);
     return summedDiffLight;
 }
 
 void main(void) {
-    vec4 summedDiffLight = calculateDirectionalLight();
+    vec4 diffuseLight = getDiffuseDirectionalLight();
 
-    vec4 texelColor = texture(uSampler, vTextureCoord);
-    fragmentColor = vColor * vec4((summedDiffLight.rgb + texelColor.rgb) / vec3(2.0), texelColor.a);
+    vec4 texelColor = vColor * texture(uSampler, vTextureCoord);
+    fragmentColor = vec4((diffuseLight.rgb * texelColor.rgb), texelColor.a);
 }

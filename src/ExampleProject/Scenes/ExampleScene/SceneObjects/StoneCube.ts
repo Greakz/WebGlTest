@@ -20,9 +20,9 @@ export class StoneCube extends ClickAbleDrawObject {
 
     update(time) {
         if (this.isHovered) {
-            this.model.color = {x: 1, y: 0.5, z: 0.5, w: 1.0};
+            this.model.color = {x: 0.5, y: 0.5, z: 0.5, w: 1.0};
         } else {
-            this.model.color = {x: 1, y: 1, z: 1, w: 1.0};
+            this.model.color = {x: 0.5, y: 1, z: 1, w: 1.0};
         }
     }
 
