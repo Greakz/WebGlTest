@@ -5,6 +5,7 @@ import { ClickAbleDrawObject } from '../../../../BaseLib/Object/ClickableDrawObj
 import { ExampleScene } from '../ExampleScene';
 import { CubeHitBox } from '../../../Objects/HitBox/CubeHitBox';
 import { WoodCubeModel } from '../../../Objects/Models/Cube/WoodCubeModel';
+import { SceneLightning } from '../../../../BaseLib/Light/SceneLightning';
 
 export class WoodCube extends ClickAbleDrawObject {
 
@@ -24,8 +25,8 @@ export class WoodCube extends ClickAbleDrawObject {
         }
     }
 
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {
-        this.model.renderModel(GL, projMat, this.transformation.getMatrix());
+    render(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
+        this.model.renderModel(GL, projMat, this.transformation.getMatrix(), sceneLightning);
 
     }
 

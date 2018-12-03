@@ -7,6 +7,7 @@ import { ClickAbleDrawObject } from '../../../../BaseLib/Object/ClickableDrawObj
 import { ExampleScene } from '../ExampleScene';
 import { PlaneModel } from '../../../Objects/Models/Plane/PlaneModel';
 import { GridModel } from '../../../Objects/Models/Grid/GridModel';
+import { SceneLightning } from '../../../../BaseLib/Light/SceneLightning';
 
 export class Grid extends ClickAbleDrawObject{
 
@@ -31,16 +32,16 @@ export class Grid extends ClickAbleDrawObject{
 
     update(time) {
     }
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {
-        this.modelPlane.renderModel(GL, projMat, this.transformation.getMatrix());
-        this.modelGrid.renderModel(GL, projMat, this.transformation.getMatrix());
+    render(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
+        this.modelPlane.renderModel(GL, projMat, this.transformation.getMatrix(), sceneLightning);
+        this.modelGrid.renderModel(GL, projMat, this.transformation.getMatrix(), sceneLightning);
         if(this.isHovered) {
             let x = Math.floor(this.hoverPoint.x + 0.5), z = Math.floor(this.hoverPoint.z + 0.5);
             const hoverMatrix = multiplyArrayOfMatrices([
                 this.transformation.getMatrix(),
                 getTranslationMatrix(x, 0.001, z)
                 ]);
-            this.hoverModel.renderModel(GL, projMat, hoverMatrix);
+            this.hoverModel.renderModel(GL, projMat, hoverMatrix, sceneLightning);
         }
     }
 
@@ -66,7 +67,6 @@ export class Grid extends ClickAbleDrawObject{
         let x = Math.floor(this.hoverPoint.x + 0.5), z = Math.floor(this.hoverPoint.z + 0.5);
         Grid.Log.info('Grid', 'I got Right Clicked on ' + x + '/' + z);
         if(x === this.x && z === this.z) {
-            console.log('add s')
             this.parent.addObjectAt(x, z, false);
         }
     }

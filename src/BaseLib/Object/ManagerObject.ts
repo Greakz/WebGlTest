@@ -1,5 +1,6 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
+import { SceneLightning } from '../Light/SceneLightning';
 
 export class ManagerObject extends SceneObject{
     initSelfAndChildren() {
@@ -10,11 +11,11 @@ export class ManagerObject extends SceneObject{
 
         this.update(time)
     }
-    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
+    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
 
-        this.render(GL, projMat)
+        this.render(GL, projMat, sceneLightning)
     }
     init() {}
     update(time: number) {}
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {}
+    render(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {}
 }

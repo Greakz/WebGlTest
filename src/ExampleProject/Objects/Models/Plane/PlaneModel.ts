@@ -5,6 +5,7 @@ import { Mat4 } from '../../../../BaseLib/Math/Matrix/mat';
 import { Vec4 } from '../../../../BaseLib/Math/Vector/vec';
 import { ExampleShader } from '../../../Shader/ExampleShader';
 import { PlaneMesh } from '../../Meshes/PlaneMesh';
+import { SceneLightning } from '../../../../BaseLib/Light/SceneLightning';
 
 export class PlaneModel extends Model<ExampleShader> {
     model_identifier: string = 'plane';
@@ -18,7 +19,7 @@ export class PlaneModel extends Model<ExampleShader> {
         this.mesh = PlaneModel.MeshProvider.getMesh(new PlaneMesh(size));
     }
 
-    renderModel(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4) {
+    renderModel(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4, sceneLightning: SceneLightning) {
         GL.bindVertexArray(this.vao);
 
         GL.useProgram(this.shader.getProgram());

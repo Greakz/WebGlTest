@@ -11,10 +11,12 @@ import { Ray } from '../Math/Ray/Ray';
 import { isHitAble } from '../Object/Implements/HitAble';
 import { compareVec3AGreaterB } from '../Math/Vector/compare';
 import { subtractVec3 } from '../Math/Vector/subtract';
+import { SceneLightning } from '../Light/SceneLightning';
 
 class SceneCore extends HasSingletons {
     protected static MousePosition: MousePosition = MouseSingleton.getInstance();
     protected camera: Camera;
+    protected sceneLightning: SceneLightning = new SceneLightning();
     protected sceneObjects: SceneObject[] = [];
     protected hitObjects: TargetAble[] = [];
     protected sceneEvents: SceneEvent[] = [];
@@ -27,6 +29,7 @@ class SceneCore extends HasSingletons {
 
     updateSelfAndChildren(time: number) {
         this.camera.update(time);
+        this.sceneLightning.updateSelfAndChiildren(time);
         this.checkMouseHover();
         this.update(time);
         this.sceneObjects.forEach(sO => sO.updateSelfAndChildren(time));
@@ -34,9 +37,9 @@ class SceneCore extends HasSingletons {
 
     renderSelfAndChildren(GL: WebGL2RenderingContext) {
         const projMat: Mat4 = this.camera.getProjectionMatrix();
-        this.preRender(GL, projMat);
-        this.sceneObjects.forEach(sO => sO.renderSelfAndChildren(GL, projMat));
-        this.postRender(GL, projMat);
+        this.preRender(GL, projMat, this.sceneLightning);
+        this.sceneObjects.forEach(sO => sO.renderSelfAndChildren(GL, projMat, this.sceneLightning));
+        this.postRender(GL, projMat, this.sceneLightning);
     }
 
     init() {
@@ -45,10 +48,10 @@ class SceneCore extends HasSingletons {
     update(time: number) {
     }
 
-    preRender(GL: WebGL2RenderingContext, projMat: Mat4) {
+    preRender(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
     }
 
-    postRender(GL: WebGL2RenderingContext, projMat: Mat4) {
+    postRender(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
     }
 
     private idCreationIndex: number = 0;

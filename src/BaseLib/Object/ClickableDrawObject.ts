@@ -6,6 +6,7 @@ import { Canvas } from '../Singleton/Canvas';
 import CanvasSingleton from '../Singleton/CanvasSingleton';
 import { ClickAble } from './Implements/Clickable';
 import { HitBox } from './Model/HitBox/HitBox';
+import { SceneLightning } from '../Light/SceneLightning';
 
 export class ClickAbleDrawObject extends SceneObject implements ClickAble {
     private initDone: boolean = false;
@@ -25,10 +26,10 @@ export class ClickAbleDrawObject extends SceneObject implements ClickAble {
         }
     }
 
-    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
+    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
         if (this.initDone) {
 
-            this.render(GL, projMat);
+            this.render(GL, projMat, sceneLightning);
         }
     }
 
@@ -38,7 +39,7 @@ export class ClickAbleDrawObject extends SceneObject implements ClickAble {
     update(time: number) {
     }
 
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {
+    render(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
     }
 
     // ClickAble Interface

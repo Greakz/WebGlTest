@@ -4,6 +4,7 @@ import { Mat4 } from '../../../BaseLib/Math/Matrix/mat';
 import { Grid } from './SceneObjects/Grid';
 import { WoodCube } from './SceneObjects/WoodCube';
 import { StoneCube } from './SceneObjects/StoneCube';
+import { DirectionalLight } from '../../../BaseLib/Light/DirectionalLight';
 
 export class ExampleScene extends Scene {
 
@@ -16,15 +17,14 @@ export class ExampleScene extends Scene {
             {x: 0, y: 0, z: 0}
         );
         this.addSceneObject(new Grid(this));
+        this.sceneLightning.addDirectionalLight(new DirectionalLight());
     }
 
     addObjectAt(x: number, z: number, wood: boolean) {
         let newObj;
         if(wood) {
-            console.log('add wood object')
             newObj = new WoodCube(this);
         } else {
-            console.log('add stone object')
             newObj = new StoneCube(this);
         }
         newObj.initSelfAndChildren();

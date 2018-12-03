@@ -1,6 +1,7 @@
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneObject } from '../Scene/SceneObject';
 import { Transformation } from './Transformation';
+import { SceneLightning } from '../Light/SceneLightning';
 
 export class DrawObject extends SceneObject {
     private initDone: boolean = false;
@@ -18,13 +19,13 @@ export class DrawObject extends SceneObject {
             this.update(time);
         }
     }
-    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
+    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
         if(this.initDone) {
 
-            this.render(GL, projMat);
+            this.render(GL, projMat, sceneLightning);
         }
     }
     init() {}
     update(time: number) {}
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {}
+    render(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {}
 }

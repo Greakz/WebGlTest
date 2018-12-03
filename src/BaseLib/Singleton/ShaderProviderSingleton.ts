@@ -45,10 +45,8 @@ var VBOProviderSingleton = (function () {
                         shader: shader,
                         identifier: shader.shader_identifier,
                     });
-                    console.log('in async')
                 }
             );
-            console.log('behind async')
             return shader;
         }
 

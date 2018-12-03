@@ -5,6 +5,7 @@ import { ArrayElementBufferData } from '../../../BaseLib/Object/Model/DataArrays
 export class CubeMesh extends Mesh {
     mesh_identifier: string = 'cube-mesh';
     attribute_pointer_name: string = 'vertexPosition';
+    normals_pointer_name: string = 'vertexNormals';
     vertex_coordinates: ArrayBufferData =
         new ArrayBufferData([
             -0.5, -0.5, 0.5,

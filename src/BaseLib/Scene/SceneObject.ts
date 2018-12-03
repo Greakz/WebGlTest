@@ -1,6 +1,7 @@
 import { Scene } from './Scene';
 import { HasSingletons } from '../Singleton/HasSingletons';
 import { Mat4 } from '../Math/Matrix/mat';
+import { SceneLightning } from '../Light/SceneLightning';
 
 abstract class SceneObjectCore extends HasSingletons {
 
@@ -25,10 +26,10 @@ export class SceneObject extends SceneObjectCore {
 
         this.update(time)
     }
-    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4) {
-        this.render(GL, projMat)
+    renderSelfAndChildren(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {
+        this.render(GL, projMat, sceneLightning)
     }
     init() {}
     update(time: number) {}
-    render(GL: WebGL2RenderingContext, projMat: Mat4) {}
+    render(GL: WebGL2RenderingContext, projMat: Mat4, sceneLightning: SceneLightning) {}
 }

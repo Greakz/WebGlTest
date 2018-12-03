@@ -5,6 +5,7 @@ import { Shader } from '../../Shader/Shader';
 import { Mat4 } from '../../Math/Matrix/mat';
 import { Canvas } from '../../Singleton/Canvas';
 import CanvasSingleton from '../../Singleton/CanvasSingleton';
+import { SceneLightning } from '../../Light/SceneLightning';
 
 export class Model<S extends Shader> extends HasSingletons {
 
@@ -37,15 +38,14 @@ export class Model<S extends Shader> extends HasSingletons {
         // build vao
 
 
-        this.mesh.bindBuffer(GL);
-        this.mesh.setAttributePointer(GL);
+        this.mesh.bindBufferAndSetAttributePointer(GL);
         this.textures.forEach((t: TextureMap) => t.bindBuffer(GL));
         this.textures.forEach((t: TextureMap) => t.setAttributePointer(GL));
 
         GL.bindVertexArray(null);
     }
 
-    renderModel(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4) {
+    renderModel(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4, sceneLightning: SceneLightning) {
        // Render Model
     }
 
