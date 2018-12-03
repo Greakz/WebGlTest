@@ -30,5 +30,6 @@ export class WoodCubeModel extends Model<TextureShader> {
         this.textures.forEach((t: TextureMap) => t.bindTexture(GL));
 
         GL.drawElements(GL.TRIANGLES, this.mesh.vertex_indices.data.length, GL.UNSIGNED_SHORT, 0);
+        this.mesh.drawNormals(GL, projMat, modelMat);
     }
 }

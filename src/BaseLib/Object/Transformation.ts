@@ -32,22 +32,22 @@ export class Transformation {
         ])
     }
 
-    moveX(offset: number) {this.translation.x += offset}
-    moveY(offset: number) {this.translation.y += offset}
-    moveZ(offset: number) {this.translation.z += offset}
+    moveX(offset: number) {this.translation.x += offset; return this;}
+    moveY(offset: number) {this.translation.y += offset; return this;}
+    moveZ(offset: number) {this.translation.z += offset; return this;}
 
-    rotateX(degree: number) {this.rotation.x = (this.rotation.x + degree) % 360}
-    rotateY(degree: number) {this.rotation.y = (this.rotation.y + degree) % 360}
-    rotateZ(degree: number) {this.rotation.z = (this.rotation.z + degree) % 360}
+    rotateX(degree: number) {this.rotation.x = (this.rotation.x + degree) % 360; return this;}
+    rotateY(degree: number) {this.rotation.y = (this.rotation.y + degree) % 360; return this;}
+    rotateZ(degree: number) {this.rotation.z = (this.rotation.z + degree) % 360; return this;}
 
-    scaleX(scale: number) {this.scaling.x *= scale;}
-    scaleY(scale: number) {this.scaling.y *= scale;}
-    scaleZ(scale: number) {this.scaling.y *= scale;}
+    scaleX(scale: number) {this.scaling.x *= scale; return this;}
+    scaleY(scale: number) {this.scaling.y *= scale; return this;}
+    scaleZ(scale: number) {this.scaling.y *= scale; return this;}
 
-    setTranslation(t: Vec3) {this.translation = t;}
+    setTranslation(t: Vec3) {this.translation = t; return this;}
     getTranslation(): Vec3 {return this.translation}
-    setRotation(r: Vec3) {this.rotation = r;}
+    setRotation(r: Vec3) {this.rotation = r; return this;}
     getRotation(): Vec3 {return this.rotation}
-    setScaling(s: Vec3) {this.scaling = s;}
+    setScaling(s: Vec3) {this.scaling = s; return this;}
     getScaling(): Vec3 {return this.scaling}
 }

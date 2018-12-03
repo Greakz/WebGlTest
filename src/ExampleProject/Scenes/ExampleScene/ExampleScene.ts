@@ -17,7 +17,20 @@ export class ExampleScene extends Scene {
             {x: 0, y: 0, z: 0}
         );
         this.addSceneObject(new Grid(this));
-        this.sceneLightning.addDirectionalLight(new DirectionalLight());
+        let lightSource = new DirectionalLight(
+            {x: 1, y: 0.5, z: 1},
+            {x: 1.0, y: 0.0, z: 0.0, w: 1}
+        );
+        let lightFromCube = new StoneCube(this);
+        lightFromCube.transformation.moveX(lightSource.direction.x).moveY(lightSource.direction.y).moveZ(lightSource.direction.z);
+        this.addSceneObject(lightFromCube);
+        this.sceneLightning.addDirectionalLight(lightSource);
+
+        this.sceneLightning.addDirectionalLight(new DirectionalLight(
+            {x: 1, y: -0.5, z: -1},
+            {x: 0.0, y: 0.0, z: 1.0, w: 1}
+        ));
+
     }
 
     addObjectAt(x: number, z: number, wood: boolean) {
@@ -30,12 +43,11 @@ export class ExampleScene extends Scene {
         newObj.initSelfAndChildren();
         newObj.transformation.moveZ(z);
         newObj.transformation.moveX(x);
-        newObj.transformation.moveY(0.5);
+        newObj.transformation.moveY(2.5);
         this.addSceneObject(newObj);
     }
 
     init() {
-
     }
 
     update(time: number) {

@@ -53,19 +53,23 @@ vec4 calculateDirectionalLight() {
     float summedDifferedLightStrenght = 0.0;
     vec4 summedDiffLight = vec4(0.0);
     for(int i = 0; i < directionalLightsCount; i++) {
+
         vec3 dl_direction = vec3(directionalLightDirections[i * 3], directionalLightDirections[i * 3 + 1], directionalLightDirections[i * 3 + 2]);
-        float directional = dot(faceNormal, dl_direction) / (length(faceNormal) * length(dl_direction));
-        summedDifferedLightStrenght += max(directional, 0.0);
+        float directional = dot(dl_direction, faceNormal) / (length(faceNormal) * length(dl_direction));
+
+        directional *= -1.0;
+
+        summedDifferedLightStrenght = max(directional, 0.0);
         summedDiffLight = vec4(
-            directionalLightColors[i * 4] + summedDiffLight.x,
-            directionalLightColors[i * 4 + 1] + summedDiffLight.y,
-            directionalLightColors[i * 4 + 2] + summedDiffLight.z,
-            directionalLightColors[i * 4 + 3] + summedDiffLight.w
+            (directionalLightColors[i * 4] * summedDifferedLightStrenght) + summedDiffLight.x,
+            (directionalLightColors[i * 4 + 1] * summedDifferedLightStrenght) + summedDiffLight.y,
+            (directionalLightColors[i * 4 + 2] * summedDifferedLightStrenght) + summedDiffLight.z,
+            (directionalLightColors[i * 4 + 3] * summedDifferedLightStrenght) + summedDiffLight.w
         );
     }
     summedDifferedLightStrenght /= float(directionalLightsCount);
     summedDiffLight /= vec4(float(directionalLightsCount));
-    summedDiffLight *= vec4(summedDifferedLightStrenght);
+    // summedDiffLight *= vec4(summedDifferedLightStrenght);
     return summedDiffLight;
 }
 
@@ -73,5 +77,5 @@ void main(void) {
     vec4 summedDiffLight = calculateDirectionalLight();
 
     vec4 texelColor = texture(uSampler, vTextureCoord);
-    fragmentColor = vColor * vec4(summedDiffLight.rgb * texelColor.rgb, texelColor.a);
+    fragmentColor = vColor * vec4((summedDiffLight.rgb + texelColor.rgb) / vec3(2.0), texelColor.a);
 }
