@@ -1,8 +1,7 @@
 import { Vec3, Vec4 } from '../Math/Vector/vec';
+import { Light } from './Light';
 
-export class PunctualLight {
+export class OmniLight extends Light{
     position: Vec3;
-    color: Vec4;
-    // any stuff for restricting shine area
     update(time: number) {}
 }

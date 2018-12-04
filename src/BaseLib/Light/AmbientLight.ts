@@ -1,6 +1,5 @@
-import { Vec3, Vec4 } from '../Math/Vector/vec';
+import { Light } from './Light';
 
-export class AmbientLight {
-    color: Vec4;
+export class AmbientLight  extends Light{
     update(time: number) {}
 }

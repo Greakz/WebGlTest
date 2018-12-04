@@ -1,14 +1,15 @@
 import { AmbientLight } from './AmbientLight';
 import { DirectionalLight } from './DirectionalLight';
-import { PunctualLight } from './PunctualLight';
+import { OmniLight } from './OmniLight';
 import { LightShader } from '../Shader/LightShader';
 import { HasLog } from '../Singleton/HasSingletons';
+import { Light } from './Light';
 
 export class SceneLightning extends HasLog {
 
     ambient_lights: AmbientLight[] = [];
     directional_lights: DirectionalLight[] = [];
-    punctual_lights: PunctualLight[] = [];
+    punctual_lights: OmniLight[] = [];
 
     private directional_light_directions: Float32Array = new Float32Array(12);
     private directional_light_colors: Float32Array = new Float32Array(16);
@@ -17,12 +18,21 @@ export class SceneLightning extends HasLog {
     addAmbientLight(ambient_light: AmbientLight) {
         this.ambient_lights.push(ambient_light);
     }
-    addDirectionalLight(directional_light: DirectionalLight) {
-        this.directional_lights.push(directional_light);
-        this.updateDirectionalLights();
+    addDirectionalLight(light: Light) {
+        if(light instanceof DirectionalLight) {
+            this.directional_lights.push(light);
+            this.updateDirectionalLights();
+        } else if(light instanceof AmbientLight) {
+            this.ambient_lights.push(light);
+        }
     }
-    addPunctualLight(puctual_light: PunctualLight) {
-        this.punctual_lights.push(puctual_light);
+
+    bindUniformLightBuffer() {
+
+    }
+
+    addOmniLight(omniLight: OmniLight) {
+        this.punctual_lights.push(omniLight);
     }
 
     updateDirectionalLights() {
@@ -34,7 +44,6 @@ export class SceneLightning extends HasLog {
                     colors.push(this.directional_lights[i].color.x);
                     colors.push(this.directional_lights[i].color.y);
                     colors.push(this.directional_lights[i].color.z);
-                    colors.push(this.directional_lights[i].color.w);
                     directions.push(this.directional_lights[i].direction.x);
                     directions.push(this.directional_lights[i].direction.y);
                     directions.push(this.directional_lights[i].direction.z);
@@ -59,7 +68,7 @@ export class SceneLightning extends HasLog {
         this.update(time);
         this.ambient_lights.forEach((al: AmbientLight) => al.update(time));
         this.directional_lights.forEach((al: DirectionalLight) => al.update(time));
-        this.punctual_lights.forEach((al: PunctualLight) => al.update(time));
+        this.punctual_lights.forEach((al: OmniLight) => al.update(time));
     }
 
     update(time: number) {}
