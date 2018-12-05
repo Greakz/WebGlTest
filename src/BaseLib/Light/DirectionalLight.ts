@@ -11,5 +11,6 @@ export class DirectionalLight extends Light{
         if(color !== undefined) {
             this.color = color;
         }
+        this.diffuse = {x: 0.5, y: 0.5, z: 0.5};
     }
 }

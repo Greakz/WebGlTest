@@ -6,6 +6,7 @@ import { Mat4 } from '../../Math/Matrix/mat';
 import { Canvas } from '../../Singleton/Canvas';
 import CanvasSingleton from '../../Singleton/CanvasSingleton';
 import { SceneLightning } from '../../Light/SceneLightning';
+import { Material } from './Material/Material';
 
 export class Model<S extends Shader> extends HasProvider {
 
@@ -18,6 +19,7 @@ export class Model<S extends Shader> extends HasProvider {
     shader: S;
     mesh: Mesh;
     textures: TextureMap[];
+    material: Material = new Material();
     /**
      * auto stuff
      */
@@ -25,6 +27,7 @@ export class Model<S extends Shader> extends HasProvider {
 
     createModel() {
         const GL: WebGL2RenderingContext = Model.Canvas.getGl();
+
         this.vao = GL.createVertexArray();
         GL.bindVertexArray(this.vao);
 
@@ -46,7 +49,7 @@ export class Model<S extends Shader> extends HasProvider {
     }
 
     renderModel(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4, sceneLightning: SceneLightning) {
-       // Render Model
+        // Render Model
     }
 
 }

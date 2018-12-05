@@ -29,6 +29,7 @@ class SceneCore extends HasProvider {
 
     updateSelfAndChildren(time: number) {
         this.camera.update(time);
+        this.sceneLightning.updateCamPos(this.camera);
         this.sceneLightning.updateSelfAndChildren(time);
         this.checkMouseHover();
         this.update(time);

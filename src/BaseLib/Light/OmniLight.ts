@@ -1,4 +1,4 @@
-import { Vec3, Vec4 } from '../Math/Vector/vec';
+import { Vec3 } from '../Math/Vector/vec';
 import { Light } from './Light';
 
 export class OmniLight extends Light {
@@ -11,6 +11,9 @@ export class OmniLight extends Light {
     }
 
     position: Vec3;
+    constant: number = 0.8; //propagation behaviors
+    linear: number = 0.19;
+    quadratic: number = 0.032;
 
     update(time: number) {
     }

@@ -7,6 +7,7 @@ export class AmbientLight extends Light {
         if (color !== undefined) {
             this.color = color;
         }
+        this.ambient = {x: 1.0, y: 1.0, z: 1.0};
     }
 
     update(time: number) {

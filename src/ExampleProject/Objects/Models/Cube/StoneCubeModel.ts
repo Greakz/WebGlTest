@@ -7,6 +7,8 @@ import { Mat4 } from '../../../../BaseLib/Math/Matrix/mat';
 import { Vec4 } from '../../../../BaseLib/Math/Vector/vec';
 import { StoneCubeTexture } from './Textures/StoneCubeTexture';
 import { SceneLightning } from '../../../../BaseLib/Light/SceneLightning';
+import { GoldMaterial } from '../../Materials/GoldMaterial';
+import { Material } from '../../../../BaseLib/Object/Model/Material/Material';
 
 export class StoneCubeModel extends Model<TextureShader> {
     model_identifier: string = 'stone-cube';
@@ -15,6 +17,7 @@ export class StoneCubeModel extends Model<TextureShader> {
     textures: TextureMap[] = [
         new StoneCubeTexture()
     ];
+    material: Material = new Material();
     color: Vec4 = {x: 1.0, y: 1.0, z: 1.0, w: 1.0};
 
     renderModel(GL: WebGL2RenderingContext, projMat: Mat4, modelMat: Mat4, sceneLightning: SceneLightning) {
@@ -22,6 +25,7 @@ export class StoneCubeModel extends Model<TextureShader> {
 
         GL.useProgram(this.shader.getProgram());
 
+        sceneLightning.getLightUbo().updateMaterial(GL, this.material)
         sceneLightning.getLightUbo().bind(GL, this.shader);
 
         GL.uniformMatrix4fv(this.shader.uf_modelMatrix, false, mat4ToF32(modelMat));

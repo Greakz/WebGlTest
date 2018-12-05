@@ -7,14 +7,15 @@ import { CubeHitBox } from '../../../Objects/HitBox/CubeHitBox';
 import { WoodCubeModel } from '../../../Objects/Models/Cube/WoodCubeModel';
 import { StoneCubeModel } from '../../../Objects/Models/Cube/StoneCubeModel';
 import { SceneLightning } from '../../../../BaseLib/Light/SceneLightning';
+import { GoldCubeModel } from '../../../Objects/Models/Cube/GoldCubeModel';
 
-export class StoneCube extends ClickAbleDrawObject {
+export class GoldCube extends ClickAbleDrawObject {
 
-    model: StoneCubeModel;
+    model: GoldCubeModel;
     protected parent: ExampleScene;
 
     init() {
-        this.model = new StoneCubeModel();
+        this.model = new GoldCubeModel();
         this.model.createModel()
     }
 
@@ -22,7 +23,7 @@ export class StoneCube extends ClickAbleDrawObject {
         if (this.isHovered) {
             this.model.color = {x: 0.5, y: 0.5, z: 0.5, w: 1.0};
         } else {
-            this.model.color = {x: 0.5, y: 1, z: 1, w: 1.0};
+            this.model.color = {x: 1, y: 0.8431372549, z: 0, w: 1.0};
         }
     }
 

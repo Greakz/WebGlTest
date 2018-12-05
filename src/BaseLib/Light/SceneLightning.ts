@@ -5,10 +5,20 @@ import { LightShader } from '../Shader/LightShader';
 import { HasCanvas, HasLog } from '../Singleton/HasSingletons';
 import { Light } from './Light';
 import { SpotLight } from './SpotLight';
+import { Camera } from '../Camera/Camera';
+import { Vec3 } from '../Math/Vector/vec';
+import { Material } from '../Object/Model/Material/Material';
+
+const maxAmbientLights: number = 2;
+const maxDirectionalLights: number = 8;
+const maxOmniLights: number = 32;
+const maxSpotLights: number = 32;
 
 export class SceneLightning extends HasCanvas {
 
     light_ubo: SceneLightUbo;
+
+    camera_pos: Vec3 = {x: 0.0, y: 0.0, z: 0.0};
 
     ambient_lights: AmbientLight[] = [];
     directional_lights: DirectionalLight[] = [];
@@ -19,23 +29,27 @@ export class SceneLightning extends HasCanvas {
     private directional_light_colors: Float32Array = new Float32Array(16);
     private directional_lights_count: number = 0;
 
+    updateCamPos(cam: Camera) {
+        this.camera_pos = cam.getPosition();
+    }
+
     addSceneLight(light: Light) {
         light.setSceneLightning(this);
         if (light instanceof OmniLight) {
-            if (this.omni_lights.length < 32) {
+            if (this.omni_lights.length < maxOmniLights) {
                 this.omni_lights.push(light);
             }
         } else if (light instanceof SpotLight) {
-            if (this.spot_lights.length < 32) {
+            if (this.spot_lights.length < maxSpotLights) {
                 this.spot_lights.push(light);
             }
         } else if (light instanceof DirectionalLight) {
-            if (this.directional_lights.length < 8) {
+            if (this.directional_lights.length < maxDirectionalLights) {
                 this.directional_lights.push(light);
             }
             this.updateDirectionalLights();
         } else if (light instanceof AmbientLight) {
-            if (this.ambient_lights.length < 2) {
+            if (this.ambient_lights.length < maxAmbientLights) {
                 this.ambient_lights.push(light);
             }
         }
@@ -77,6 +91,7 @@ export class SceneLightning extends HasCanvas {
         }
         this.light_ubo.update(
             SceneLightning.Canvas.getGl(),
+            this.camera_pos,
             this.ambient_lights,
             this.directional_lights,
             this.omni_lights,
@@ -108,7 +123,7 @@ class SceneLightUbo {
     init(GL: WebGL2RenderingContext) {
         this.ubo_buffer = GL.createBuffer();
         GL.bindBuffer(GL.UNIFORM_BUFFER, this.ubo_buffer);
-        GL.bufferData(GL.UNIFORM_BUFFER, new Float32Array(102), GL.DYNAMIC_DRAW);
+        GL.bufferData(GL.UNIFORM_BUFFER, new Float32Array(1892), GL.DYNAMIC_DRAW);
         GL.bindBuffer(GL.UNIFORM_BUFFER, null);
     }
 
@@ -157,6 +172,11 @@ class SceneLightUbo {
         this.ubo_data_build.push(l.color.x);
         this.ubo_data_build.push(l.color.y);
         this.ubo_data_build.push(l.color.z);
+        this.ubo_data_build.push(0.0);
+        // push propagation behaviors
+        this.ubo_data_build.push(l.constant);
+        this.ubo_data_build.push(l.linear);
+        this.ubo_data_build.push(l.quadratic);
         this.ubo_data_build.push(0.0);
         //push ambient factor
         this.ubo_data_build.push(l.ambient.x);
@@ -213,76 +233,79 @@ class SceneLightUbo {
         this.ubo_data_build.push(0.0);
     }
 
-    private pushEmptyVec4() {
-        this.ubo_data_build.push(0.0);
-        this.ubo_data_build.push(0.0);
-        this.ubo_data_build.push(0.0);
-        this.ubo_data_build.push(0.0);
+    private pushEmptyVec4s(count?: number) {
+        let c = (count !== undefined) ? count : 1;
+        for(let i = 0; i < (c * 4); i++) {
+            this.ubo_data_build.push(0.0);
+        }
+    }
+
+    updateMaterial(GL: WebGL2RenderingContext, material: Material) {
+        const offset : number = 16; // skip camera;
+        GL.bindBuffer(GL.UNIFORM_BUFFER, this.ubo_buffer);
+        GL.bufferSubData(GL.UNIFORM_BUFFER, offset, material.buildBufferArrayData(), 0, null);
+        GL.bindBuffer(GL.UNIFORM_BUFFER, null);
     }
 
     update(GL: WebGL2RenderingContext,
+           cam_pos: Vec3,
            amb_l: AmbientLight[],
            dir_l: DirectionalLight[],
            omn_l: OmniLight[],
            spo_l: SpotLight[]) {
         this.ubo_data_build = [];
 
+        // push Camera Position
+        this.ubo_data_build.push(cam_pos.x);
+        this.ubo_data_build.push(cam_pos.y);
+        this.ubo_data_build.push(cam_pos.z);
+        this.ubo_data_build.push(0.0);
+
+        // push Material Dummy
+        this.pushEmptyVec4s(4);
+
         //AmbientLights
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < maxAmbientLights; i++) {
             // push one Chunk (ambient Light is only one Chunk
             if (amb_l.length > i) {
                 this.pushAmbientLight(amb_l[i]);
             } else {
-                this.pushEmptyVec4();
+                this.pushEmptyVec4s();
             }
         }
         //DirectionalLights
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < maxDirectionalLights; i++) {
             // push one Chunk (ambient Light is only one Chunk
             if (dir_l.length > i) {
                 this.pushDirectionalLight(dir_l[i]);
             } else {
-                this.pushEmptyVec4(); // dir
-                this.pushEmptyVec4(); // col
-                this.pushEmptyVec4(); // amb
-                this.pushEmptyVec4(); // diff
-                this.pushEmptyVec4(); // spec
+                this.pushEmptyVec4s(5);
             }
         }
         //OmniLights
-        for (let i = 0; i < 32; i++) {
+        for (let i = 0; i < maxOmniLights; i++) {
             // push one Chunk (ambient Light is only one Chunk
             if (omn_l.length > i) {
                 this.pushOmniLight(omn_l[i]);
             } else {
-                this.pushEmptyVec4(); // pos
-                this.pushEmptyVec4(); // col
-                this.pushEmptyVec4(); // amb
-                this.pushEmptyVec4(); // diff
-                this.pushEmptyVec4(); // spec
+                this.pushEmptyVec4s(6);
             }
         }
         //OmniLights
-        for (let i = 0; i < 32; i++) {
+        for (let i = 0; i < maxSpotLights; i++) {
             // push one Chunk (ambient Light is only one Chunk
             if (spo_l.length > i) {
                 this.pushSpotLight(spo_l[i]);
             } else {
-                this.pushEmptyVec4(); // pos
-                this.pushEmptyVec4(); // dir
-                this.pushEmptyVec4(); // c_angle
-                this.pushEmptyVec4(); // col
-                this.pushEmptyVec4(); // amb
-                this.pushEmptyVec4(); // diff
-                this.pushEmptyVec4(); // spec
+                this.pushEmptyVec4s(7);
             }
         }
         GL.bindBuffer(GL.UNIFORM_BUFFER, this.ubo_buffer);
         GL.bufferData(GL.UNIFORM_BUFFER, new Float32Array(this.ubo_data_build), GL.DYNAMIC_DRAW);
+        GL.bindBuffer(GL.UNIFORM_BUFFER, null);
     }
 
     bind(GL: WebGL2RenderingContext, shader: LightShader) {
-        GL.bindBuffer(GL.UNIFORM_BUFFER, this.ubo_buffer);
-        GL.bindBufferBase(GL.UNIFORM_BUFFER, shader.uf_light_block_binding, this.ubo_buffer);
+        GL.bindBufferBase(GL.UNIFORM_BUFFER, 0, this.ubo_buffer);
     }
 }

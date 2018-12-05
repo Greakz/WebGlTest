@@ -6,6 +6,8 @@ import { WoodCube } from './SceneObjects/WoodCube';
 import { StoneCube } from './SceneObjects/StoneCube';
 import { DirectionalLight } from '../../../BaseLib/Light/DirectionalLight';
 import { SpotLight } from '../../../BaseLib/Light/SpotLight';
+import { OmniLight } from '../../../BaseLib/Light/OmniLight';
+import { GoldCube } from './SceneObjects/GoldCube';
 
 export class ExampleScene extends Scene {
 
@@ -22,14 +24,24 @@ export class ExampleScene extends Scene {
             {x: 1, y: 1, z: 1},
             {x: 1.0, y: 1.0, z: 1.0}
         );
-        let lightFromCube = new StoneCube(this);
-        lightFromCube.transformation.moveX(lightSource.direction.x).moveY(lightSource.direction.y).moveZ(lightSource.direction.z);
+        /*
+        let lightFromCube: StoneCube = new StoneCube(this);
+        lightFromCube.transformation.moveX(2).moveY(4).moveZ(2).scale(0.2);
         this.addSceneObject(lightFromCube);
-        this.sceneLightning.addSceneLight(lightSource);
 
+        let lightFromCube2: StoneCube = new StoneCube(this);
+        lightFromCube2.transformation.moveX(-2).moveY(4).moveZ(-2).scale(0.2);
+        this.addSceneObject(lightFromCube2);
+*/
+        // this.sceneLightning.addSceneLight(lightSource);
+
+        this.sceneLightning.addSceneLight(new OmniLight(
+            {x: 2, y: 4, z: 2},
+            {x: 1, y: 1, z: 1}
+        ));
         this.sceneLightning.addSceneLight(new DirectionalLight(
-            {x: -1, y: -1, z: -1},
-            {x: 0.0, y: 0, z: 1.0}
+            {x: -2, y: -1, z: -2},
+            {x: 1, y: 1, z: 1}
         ));
     }
 
@@ -38,7 +50,7 @@ export class ExampleScene extends Scene {
         if(wood) {
             newObj = new WoodCube(this);
         } else {
-            newObj = new StoneCube(this);
+            newObj = new GoldCube(this);
         }
         newObj.initSelfAndChildren();
         newObj.transformation.moveZ(z);
@@ -48,6 +60,7 @@ export class ExampleScene extends Scene {
     }
 
     init() {
+
     }
 
     update(time: number) {
