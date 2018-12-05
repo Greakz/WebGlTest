@@ -1,9 +1,9 @@
 import { Scene } from './Scene';
-import { HasSingletons } from '../Singleton/HasSingletons';
+import { HasProvider } from '../Singleton/HasSingletons';
 import { Mat4 } from '../Math/Matrix/mat';
 import { SceneLightning } from '../Light/SceneLightning';
 
-abstract class SceneObjectCore extends HasSingletons {
+abstract class SceneObjectCore extends HasProvider {
 
     protected parent: Scene | SceneObject;
     constructor(parent: Scene | SceneObject) {

@@ -43,8 +43,11 @@ export class PlaneModel extends Model<ExampleShader> {
         this.uniformBuffer = GL.createBuffer();
         // buffer data to uniform buffer and set pointer!?
         const bufferData: Float32Array = new Float32Array([
-            1, 0.0, 0.5, 1.0,
-            1, 0.0, 0.5, 1.0
+            1, 1, 1, 1.0,
+            0, 0.0, 0, 1.0,
+            0, 0.0, 0, 1.0,
+            0, 0, 1, 1.0,
+            0, 0.0, 0, 1.0,
         ]);
         GL.bindBuffer(GL.UNIFORM_BUFFER, this.uniformBuffer);
         GL.bufferData(GL.UNIFORM_BUFFER, bufferData, GL.DYNAMIC_DRAW);

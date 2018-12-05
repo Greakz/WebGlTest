@@ -1,13 +1,13 @@
 import { Mesh } from './Mesh/Mesh';
 import { TextureMap } from './Texture/TextureMap';
-import { HasSingletons } from '../../Singleton/HasSingletons';
+import { HasProvider } from '../../Singleton/HasSingletons';
 import { Shader } from '../../Shader/Shader';
 import { Mat4 } from '../../Math/Matrix/mat';
 import { Canvas } from '../../Singleton/Canvas';
 import CanvasSingleton from '../../Singleton/CanvasSingleton';
 import { SceneLightning } from '../../Light/SceneLightning';
 
-export class Model<S extends Shader> extends HasSingletons {
+export class Model<S extends Shader> extends HasProvider {
 
     protected static Canvas: Canvas = CanvasSingleton.getInstance();
 

@@ -5,13 +5,9 @@ export abstract class LightShader extends Shader {
     constructor() {
         super();
     }
-    uf_directional_light_directions: WebGLUniformLocation;
-    uf_directional_light_colors: WebGLUniformLocation;
-    uf_directional_lights_count: WebGLUniformLocation;
+    uf_light_block_binding: number;
     bindLightUniformLocations(GL: WebGL2RenderingContext) {
-        this.uf_directional_light_directions = GL.getUniformLocation(this.compiledProgram, 'directionalLightDirections');
-        this.uf_directional_light_colors = GL.getUniformLocation(this.compiledProgram, 'directionalLightColors');
-        this.uf_directional_lights_count = GL.getUniformLocation(this.compiledProgram, 'directionalLightsCount');
+        this.uf_light_block_binding = GL.getUniformBlockIndex(this.compiledProgram, 'light');
     }
     bindUniformLocations(GL: WebGL2RenderingContext) {}
     bindAttributeLocations(GL: WebGL2RenderingContext) {}

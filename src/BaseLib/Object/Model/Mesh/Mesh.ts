@@ -9,11 +9,11 @@ import { Mat4 } from '../../../Math/Matrix/mat';
 import { ExampleShader } from '../../../../ExampleProject/Shader/ExampleShader';
 import { mat4ToF32 } from '../../../Math/Matrix/matTo';
 import { addVec3 } from '../../../Math/Vector/add';
-import { HasSingletons } from '../../../Singleton/HasSingletons';
+import { HasProvider } from '../../../Singleton/HasSingletons';
 import { NormalsShader } from '../../../Shader/NormalsShader';
 import { scaleVec3 } from '../../../Math/Vector/scale';
 
-export abstract class Mesh extends HasSingletons {
+export abstract class Mesh extends HasProvider {
 
     protected static buildVertexNormals(vertex_coordinates: ArrayBufferData, vertex_indices: ArrayElementBufferData) {
         let vertex_normals: number[] = [];

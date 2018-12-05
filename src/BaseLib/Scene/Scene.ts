@@ -1,4 +1,4 @@
-import { HasSingletons } from '../Singleton/HasSingletons';
+import { HasProvider } from '../Singleton/HasSingletons';
 import { SceneObject } from './SceneObject';
 import { SceneEvent } from './SceneEvent';
 import { Camera } from '../Camera/Camera';
@@ -13,7 +13,7 @@ import { compareVec3AGreaterB } from '../Math/Vector/compare';
 import { subtractVec3 } from '../Math/Vector/subtract';
 import { SceneLightning } from '../Light/SceneLightning';
 
-class SceneCore extends HasSingletons {
+class SceneCore extends HasProvider {
     protected static MousePosition: MousePosition = MouseSingleton.getInstance();
     protected camera: Camera;
     protected sceneLightning: SceneLightning = new SceneLightning();
@@ -29,7 +29,7 @@ class SceneCore extends HasSingletons {
 
     updateSelfAndChildren(time: number) {
         this.camera.update(time);
-        this.sceneLightning.updateSelfAndChiildren(time);
+        this.sceneLightning.updateSelfAndChildren(time);
         this.checkMouseHover();
         this.update(time);
         this.sceneObjects.forEach(sO => sO.updateSelfAndChildren(time));
@@ -60,7 +60,6 @@ class SceneCore extends HasSingletons {
         obj.setId(this.idCreationIndex);
         this.idCreationIndex++;
         this.sceneObjects.push(obj);
-        console.log(this.sceneObjects.length)
         if (isHitAble(obj)) {
             this.addToHitObjects(obj);
         }

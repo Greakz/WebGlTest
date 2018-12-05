@@ -41,55 +41,59 @@ out vec4 fragmentColor;
 // Texture
 uniform sampler2D uSampler;
 
-
+struct AmbientLight {
+    vec3 color;
+};
 struct DirectionalLight {
-    vec3 dir; // dir = direction
+    vec4 dir; // dir = direction
     vec3 col; // col = color
-    // vec3 amb; // amb = ambient factor
+    vec3 amb; // amb = ambient factor
     vec3 diff; // diff = diffuse factor
-    // vec3 spec; // spec = specular color factor
+    vec3 spec; // spec = specular color factor
 };
-struct SceneLight {
-    // AmbientLight ambient_light;
-    DirectionalLight dir_lights[8]; // dir_lights = Directional Lights
-    int dir_lights_count;
-    // OmniLight omni_lights[64]; // omni = punctual light
-    // int omni_lights_count;
-    // SpotLight spot_lights[64]; // spot is like omni with a restricting cone
-    // int spot_lights_count;
+struct OmniLight {
+    vec4 pos; // pos = position
+    vec3 col; // col = color
+    vec3 amb; // amb = ambient factor
+    vec3 diff; // diff = diffuse factor
+    vec3 spec; // spec = specular color factor
+};
+struct SpotLight {
+    vec4 pos; // pos = position
+    vec3 dir; // dir = direction
+    vec3 c_angle; // c_angle = cone_angle
+    vec3 col; // col = color
+    vec3 amb; // amb = ambient factor
+    vec3 diff; // diff = diffuse factor
+    vec3 spec; // spec = specular color factor
 };
 
-uniform SceneLight scene_light;
+uniform light {
+    AmbientLight amb_lights[2];
+    DirectionalLight dir_lights[8];
+    OmniLight omni_lights[32];
+    SpotLight spot_lights[32];
+};
 
-// Lights
-uniform float directionalLightDirections[12];
-uniform float directionalLightColors[12];
-uniform int directionalLightsCount;
+vec3 calculateDirectionalDiffuseLight(int i) {
+        float hitAngleFactor = dot(faceNormal, dir_lights[i].dir.xyz);
+        float strenght = max(hitAngleFactor * -1.0, 0.0);
+        return dir_lights[i].col * vec3(strenght);
+}
 
-vec3 getDiffuseDirectionalLight() {
-    scene_light;
-    float summedDifferedLightStrenght = 0.0;
-    vec3 summedDiffLight = vec3(0.0);
-    for(int i = 0; i < directionalLightsCount; i++) {
-
-        vec3 dl_direction = vec3(directionalLightDirections[i * 3], directionalLightDirections[i * 3 + 1], directionalLightDirections[i * 3 + 2]);
-        float directional = dot(faceNormal, dl_direction);
-
-        directional *= -1.0;
-
-        summedDifferedLightStrenght = max(directional, 0.0);
-        summedDiffLight = vec3(
-            (directionalLightColors[i * 3] * summedDifferedLightStrenght) + summedDiffLight.x,
-            (directionalLightColors[i * 3 + 1] * summedDifferedLightStrenght) + summedDiffLight.y,
-            (directionalLightColors[i * 3 + 2] * summedDifferedLightStrenght) + summedDiffLight.z
-        );
+vec3 calculateAllDirectionalDiffuseLights() {
+    vec3 sumDirDiffLight = vec3(0.0);
+    for(int i = 0; i < 8; i++){
+        if(dir_lights[i].dir.a > 0.5) {
+            sumDirDiffLight += calculateDirectionalDiffuseLight(i);
+        }
     }
-    return summedDiffLight;
+    return sumDirDiffLight;
 }
 
 void main(void) {
-    vec3 diffuseLight = getDiffuseDirectionalLight();
+    vec3 diffuseLight = calculateAllDirectionalDiffuseLights();
 
     vec4 texelColor = vColor * texture(uSampler, vTextureCoord);
-    fragmentColor = vec4((diffuseLight * texelColor.rgb), texelColor.a);
+    fragmentColor = vec4(spot_lights[0].col, 1.0); //vec4((diffuseLight * texelColor.rgb), texelColor.a);
 }

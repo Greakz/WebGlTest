@@ -1,12 +1,12 @@
 import { Scene } from '../Scene/Scene';
-import { HasSingletons } from '../Singleton/HasSingletons';
+import { HasProvider } from '../Singleton/HasSingletons';
 
 export interface State {
     state: string;
     scene: Scene;
 }
 
-abstract class StateManagerCore extends HasSingletons {
+abstract class StateManagerCore extends HasProvider {
     protected states: State[];
     protected activeState: State;
 

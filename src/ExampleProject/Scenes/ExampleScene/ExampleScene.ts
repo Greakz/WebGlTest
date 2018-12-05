@@ -5,6 +5,7 @@ import { Grid } from './SceneObjects/Grid';
 import { WoodCube } from './SceneObjects/WoodCube';
 import { StoneCube } from './SceneObjects/StoneCube';
 import { DirectionalLight } from '../../../BaseLib/Light/DirectionalLight';
+import { SpotLight } from '../../../BaseLib/Light/SpotLight';
 
 export class ExampleScene extends Scene {
 
@@ -24,13 +25,12 @@ export class ExampleScene extends Scene {
         let lightFromCube = new StoneCube(this);
         lightFromCube.transformation.moveX(lightSource.direction.x).moveY(lightSource.direction.y).moveZ(lightSource.direction.z);
         this.addSceneObject(lightFromCube);
-        this.sceneLightning.addDirectionalLight(lightSource);
+        this.sceneLightning.addSceneLight(lightSource);
 
-        this.sceneLightning.addDirectionalLight(new DirectionalLight(
+        this.sceneLightning.addSceneLight(new DirectionalLight(
             {x: -1, y: -1, z: -1},
             {x: 0.0, y: 0, z: 1.0}
         ));
-
     }
 
     addObjectAt(x: number, z: number, wood: boolean) {

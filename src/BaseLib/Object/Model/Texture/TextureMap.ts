@@ -1,9 +1,9 @@
 import { ArrayBufferData } from '../DataArrays/ArrayBufferData';
 import { Asset } from '../Asset/Asset';
-import { HasSingletons } from '../../../Singleton/HasSingletons';
+import { HasProvider } from '../../../Singleton/HasSingletons';
 import { Shader } from '../../../Shader/Shader';
 
-export class TextureMap extends HasSingletons {
+export class TextureMap extends HasProvider {
 
     /**
      * Define these!

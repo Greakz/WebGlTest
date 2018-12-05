@@ -21,11 +21,12 @@ export class WoodCubeModel extends Model<TextureShader> {
         GL.bindVertexArray(this.vao);
 
         GL.useProgram(this.shader.getProgram());
+
+        sceneLightning.getLightUbo().bind(GL, this.shader);
+
         GL.uniformMatrix4fv(this.shader.uf_modelMatrix, false, mat4ToF32(modelMat));
         GL.uniformMatrix4fv(this.shader.uf_projectionMatrix, false, mat4ToF32(projMat));
         GL.uniform4f(this.shader.uf_color, this.color.x, this.color.y, this.color.z, this.color.w);
-
-        sceneLightning.setUniformSceneLightning(GL, this.shader);
 
         this.textures.forEach((t: TextureMap) => t.bindTexture(GL));
 
