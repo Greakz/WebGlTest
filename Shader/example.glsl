@@ -26,16 +26,11 @@ precision mediump float;
 in vec4 vColor;
 out vec4 fragmentColor;
 
-struct bla {
-    vec3 bla1;
-    vec3 bla2;
-};
-
 uniform light {
-    vec3 ambient;
-    bla diffuse[2];
+    vec4 ambient;
+    vec4 diffuse;
 };
 
 void main(void) {
-    fragmentColor = vec4(vColor.rgb * diffuse[1].bla1, 1.0);
+    fragmentColor = vColor * ambient * diffuse;
 }

@@ -26,11 +26,14 @@ export class PlaneModel extends Model<ExampleShader> {
 
         GL.useProgram(this.shader.getProgram());
 
+        /*
+        UBO TEST
         if(this.uniformBuffer === null) {
             this.initUniformBuffer(GL, this.shader);
         }
         GL.bindBuffer(GL.UNIFORM_BUFFER, this.uniformBuffer);
         GL.bindBufferBase(GL.UNIFORM_BUFFER, this.uniformBlockBinding, this.uniformBuffer);
+        */
 
         GL.uniformMatrix4fv(this.shader.uf_modelMatrix, false, mat4ToF32(modelMat));
         GL.uniformMatrix4fv(this.shader.uf_projectionMatrix, false, mat4ToF32(projMat));
@@ -38,7 +41,8 @@ export class PlaneModel extends Model<ExampleShader> {
 
         GL.drawElements(GL.TRIANGLES, this.mesh.vertex_indices.data.length, GL.UNSIGNED_SHORT, 0);
     }
-
+/*
+THIS WAS A UBO TEST
     private initUniformBuffer(GL: WebGL2RenderingContext, shader: ExampleShader) {
         this.uniformBuffer = GL.createBuffer();
         // buffer data to uniform buffer and set pointer!?
@@ -55,4 +59,5 @@ export class PlaneModel extends Model<ExampleShader> {
 
         this.uniformBlockBinding = GL.getUniformBlockIndex(shader.getProgram(), 'light');
     }
+    */
 }
