@@ -26,11 +26,6 @@ precision mediump float;
 in vec4 vColor;
 out vec4 fragmentColor;
 
-uniform light {
-    vec4 ambient;
-    vec4 diffuse;
-};
-
 void main(void) {
-    fragmentColor = vColor * ambient * diffuse;
+    fragmentColor = vColor;
 }
