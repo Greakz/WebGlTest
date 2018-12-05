@@ -95,5 +95,5 @@ void main(void) {
     vec3 diffuseLight = calculateAllDirectionalDiffuseLights();
 
     vec4 texelColor = vColor * texture(uSampler, vTextureCoord);
-    fragmentColor = vec4(spot_lights[0].col, 1.0); //vec4((diffuseLight * texelColor.rgb), texelColor.a);
+    fragmentColor = vec4((diffuseLight * texelColor.rgb), texelColor.a);
 }
