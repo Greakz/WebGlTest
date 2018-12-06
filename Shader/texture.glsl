@@ -41,10 +41,10 @@ in vec4 vColor;
 // Result output
 out vec4 fragmentColor;
 
-const int maxAmbientLights = 2;
-const int maxDirectionalLights = 8;
-const int maxOmniLights = 32;
-const int maxSpotLights = 32;
+const int maxAmbientLights = 1;
+const int maxDirectionalLights = 2;
+const int maxOmniLights = 24;
+const int maxSpotLights = 12;
 
 // Texture
 uniform sampler2D uSampler;
@@ -86,10 +86,10 @@ struct SpotLight {
 uniform light{
     vec3 camera_pos;
     Material material;
-    AmbientLight amb_lights[2];
-    DirectionalLight dir_lights[8];
-    OmniLight omni_lights[32];
-    SpotLight spot_lights[32];
+    AmbientLight amb_lights[maxAmbientLights];
+    DirectionalLight dir_lights[maxDirectionalLights];
+    OmniLight omni_lights[maxOmniLights];
+    SpotLight spot_lights[maxSpotLights];
 };
 
 /*
@@ -238,8 +238,8 @@ void main(void) {
     vec3 diffuseLight = calculateAllDirectionalDiffuseLights();
     diffuseLight += calculateAllOmniDiffuseLights();
 
-    vec3 specularLight = calculateAllDirectionalSpecularLights();
-    specularLight += calculateAllOmniSpecularLights();
+    // vec3 specularLight = calculateAllDirectionalSpecularLights();
+    vec3 specularLight = calculateAllOmniSpecularLights();
 
 
     vec3 lightColor = ambientLight + diffuseLight + specularLight;

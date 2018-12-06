@@ -9,10 +9,10 @@ import { Camera } from '../Camera/Camera';
 import { Vec3 } from '../Math/Vector/vec';
 import { Material } from '../Object/Model/Material/Material';
 
-const maxAmbientLights: number = 2;
-const maxDirectionalLights: number = 8;
-const maxOmniLights: number = 32;
-const maxSpotLights: number = 32;
+const maxAmbientLights: number = 1;
+const maxDirectionalLights: number = 2;
+const maxOmniLights: number = 24;
+const maxSpotLights: number = 12;
 
 export class SceneLightning extends HasCanvas {
 
