@@ -1,5 +1,5 @@
 # WebGlTest
-`ld start` & `hub ld start`
+`hub ld start` & `ld start`
 <details>
 <summary>usage & help</summary>
 
