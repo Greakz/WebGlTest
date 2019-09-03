@@ -1,13 +1,13 @@
 # WebGlTest
 
-<details><summary>CLICK ME</summary>
-<p>
+<details><summary>`ld start -h`</summary>
 
-#### yes, even hidden code blocks!
+```bash
+usage: start [-h] [-f] [-b]
 
-```python
-print("hello world!")
+optional arguments:
+  -h, --help      show this help message and exit
+  -f, --frontend
+  -b, --backend
 ```
-
-</p>
 </details>
