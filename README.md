@@ -1,6 +1,7 @@
 # WebGlTest
-
-<details><summary>`ld start -h`</summary>
+`ld start -h`
+<details>
+<summary>--help</summary>
 
 ```bash
 usage: start [-h] [-f] [-b]
@@ -10,4 +11,5 @@ optional arguments:
   -f, --frontend
   -b, --backend
 ```
+
 </details>
