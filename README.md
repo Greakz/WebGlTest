@@ -1,7 +1,7 @@
 # WebGlTest
-`ld start` || `hub ld start`
+`ld start` & `hub ld start`
 <details>
-<summary>--help</summary>
+<summary>usage & help</summary>
 
 ```bash
 usage: start [-h] [-f] [-b]
